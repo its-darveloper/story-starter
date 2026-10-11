@@ -75,6 +75,16 @@ Always keep any names the player gave you (in their idea or their answers); use 
 }
 
 const planShape = (packCodes) => `{
+  "storyFrame": {
+    "protagonist": "the one main Sim the story follows",
+    "wants": "the protagonist's outer goal: something concrete they chase",
+    "flaw": "the protagonist's inner flaw or fear that works against that goal",
+    "opposition": "who or what blocks them, and WHY that Sim wants what they want (their own understandable goal)",
+    "incitingIncident": "the event in the first sim-days that forces the protagonist to make a choice",
+    "stakes": "what the protagonist personally loses if they fail",
+    "clues": ["1-2 things to set up early so the twist feels earned later"],
+    "dramaticQuestion": "the yes/no question the player will play to answer"
+  },
   "heart": "the one central conflict or theme, in one short line (e.g. 'Two sisters who can't stand each other are stuck sharing a failing farm')",
   "ingredientsUsed": [the numbers of the 1 or 2 ingredients you used],
   "premise": "2-3 vivid sentences summarizing the story",
@@ -83,6 +93,8 @@ const planShape = (packCodes) => `{
       "name": "full Sim name",
       "headline": "one short line, e.g. 'The burnt-out barista with a secret'",
       "personality": "traits, quirks, aspiration, career, in a few sentences",
+      "wants": "what this Sim is chasing, in one short line",
+      "holdingBack": "the flaw or fear in their way, in one short line",
       "connections": "how this Sim connects to the others",
       "cas": ${casShape(packCodes)}
     }
@@ -90,7 +102,8 @@ const planShape = (packCodes) => `{
   "plotline": {
     "headline": "one short line",
     "body": "the starting storyline in a few sentences",
-    "goal": "a loose direction to play toward, not an ending"
+    "dayOne": "the first scene to play: the inciting incident, staged as something the player can set up in their first session",
+    "goal": "the dramatic question, phrased as an open question the player plays to answer (never a fixed ending)"
   },
   "world": {
     "world": "which world and why",
@@ -198,6 +211,13 @@ How to build the plan:
 2. Weave in the 1 or 2 ingredients you picked so they deepen that conflict, not sit beside it.
 3. Every character must be tied to the central conflict. No side businesses, side careers, or separate plotlines that don't feed it.
 4. Keep it focused enough that someone could explain the story in one breath.
+5. Fill in the storyFrame first, then make every other part follow it:
+   - The protagonist's flaw works against their want, so the inner conflict and the outer conflict are the same story.
+   - The opposition has its own understandable reason; nobody is evil for no reason. At drama 1-2 the opposition can be circumstance or the protagonist's own flaw instead of a person.
+   - The protagonist ACTS: the plotline shows choices they make that push the story forward, not just things that happen to them.
+   - The stakes are personal to the protagonist, not generic (not just "money" or "rent").
+   - Any twist is set up by the clues, so it will feel inevitable in hindsight. No coincidences, no luck, and no "it's unexplained."
+   - The world and lots put pressure on the conflict; they are not just a backdrop.
 
 Write a starting plan with 2-4 characters. Use this exact JSON shape:
 ${planShape(ingredients.packs.map((p) => p.code))}`;
@@ -217,13 +237,14 @@ export function parsePlan(text) {
   }
   const filled = (s) => typeof s === 'string' && s.trim().length > 0;
   const ok =
+    plan.storyFrame && ['protagonist', 'wants', 'flaw', 'opposition', 'incitingIncident', 'stakes', 'dramaticQuestion'].every((k) => filled(plan.storyFrame[k])) &&
     filled(plan.heart) &&
     Array.isArray(plan.ingredientsUsed) &&
     filled(plan.premise) &&
     Array.isArray(plan.characters) && plan.characters.length > 0 &&
-    plan.characters.every((c) => filled(c.name) && filled(c.headline) && filled(c.personality) && filled(c.connections) &&
+    plan.characters.every((c) => filled(c.name) && filled(c.headline) && filled(c.personality) && filled(c.connections) && filled(c.wants) && filled(c.holdingBack) &&
       c.cas && filled(c.cas.lifeStage) && filled(c.cas.orientation) && filled(c.cas.boundaries) && filled(c.cas.likes) && filled(c.cas.dislikes)) &&
-    plan.plotline && filled(plan.plotline.headline) && filled(plan.plotline.body) && filled(plan.plotline.goal) &&
+    plan.plotline && filled(plan.plotline.headline) && filled(plan.plotline.body) && filled(plan.plotline.goal) && filled(plan.plotline.dayOne) &&
     plan.world && filled(plan.world.world) && filled(plan.world.lots) && filled(plan.world.season);
   return ok ? plan : null;
 }

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sims 4 Story Starter — Spec</title>
+<style>
+  :root{
+    --bg:#fbf5fb; --card:#fff; --ink:#2a1d2e; --muted:#6e5d73; --line:#ead9ee;
+    --pink:#e0399a; --pink-soft:#fde4f3; --purple:#7a4bd1; --purple-soft:#ece4fb;
+    --teal:#0e9aa7; --teal-soft:#dcf5f6; --amber:#c98412; --amber-soft:#fdf0d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#1a1220; --card:#251a2d; --ink:#f4eaf7; --muted:#b9a6c0; --line:#3a2b45;
+      --pink:#ff6bbd; --pink-soft:#46183a; --purple:#a98cf0; --purple-soft:#2c2149;
+      --teal:#4cd2dd; --teal-soft:#123a3e; --amber:#f0b04d; --amber-soft:#3a2c14;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:960px;margin:0 auto;padding:24px 16px 64px}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-soft);color:var(--amber);border-radius:999px;padding:3px 10px;font-weight:700}
+  h1{font-size:2rem;margin:10px 0 4px}
+  .tag{color:var(--muted);margin:0 0 18px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0}
+  h2{margin:0 0 10px;font-size:1.15rem}
+  svg{width:100%;height:auto;display:block}
+  svg text{font:13px system-ui,sans-serif;fill:var(--ink)}
+  .box{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+  .page{fill:var(--pink-soft);stroke:var(--pink);stroke-width:2}
+  .srv{fill:var(--purple-soft);stroke:var(--purple);stroke-width:2}
+  .data{fill:var(--teal-soft);stroke:var(--teal);stroke-width:2}
+  .ext{fill:var(--amber-soft);stroke:var(--amber);stroke-width:2}
+  .arrow{stroke:var(--muted);stroke-width:2;fill:none}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+  .tabs button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px}
+  .tabs button[aria-selected="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+  .panel{background:var(--purple-soft);border-radius:14px;padding:14px 16px}
+  .panel h3{margin:.2em 0 .3em;font-size:1rem}
+  code{background:var(--teal-soft);border-radius:6px;padding:1px 6px;font-size:.9em}
+  details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}
+  summary{cursor:pointer;font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  pre{background:var(--teal-soft);border-radius:12px;padding:12px;overflow:auto;font-size:.85rem}
+  table{border-collapse:collapse;width:100%;font-size:.92rem}
+  td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .foot{color:var(--muted);font-size:.9rem;margin-top:26px}
+  button:focus-visible,summary:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+  <span class="badge">Draft — spec</span>
+  <h1>Sims 4 Story Starter <small style="font-weight:400;color:var(--muted)">(working title)</small></h1>
+  <p class="tag">How we build what the PRD describes: a phone-friendly page, a small server on your laptop, pack notes in our own words, and Claude for the language work.</p>
+
+  <section>
+    <h2>How it works, in plain language</h2>
+    <div class="grid">
+      <div><strong>1 · The page</strong><br>What you see on your phone. Walks through the steps and shows the cards. Never talks to the AI directly.</div>
+      <div><strong>2 · The little server</strong><br>Runs on your laptop. Serves the page, holds the secret key, does the behind-the-scenes work.</div>
+      <div><strong>3 · The pack notes</strong><br>One file of short, story-focused entries per pack, in our own words, reviewed by you.</div>
+      <div><strong>4 · The AI (Claude)</strong><br>Reflects back what you said, asks follow-ups, and writes the plan.</div>
+    </div>
+    <p><strong>Why plans aren’t generic:</strong> before the AI writes anything, the code randomly draws a few story ingredients from your selected packs’ notes, nudged by your sliders. The randomness comes from the code, not the AI’s habits.</p>
+  </section>
+
+  <section>
+    <h2>The system at a glance</h2>
+    <svg viewBox="0 0 900 300" role="img" aria-label="Phone page talks to the laptop server, which reads pack notes and calls Claude. Plans are saved in the phone browser.">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+      <rect class="page" x="10" y="70" width="200" height="150" rx="14"/>
+      <text x="110" y="100" text-anchor="middle" font-weight="700">The page (phone)</text>
+      <text x="110" y="124" text-anchor="middle">screens · sliders · cards</text>
+      <text x="110" y="144" text-anchor="middle">public/</text>
+      <rect class="data" x="30" y="165" width="160" height="42" rx="10"/>
+      <text x="110" y="183" text-anchor="middle">Saved plans</text><text x="110" y="199" text-anchor="middle" style="font-size:11px">browser storage</text>
+
+      <rect class="srv" x="340" y="40" width="220" height="210" rx="14"/>
+      <text x="450" y="70" text-anchor="middle" font-weight="700">Little server (laptop)</text>
+      <text x="450" y="94" text-anchor="middle">server/server.js</text>
+      <rect class="box" x="360" y="108" width="180" height="40" rx="8"/><text x="450" y="133" text-anchor="middle">Ingredient draw</text>
+      <rect class="box" x="360" y="156" width="180" height="40" rx="8"/><text x="450" y="181" text-anchor="middle">Prompt builder</text>
+      <rect class="box" x="360" y="204" width="180" height="36" rx="8"/><text x="450" y="227" text-anchor="middle">Holds the API key</text>
+
+      <rect class="data" x="340" y="262" width="220" height="30" rx="8"/><text x="450" y="282" text-anchor="middle">data/ pack notes · dials · styles</text>
+
+      <rect class="ext" x="690" y="90" width="200" height="110" rx="14"/>
+      <text x="790" y="125" text-anchor="middle" font-weight="700">Claude (Anthropic API)</text>
+      <text x="790" y="148" text-anchor="middle">reflect · follow-ups</text>
+      <text x="790" y="168" text-anchor="middle">write the plan</text>
+
+      <path class="arrow" d="M210 130 L338 130" marker-end="url(#a)"/><text x="274" y="122" text-anchor="middle" style="font-size:11px">/api/reflect</text><text x="274" y="148" text-anchor="middle" style="font-size:11px">/api/plan</text>
+      <path class="arrow" d="M338 180 L212 180" marker-end="url(#a)"/>
+      <path class="arrow" d="M560 145 L688 145" marker-end="url(#a)"/>
+      <path class="arrow" d="M450 250 L450 260" marker-end="url(#a)"/>
+    </svg>
+  </section>
+
+  <section>
+    <h2>Walk the journey through the system <span style="font-weight:400;color:var(--muted)">(click a step)</span></h2>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="panel" id="panel" role="tabpanel" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>Components <span style="font-weight:400;color:var(--muted)">(each ties to a PRD heading)</span></h2>
+    <details open><summary>Screen flow (the page)</summary><p>Every screen from welcome to the plan, step navigation, one run’s in-memory state. <code>public/js/app.js</code>, <code>public/js/screens.js</code> · PRD: Screens and Layout, The Core Journey</p></details>
+    <details><summary>Starting-style cards</summary><p>Styles from <code>data/starting-styles.json</code>, including “I’m not sure / something else.” · PRD: Starting-style choice</p></details>
+    <details><summary>Yap box and nudges</summary><p>One big box; tappable nudges from <code>data/nudges.json</code>; works with the phone’s keyboard dictation. · PRD: The yap</p></details>
+    <details><summary>Reflect and follow-up</summary><p><code>POST /api/reflect</code> returns a reflection and a few gap questions shown as speech bubbles. · PRD: Reflect and follow up</p></details>
+    <details><summary>Dials</summary><p>Four sliders with five described positions each from <code>data/dials.json</code>, plus the supernatural checkbox, grayed out with a visible note unless a supernatural-capable pack is chosen. · PRD: Dials</p></details>
+    <details><summary>Pack picker</summary><p>Pack cards from <code>data/pack-notes.json</code>, multi-select, visible Skip. · PRD: Pack selection</p></details>
+    <details><summary>Ingredient draw (server)</summary><p>Random, seedable, nudged by sliders; falls back to <code>data/general-notes.json</code>. <code>server/draw.js</code> · PRD: Dials, Pack selection · Scope: The Unique Kernel</p></details>
+    <details><summary>Plan writer (server)</summary><p>Builds the prompt, calls Claude, asks for a fixed structure, checks it. <code>server/prompt.js</code>, <code>server/claude.js</code> · PRD: Plan Cards</p></details>
+    <details><summary>Plan cards and saved plans</summary><p>Cards led by the chosen style; saved in local storage; “My plans” list on return. <code>public/js/store.js</code> · PRD: Plan Cards, States and Boundaries</p></details>
+  </section>
+
+  <section>
+    <h2>Where each piece of data lives</h2>
+    <table>
+      <tr><th>Data</th><th>Lives in</th><th>When you come back</th></tr>
+      <tr><td>Current run (style, yap, sliders, packs)</td><td>Page memory</td><td>Gone on refresh (runs are short)</td></tr>
+      <tr><td>Saved plans</td><td>Phone browser storage</td><td>Still there, same browser and address</td></tr>
+      <tr><td>Pack notes, styles, dials, nudges</td><td>JSON files in <code>data/</code></td><td>Always available</td></tr>
+      <tr><td>API key</td><td><code>.env</code> on the laptop</td><td>Never sent to the page</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>File structure</h2>
+<pre>sims-skill-gameplay/
+├── server/          server.js · draw.js · prompt.js · claude.js
+├── public/          index.html · css/styles.css · js/(app, screens, store, api) · img/ (SVG decoration)
+├── data/            pack-notes.json · general-notes.json · starting-styles.json
+│                    nudges.json · dials.json · pack-codes.md
+├── tools/           read_packs.py   (drafts pack notes from local text)
+├── devpost/         planning docs
+├── .env             API key (git-ignored)
+└── README.md        how to run + what to show in the demo</pre>
+  </section>
+
+  <section>
+    <h2>Look and feel, in build terms</h2>
+    <ul>
+      <li><strong>Palette:</strong> hot magenta/pink base, baby blue and lavender, aqua accents, white margin.</li>
+      <li><strong>Shapes:</strong> rounded pill buttons with colored outlines, a vertical stack of icon tiles, sticker-like card tiles.</li>
+      <li><strong>Type:</strong> rounded sans for UI, italic script headings, with offline-safe fallbacks.</li>
+      <li><strong>Details:</strong> pixel-square corners, speech bubbles for follow-ups, sparkles, “+” marks.</li>
+      <li><strong>Imagery:</strong> interface decoration only (CSS and inline SVG), all original.</li>
+      <li><strong>Readability wins:</strong> decoration never sits behind long text.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Where it runs and how someone tries it</h2>
+    <p>Start: <code>node --env-file=.env server/server.js</code>, then open the address it prints on your phone (same Wi-Fi), or <code>http://localhost:3000</code> on the laptop. Record the demo from the phone or laptop browser. A short demo video and a public GitHub repo are required; a public link is later.</p>
+  </section>
+
+  <section>
+    <h2>What could break, and what you’d see</h2>
+    <details><summary>The AI is slow or fails</summary><p>A friendly loading state with retry; your inputs are kept.</p></details>
+    <details><summary>The AI returns the wrong structure</summary><p>The server retries once; then a plain “try again” message.</p></details>
+    <details><summary>No pack chosen, or a pack has no notes yet</summary><p>The draw uses general notes; a plan is still produced.</p></details>
+    <details><summary>Phone can’t reach the laptop</summary><p>README checklist (same Wi-Fi, right address, laptop awake); the demo can use the laptop browser.</p></details>
+    <details><summary>Laptop address changes</summary><p>Plans saved at one address don’t appear at another. Known limit until there’s a stable public link.</p></details>
+  </section>
+
+  <section>
+    <h2>What we simplified, and why</h2>
+    <ul>
+      <li>No framework, no packages · nothing to install, fewer unfamiliar errors</li>
+      <li>Browser storage, no accounts · matches “same device”</li>
+      <li>Four packs’ notes first · each needs your review</li>
+      <li>Decoration only, no illustrated characters · Y2K feel at the least asset cost</li>
+      <li>Laptop server, no hosting · free and simple; public link comes later</li>
+      <li>Start-of-story draw, not the full mid-game roll · proves the anti-generic idea first</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Decisions and open issues</h2>
+    <details open><summary>Decisions</summary>
+      <ul>
+        <li>Web page, phone-first, PWA later · <em>yours</em></li>
+        <li>Laptop first, public link later · <em>yours</em></li>
+        <li>Plain HTML/CSS/JS, Node with no packages, Claude · <em>recommended, you accepted</em></li>
+        <li>Pack notes drafted from sources, reviewed by you, in our own words · <em>you agreed</em></li>
+        <li>First notes: Vampires, Realm of Magic, Paranormal Stuff, Get to Work · Werewolves later (not owned)</li>
+        <li>Random ingredient draw before the AI writes · <em>recommended, you accepted</em></li>
+        <li>Decoration only · <em>yours</em></li>
+      </ul>
+    </details>
+    <details><summary>Open issues</summary>
+      <ul>
+        <li><strong>Verify early:</strong> API headers and response shape (from general knowledge; the docs page I read confirmed the endpoint path, required fields, and the model ID, but cut off before the response section).</li>
+        <li>How strongly each slider nudges the draw is tuned in the build by checking that a slider move visibly changes the plan.</li>
+        <li>Starting-style coverage may miss ways people play; research continues.</li>
+      </ul>
+    </details>
+  </section>
+
+  <p class="foot">Source of truth: <code>devpost/spec.md</code>. This page is a visual companion.</p>
+</main>
+
+<script>
+var steps = [
+ {n:"1 · Welcome", t:"The page shows the intro. Nothing is sent anywhere.", f:"public/js/screens.js", p:"The Core Journey"},
+ {n:"2 · Pick a style", t:"Style cards come from a data file. Your choice is held in the page’s memory and shapes the next steps.", f:"data/starting-styles.json · public/js/screens.js", p:"Starting-style choice"},
+ {n:"3 · Yap", t:"You type or use keyboard dictation. Tapping a nudge drops a prompt into the box.", f:"data/nudges.json · public/js/screens.js", p:"The yap"},
+ {n:"4 · Reflect", t:"The page sends your style and yap to the server. The server asks Claude for a reflection and a few gap questions, and sends them back as speech bubbles.", f:"server/prompt.js · server/claude.js · POST /api/reflect", p:"Reflect and follow up"},
+ {n:"5 · Dials", t:"Four sliders and the supernatural checkbox. The description under each slider changes as you move it.", f:"data/dials.json · public/js/screens.js", p:"Dials"},
+ {n:"6 · Packs", t:"Pack cards come from the notes file. Skip is always there. Choosing a supernatural-capable pack unlocks the checkbox.", f:"data/pack-notes.json", p:"Pack selection"},
+ {n:"7 · Make the plan", t:"The server draws ingredients from your packs’ notes (or the general notes), builds the prompt, asks Claude for the plan in a fixed structure, checks it, and returns it.", f:"server/draw.js · server/prompt.js · server/claude.js · POST /api/plan", p:"Plan Cards"},
+ {n:"8 · Cards", t:"The page lays out the cards, leading with the one that matches your chosen style.", f:"public/js/screens.js", p:"Plan Cards"},
+ {n:"9 · Save", t:"The plan is saved in your phone’s browser. Next time, a “My plans” list shows it.", f:"public/js/store.js", p:"States and Boundaries"}
+];
+var tabs = document.getElementById("tabs"), panel = document.getElementById("panel");
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function show(i){
+  var s = steps[i];
+  Array.prototype.forEach.call(tabs.children, function(b,j){ b.setAttribute("aria-selected", String(i===j)); });
+  panel.innerHTML = "<h3>"+esc(s.n)+"</h3><p>"+esc(s.t)+"</p><p><strong>Files:</strong> <code>"+esc(s.f)+"</code><br><strong>PRD:</strong> "+esc(s.p)+"</p>";
+}
+steps.forEach(function(s,i){
+  var b = document.createElement("button"); b.setAttribute("role","tab"); b.textContent = s.n;
+  b.addEventListener("click", function(){ show(i); }); tabs.appendChild(b);
+});
+show(0);
+</script>
+</body>
+</html>

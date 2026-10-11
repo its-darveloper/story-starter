@@ -1,0 +1,10 @@
+/devpost/learner-profile.md
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+
+# macOS
+.DS_Store

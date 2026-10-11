@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sims 4 Story Starter — PRD</title>
+<style>
+  :root{
+    --bg:#fbf5fb; --card:#ffffff; --ink:#2a1d2e; --muted:#6e5d73; --line:#ead9ee;
+    --pink:#e0399a; --pink-soft:#fde4f3; --purple:#7a4bd1; --purple-soft:#ece4fb;
+    --teal:#0e9aa7; --teal-soft:#dcf5f6; --amber:#c98412; --amber-soft:#fdf0d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1a1220; --card:#251a2d; --ink:#f4eaf7; --muted:#b9a6c0; --line:#3a2b45;
+      --pink:#ff6bbd; --pink-soft:#46183a; --purple:#a98cf0; --purple-soft:#2c2149;
+      --teal:#4cd2dd; --teal-soft:#123a3e; --amber:#f0b04d; --amber-soft:#3a2c14;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:940px;margin:0 auto;padding:24px 16px 64px}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--amber-soft);color:var(--amber);border-radius:999px;padding:3px 10px;font-weight:700}
+  h1{font-size:2rem;margin:10px 0 4px}
+  .tag{color:var(--muted);margin:0 0 18px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0}
+  h2{margin:0 0 10px;font-size:1.15rem}
+  .principle{background:linear-gradient(135deg,var(--pink-soft),var(--purple-soft));border:none}
+  svg{width:100%;height:auto;display:block}
+  svg text{font:13px system-ui,sans-serif;fill:var(--ink)}
+  .box{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+  .on{fill:var(--pink-soft);stroke:var(--pink);stroke-width:2}
+  .arrow{stroke:var(--muted);stroke-width:2;fill:none}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+  .tabs button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    border-radius:999px;padding:6px 14px}
+  .tabs button[aria-selected="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+  .panel{background:var(--purple-soft);border-radius:14px;padding:14px 16px}
+  .panel h3{margin:.2em 0 .3em;font-size:1rem}
+  .panel ul{margin:.3em 0 .6em;padding-left:1.2em}
+  .crit li{list-style:"☐  "}
+  details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}
+  summary{cursor:pointer;font-weight:600}
+  details.now{border-left:5px solid var(--teal)}
+  details.def{border-left:5px solid var(--purple)}
+  details.no{border-left:5px solid var(--pink)}
+  details.q{border-left:5px solid var(--amber)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .pc{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:12px;text-align:left;font:inherit;
+    color:var(--ink);cursor:pointer;min-height:84px}
+  .pc[aria-pressed="true"]{border-color:var(--pink);background:var(--pink-soft)}
+  .pc b{display:block}
+  #planbody{margin-top:10px;background:var(--teal-soft);border-radius:12px;padding:12px 14px}
+  .foot{color:var(--muted);font-size:.9rem;margin-top:26px}
+  button:focus-visible,summary:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+  <span class="badge">Draft — PRD</span>
+  <h1>Sims 4 Story Starter <small style="font-weight:400;color:var(--muted)">(working title)</small></h1>
+  <p class="tag">Scope said “a guided flow, dials, packs, and a starting plan.” Now we know exactly what each of those does.</p>
+
+  <section class="principle">
+    <h2>Guiding principle</h2>
+    <p><strong>Human-centered. Low cognitive load. Plain language.</strong> Nothing that makes anyone say “wait, what?”</p>
+  </section>
+
+  <section>
+    <h2>The core journey</h2>
+    <svg viewBox="0 0 880 150" role="img" aria-label="Journey: Welcome, pick style, yap, reflect and follow up, dials, packs, plan cards.">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+      <g>
+        <rect class="box" x="4" y="40" width="108" height="70" rx="12"/><text x="58" y="70" text-anchor="middle" font-weight="700">1 Welcome</text><text x="58" y="90" text-anchor="middle">what &amp; why</text>
+        <rect class="box" x="132" y="40" width="108" height="70" rx="12"/><text x="186" y="70" text-anchor="middle" font-weight="700">2 Style</text><text x="186" y="90" text-anchor="middle">click a card</text>
+        <rect class="box" x="260" y="40" width="108" height="70" rx="12"/><text x="314" y="70" text-anchor="middle" font-weight="700">3 Yap</text><text x="314" y="90" text-anchor="middle">type or dictate</text>
+        <rect class="box" x="388" y="40" width="108" height="70" rx="12"/><text x="442" y="70" text-anchor="middle" font-weight="700">4 Follow-up</text><text x="442" y="90" text-anchor="middle">fill the gaps</text>
+        <rect class="box" x="516" y="40" width="108" height="70" rx="12"/><text x="570" y="70" text-anchor="middle" font-weight="700">5 Dials</text><text x="570" y="90" text-anchor="middle">drama · surprise</text>
+        <rect class="box" x="644" y="40" width="108" height="70" rx="12"/><text x="698" y="70" text-anchor="middle" font-weight="700">6 Packs</text><text x="698" y="90" text-anchor="middle">click or skip</text>
+        <rect class="on" x="772" y="40" width="104" height="70" rx="12"/><text x="824" y="70" text-anchor="middle" font-weight="700">7 Plan</text><text x="824" y="90" text-anchor="middle">card deck</text>
+      </g>
+      <path class="arrow" d="M112 75H130" marker-end="url(#a)"/><path class="arrow" d="M240 75H258" marker-end="url(#a)"/>
+      <path class="arrow" d="M368 75H386" marker-end="url(#a)"/><path class="arrow" d="M496 75H514" marker-end="url(#a)"/>
+      <path class="arrow" d="M624 75H642" marker-end="url(#a)"/><path class="arrow" d="M752 75H770" marker-end="url(#a)"/>
+    </svg>
+  </section>
+
+  <section>
+    <h2>Explore each step</h2>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="panel" id="panel" role="tabpanel" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>Try the pack picker <span style="font-weight:400;color:var(--muted)">(sample behavior)</span></h2>
+    <p>Pick as many as you own. Or skip. Either way you move forward. Notice the supernatural checkbox below.</p>
+    <div class="cards" id="packs"></div>
+    <label style="display:block;margin-top:12px"><input type="checkbox" id="sn"> Add supernatural elements</label>
+    <div id="snnote" style="color:var(--muted);font-size:.9rem"></div>
+    <div id="planbody" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <h2>Look and feel</h2>
+    <ul>
+      <li><strong>Vibe:</strong> My Scene / Polly Pocket, Y2K web: glossy, bubbly, colorful, nostalgic.</li>
+      <li><strong>Metaphor:</strong> a little world you peek into; cards you open; tarot / Yu-Gi-Oh “pull from a deck” as a possible fit.</li>
+      <li><strong>Priority:</strong> looks and feels good, but low cognitive load beats decoration.</li>
+      <li><em>Not yet set:</em> exact colors, fonts, and how far to take the deck metaphor.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Boundaries</h2>
+    <details class="now" open><summary>Building now</summary>
+      <ul><li>Welcome · starting-style choice · yap box with nudges · reflect and follow-up · four sliders (drama, predictability, relationship planning, pace) with live descriptions + supernatural opt-in · pack picking with skip · plan as a stack of cards led by the chosen style · save on this device and reopen · phone-friendly layout</li></ul>
+    </details>
+    <details class="def"><summary>Deferred from the POC</summary>
+      <ul><li><strong>Pack-list file upload:</strong> your pack folder names identify packs, so it looks feasible, but clicking is enough for now</li>
+      <li><strong>Mid-game “what happens next” and the roll</strong></li>
+      <li><strong>Reading save files / raw game-data extraction</strong></li>
+      <li><strong>Cross-device sync and sharing plans</strong></li>
+      <li><strong>Playing inside the game (a mod in Create-a-Sim)</strong></li></ul>
+    </details>
+    <details class="no"><summary>Non-goals</summary>
+      <ul><li>Not a replacement for Create-a-Sim · no custom content / mods · no accounts · never forces a story ending</li></ul>
+    </details>
+    <details class="q"><summary>Open questions</summary>
+      <ul>
+        <li><strong>Resolved:</strong> used beside the game (second screen / phone), saved on the same device; dial controls; skipped packs and the supernatural checkbox</li>
+        <li><strong>Skill vs. app vs. other medium</strong> — must be decided in the spec</li>
+        <li><strong>How is pack content sourced?</strong> — descriptive info in our own words; exact approach in the spec</li>
+        <li><strong>Resolved:</strong> supernatural-capable packs are Werewolves, Realm of Magic, Vampires, Paranormal Stuff, and Get to Work (aliens)</li>
+        <li><strong>What starting styles are missing?</strong> — research; can happen during the build</li>
+        <li><strong>How do the PoC outputs prove they aren’t generic?</strong> — candidate: sliders and packs visibly change the plan</li>
+      </ul>
+    </details>
+  </section>
+
+  <p class="foot">Source of truth: <code>devpost/prd.md</code>. This page is a visual companion.</p>
+</main>
+
+<script>
+var steps = [
+ {n:"1 · Welcome", d:"What this is, how to use it, what you end up with, and why it’s built.",
+  c:["Explains what, how, what you get, and why","Has one clear way to start"], s:["First use: this is the first thing anyone sees"]},
+ {n:"2 · Style", d:"Cards, each with a plain-language description of what it means if you’re this kind of player. Starting set: character-driven, plot-driven, “I just have a vibe,” recreating a favorite movie or book, building around a theme or pack.",
+  c:["Every option has a title and plain description","“I’m not sure / something else” is present","The next screen is shaped by the choice"], s:["Not sure: the flow still works and helps find a starting point"]},
+ {n:"3 · Yap", d:"One big, friendly open box. Typing and device dictation are equals. Tappable nudges sit beside it: who do they clash with, pet peeves, favorite thing, obsessions, celebrity crush.",
+  c:["Accepts a few words or a long ramble","Works with the device’s dictation; no speaking or typing is required","Nudges are visible, optional, and don’t force a long answer"], s:["Almost empty: a few words or only nudges are enough to continue"]},
+ {n:"4 · Follow-up", d:"The app reflects back what it heard in plain words, then asks a few questions about the gaps.",
+  c:["Reflection mentions specifics the person said","Questions target gaps, not what was already covered","Only a few questions"], s:[]},
+ {n:"5 · Dials", d:"Four sliders, each with a description that changes as you move it: drama (happy ending to reality-TV), predictability (I choose to surprise me), relationship planning (leave it open to set up who’s drawn to whom), and pace (slow burn to fast). Plus an opt-in checkbox: add supernatural elements.",
+  c:["Each slider’s description changes as it moves and is understandable without explanation","Moving a slider visibly changes the plan produced","Supernatural checkbox adds a layer without changing the other settings"], s:["No supernatural-capable pack chosen: the checkbox is grayed out, can’t be clicked, and a visible note says why (not hover-only; phones have no hover)"]},
+ {n:"6 · Packs", d:"Click pack cards for what you own, as many as you want, or skip.",
+  c:["Select and unselect multiple packs","Skip is always visible and works","Plan reflects selected packs","Selecting a supernatural-capable pack unlocks the supernatural checkbox"], s:["Skipped: plan still produced from general content; supernatural unavailable with a visible explanation"]},
+ {n:"7 · Plan", d:"A stack of cards, led by the style you chose. Closed cards show a headline; open one for detail. Cards: characters (one each), plotline with a loose goal, world and lots and season, premise. Saved on this device so you can reopen it later.",
+  c:["First card matches the chosen style","Cards are readable at a glance and expand","Contains who to create, starting plotline, lots/world, season","Goal is loose, never a fixed ending","Reopening the app on the same device shows the saved plan"], s:["Works on a phone-sized screen"]}
+];
+var tabs = document.getElementById("tabs"), panel = document.getElementById("panel");
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function show(i){
+  var s = steps[i];
+  Array.prototype.forEach.call(tabs.children, function(b,j){ b.setAttribute("aria-selected", String(i===j)); });
+  var h = "<h3>"+esc(s.n)+"</h3><p>"+esc(s.d)+"</p><strong>How you’ll know it works</strong><ul class='crit'>"
+    + s.c.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>";
+  if(s.s.length){ h += "<strong>What if…</strong><ul>"+s.s.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>"; }
+  panel.innerHTML = h;
+}
+steps.forEach(function(s,i){
+  var b = document.createElement("button"); b.setAttribute("role","tab"); b.textContent = s.n;
+  b.addEventListener("click", function(){ show(i); }); tabs.appendChild(b);
+});
+show(0);
+
+var packs = ["Vampires","Werewolves","Realm of Magic","Paranormal Stuff","Get to Work","Seasons","Get Together"];
+var chosen = {}, box = document.getElementById("packs"), out = document.getElementById("planbody");
+var superPacks = ["Vampires","Werewolves","Realm of Magic","Paranormal Stuff","Get to Work"];
+var sn = document.getElementById("sn"), snnote = document.getElementById("snnote");
+function render(){
+  var list = Object.keys(chosen).filter(function(k){return chosen[k];});
+  var can = list.some(function(p){return superPacks.indexOf(p) > -1;});
+  sn.disabled = !can;
+  if(!can){ sn.checked = false; }
+  snnote.textContent = can ? "Supernatural is available with your packs."
+    : "Pick a pack with supernatural content to turn this on.";
+  out.textContent = list.length
+    ? "Your plan will lean on: " + list.join(", ") + (sn.checked ? " — with a supernatural layer." : ".")
+    : "No packs chosen — the plan is built from general content. Skipping is fine.";
+}
+sn.addEventListener("change", render);
+packs.forEach(function(p){
+  var b = document.createElement("button"); b.className = "pc"; b.setAttribute("aria-pressed","false");
+  b.innerHTML = "<b>"+p+"</b><span style='color:var(--muted)'>tap if you own it</span>";
+  b.addEventListener("click", function(){ chosen[p] = !chosen[p]; b.setAttribute("aria-pressed", String(!!chosen[p])); render(); });
+  box.appendChild(b);
+});
+var sk = document.createElement("button"); sk.className="pc"; sk.innerHTML="<b>Skip</b><span style='color:var(--muted)'>I’ll do this later</span>";
+sk.addEventListener("click", function(){ chosen = {}; Array.prototype.forEach.call(box.querySelectorAll("[aria-pressed]"), function(x){x.setAttribute("aria-pressed","false");}); render(); });
+box.appendChild(sk);
+render();
+</script>
+</body>
+</html>

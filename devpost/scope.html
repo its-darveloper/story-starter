@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sims 4 Story Starter — Scope</title>
+<style>
+  :root{
+    --bg:#f6f8f4; --card:#ffffff; --ink:#1d2a24; --muted:#5b6b62; --line:#d8e2da;
+    --green:#2e9e6b; --green-soft:#e3f5ec; --blue:#2f7fd1; --blue-soft:#e4f0fb;
+    --amber:#d98a1e; --amber-soft:#fdf1dc; --rose:#c9485b; --rose-soft:#fbe6ea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#121a16; --card:#1b2621; --ink:#e8f0eb; --muted:#9fb1a6; --line:#2c3b33;
+      --green:#4cc58c; --green-soft:#17332a; --blue:#6aa8ee; --blue-soft:#162a40;
+      --amber:#f0b04d; --amber-soft:#3a2c14; --rose:#ee7a8c; --rose-soft:#3d1c24;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+  header{padding:12px 0 8px}
+  .badge{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--amber-soft);color:var(--amber);border-radius:999px;padding:3px 10px;font-weight:600}
+  h1{font-size:2rem;margin:10px 0 4px}
+  .tag{color:var(--muted);margin:0 0 20px;font-size:1.05rem}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+  h2{margin:0 0 10px;font-size:1.15rem}
+  p{margin:.4em 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .kernel{border-left:5px solid var(--green)}
+  .quote{background:var(--green-soft);border-radius:10px;padding:12px 14px;margin-top:10px}
+  svg{width:100%;height:auto;display:block}
+  svg text{font:14px system-ui,sans-serif;fill:var(--ink)}
+  .node{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+  .n-user{fill:var(--blue-soft);stroke:var(--blue)}
+  .n-loop{fill:var(--green-soft);stroke:var(--green)}
+  .n-proof{fill:var(--amber-soft);stroke:var(--amber)}
+  .arrow{stroke:var(--muted);stroke-width:2;fill:none}
+  details{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;background:var(--card)}
+  summary{cursor:pointer;font-weight:600}
+  details.now{border-left:5px solid var(--green)}
+  details.later{border-left:5px solid var(--blue)}
+  details.cut{border-left:5px solid var(--rose)}
+  ul{margin:.5em 0 .2em;padding-left:1.2em}
+  .stepper{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .stepper button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    border-radius:999px;padding:6px 14px}
+  .stepper button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+  #stepbody{background:var(--green-soft);border-radius:10px;padding:12px 14px;min-height:3.5em}
+  .foot{color:var(--muted);font-size:.9rem;margin-top:28px}
+  button:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <span class="badge">Draft — scope</span>
+  <h1>Sims 4 Story Starter <small style="font-weight:400;color:var(--muted)">(working title)</small></h1>
+  <p class="tag">A guided, pack-aware story planner that interviews a Sims 4 player and hands them a concrete starting plan, so they go into Create-a-Sim with a story already in hand.</p>
+</header>
+
+<section class="kernel">
+  <h2>The unique kernel</h2>
+  <p><strong>Structure instead of “AI, give me ideas.”</strong> The player picks how they think, sets dials (drama, predictability), and says which packs they own; the output is shaped by all of that, so it isn’t the same generic ideas on repeat.</p>
+  <div class="quote"><strong>Long-term kernel:</strong> a D&amp;D-style <em>roll</em>. When the player picks “surprise me,” a roll with structure behind it decides the twist.</div>
+</section>
+
+<section>
+  <h2>How it fits together</h2>
+  <svg viewBox="0 0 760 250" role="img" aria-label="Diagram: a Sims 4 player flows through the guided questions with dials and pack selection, ending in a starting plan.">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+    <rect class="node n-user" x="10" y="85" width="150" height="80" rx="12"/>
+    <text x="85" y="118" text-anchor="middle" font-weight="700">Sims 4 player</text>
+    <text x="85" y="140" text-anchor="middle">character-first,</text>
+    <text x="85" y="157" text-anchor="middle">stalls after setup</text>
+
+    <rect class="node n-loop" x="215" y="20" width="190" height="60" rx="12"/>
+    <text x="310" y="46" text-anchor="middle" font-weight="700">1. What kind of</text>
+    <text x="310" y="64" text-anchor="middle" font-weight="700">player are you?</text>
+
+    <rect class="node n-loop" x="215" y="95" width="190" height="60" rx="12"/>
+    <text x="310" y="122" text-anchor="middle" font-weight="700">2. Guided flow</text>
+    <text x="310" y="140" text-anchor="middle">characters · time · place · plot</text>
+
+    <rect class="node n-loop" x="215" y="170" width="190" height="60" rx="12"/>
+    <text x="310" y="196" text-anchor="middle" font-weight="700">3. Dials + packs</text>
+    <text x="310" y="214" text-anchor="middle">drama · surprise · what you own</text>
+
+    <rect class="node n-proof" x="500" y="75" width="240" height="100" rx="12"/>
+    <text x="620" y="105" text-anchor="middle" font-weight="700">Starting plan</text>
+    <text x="620" y="128" text-anchor="middle">who to create · plotline</text>
+    <text x="620" y="146" text-anchor="middle">lots &amp; world · season</text>
+    <text x="620" y="164" text-anchor="middle">loose goal</text>
+
+    <path class="arrow" d="M160 115 L213 55" marker-end="url(#a)"/>
+    <path class="arrow" d="M310 80 L310 93" marker-end="url(#a)"/>
+    <path class="arrow" d="M310 155 L310 168" marker-end="url(#a)"/>
+    <path class="arrow" d="M405 200 L498 150" marker-end="url(#a)"/>
+    <path class="arrow" d="M405 125 L498 125" marker-end="url(#a)"/>
+  </svg>
+</section>
+
+<section>
+  <h2>Who it’s for</h2>
+  <p>A Sims 4 player like you: <strong>character-first</strong>, loves households, outfits and personalities, but stalls once gameplay starts and drifts toward “marry, have a kid, happily ever after.” First for you; eventually other simmers, including people who don’t know what a “skill” or “plugin” is.</p>
+  <p style="color:var(--muted)">Today: brainstorm in their head or in Create-a-Sim, or ask generic AI, which doesn’t understand packs or mechanics.</p>
+</section>
+
+<section>
+  <h2>The core loop <span style="font-weight:400;color:var(--muted)">(click through)</span></h2>
+  <div class="stepper" id="stepper" role="group" aria-label="Core loop steps">
+    <button aria-pressed="true" data-i="0">1 · Open</button>
+    <button aria-pressed="false" data-i="1">2 · Pick your style</button>
+    <button aria-pressed="false" data-i="2">3 · Guided flow</button>
+    <button aria-pressed="false" data-i="3">4 · Dials &amp; packs</button>
+    <button aria-pressed="false" data-i="4">5 · Walk away</button>
+  </div>
+  <div id="stepbody" aria-live="polite"></div>
+</section>
+
+<section>
+  <h2>What “working” looks like</h2>
+  <p>A one-minute demo: open it, answer “what kind of player are you?”, walk the guided flow, set drama/predictability and your packs, and end on a starting plan.</p>
+  <div class="quote"><strong>The “oh, that’s cool” beat:</strong> the plan visibly reflects the packs you chose and the dials you set. It isn’t generic.</div>
+</section>
+
+<section>
+  <h2>Inspiration &amp; identity</h2>
+  <ul>
+    <li>Human-centered and intuitive: no jargon, nothing that makes anyone go “wait, what?”</li>
+    <li>Game-night companion energy, with a D&amp;D “roll and see” feel.</li>
+    <li>Counter-example: TikTok-style AI gameplay generation that repeats itself and doesn’t know Sims.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Why this matters to you</h2>
+  <p>“I wish I didn’t have to leave the Sims screen.” You want Create-a-Sim to become execution of a plan, and you want gameplay that surprises you.</p>
+</section>
+
+<section>
+  <h2>The proof-of-concept boundary</h2>
+  <details class="now" open>
+    <summary>In (now)</summary>
+    <ul>
+      <li>Guided start-of-story flow that branches: character-driven / plot-driven / just an idea</li>
+      <li>Plain-language explanation of each starting style</li>
+      <li>Drama and predictability dials</li>
+      <li>Player selects which packs they own</li>
+      <li>Output: characters (backgrounds + connections), starting plotline, world/lot types, season, loose goal that doesn’t force an ending</li>
+      <li>Medium (skill, plugin, web page…) decided in the spec</li>
+    </ul>
+  </details>
+  <details class="later">
+    <summary>Later</summary>
+    <ul>
+      <li>Mid-game mode: add context (voice or notes) and get new plotlines when play goes stale, the D&amp;D-style roll</li>
+      <li>Load packs / game data from an uploaded file instead of selecting manually</li>
+      <li>Handling players who don’t want surprises (the dial likely covers this)</li>
+    </ul>
+  </details>
+  <details class="cut">
+    <summary>Explicitly cut</summary>
+    <ul>
+      <li><strong>Custom content / mods:</strong> more complicated; maybe v2</li>
+      <li><strong>Save-file parsing and relationship/event data:</strong> unknown data availability, too heavy for the PoC</li>
+    </ul>
+  </details>
+</section>
+
+<p class="foot">Source of truth: <code>devpost/scope.md</code>. This page is a visual companion.</p>
+</main>
+
+<script>
+  var steps = [
+    "<strong>Open it.</strong> No setup wall. You land on one friendly question.",
+    "<strong>Pick your style.</strong> “Character-driven, plot-driven, or just an idea?” Each is explained in plain words so no one gets confused.",
+    "<strong>Guided flow.</strong> It adapts to your choice and walks through characters, time, place, plot, backgrounds, and how it all ties together.",
+    "<strong>Dials &amp; packs.</strong> Set drama (happy ending ↔ reality TV) and predictability, and choose the packs you own so the output fits your game.",
+    "<strong>Walk away with a plan.</strong> Who to create, your starting plotline, the kinds of lots and world, and the season to start in, plus a loose goal."
+  ];
+  var buttons = document.querySelectorAll("#stepper button");
+  var body = document.getElementById("stepbody");
+  function show(i){
+    body.innerHTML = steps[i];
+    buttons.forEach(function(b){ b.setAttribute("aria-pressed", String(+b.dataset.i === i)); });
+  }
+  buttons.forEach(function(b){ b.addEventListener("click", function(){ show(+b.dataset.i); }); });
+  show(0);
+</script>
+</body>
+</html>

@@ -12,6 +12,8 @@ The goal must stay loose: a direction to play toward, never a fixed ending (no "
 Reply with JSON only, no other text.`;
 
 const PLAN_SHAPE = `{
+  "heart": "the one central conflict or theme, in one short line (e.g. 'Two sisters who can't stand each other are stuck sharing a failing farm')",
+  "ingredientsUsed": [the numbers of the 1 or 2 ingredients you used],
   "premise": "2-3 vivid sentences summarizing the story",
   "characters": [
     {
@@ -40,17 +42,27 @@ function describePacks(ingredients) {
     .join('\n');
 }
 
+// All drawn ingredients in one numbered list, so Claude can say which ones it used.
+export function numberedIngredients(ingredients) {
+  const kinds = [
+    ['characterTypes', 'character type'],
+    ['hooks', 'story hook'],
+    ['twists', 'twist (set it up; don\'t resolve it)'],
+    ['settings', 'setting'],
+  ];
+  return kinds.flatMap(([kind, label]) => ingredients[kind].map((i) => ({ ...i, label })));
+}
+
 function describeIngredients(ingredients) {
-  const list = (items) => items.map((i) => `- ${i.text} (${i.source})`).join('\n');
-  return `Story ingredients, drawn at random for this plan. Weave every one of them in, adapted to fit the player's idea:
-Character types to inspire the cast:
-${list(ingredients.characterTypes)}
-Story hooks:
-${list(ingredients.hooks)}
-A twist waiting to happen (set it up; don't resolve it):
-${list(ingredients.twists)}
-A setting:
-${list(ingredients.settings)}`;
+  const fromPacks = ingredients.packs.some((p) => p.hasNotes);
+  const menu = numberedIngredients(ingredients)
+    .map((i, n) => `${n + 1}. [${i.label}, from ${i.source}] ${i.text}`)
+    .join('\n');
+  return `A menu of story ingredients, drawn at random for this plan:
+${menu}
+
+These are a menu, not a checklist. Pick only the 1 or 2 that best sharpen the central conflict, and leave the rest out.${
+  fromPacks ? '\nAt least one ingredient you pick must come from one of the player\'s packs, so the plan reflects what they own.' : ''}`;
 }
 
 export function buildPlanPrompt({ yap, ingredients }) {
@@ -63,7 +75,12 @@ ${describePacks(ingredients)}
 
 ${describeIngredients(ingredients)}
 
-The player's own idea comes first; the ingredients add specifics and surprise around it.
+How to build the plan:
+1. First, decide the ONE central conflict or theme, grown from the player's idea. Everything else serves it.
+2. Weave in the 1 or 2 ingredients you picked so they deepen that conflict, not sit beside it.
+3. Every character must be tied to the central conflict. No side businesses, side careers, or separate plotlines that don't feed it.
+4. Keep it focused enough that someone could explain the story in one breath.
+
 Write a starting plan with 2-4 characters. Use this exact JSON shape:
 ${PLAN_SHAPE}`;
 }
@@ -82,6 +99,8 @@ export function parsePlan(text) {
   }
   const filled = (s) => typeof s === 'string' && s.trim().length > 0;
   const ok =
+    filled(plan.heart) &&
+    Array.isArray(plan.ingredientsUsed) &&
     filled(plan.premise) &&
     Array.isArray(plan.characters) && plan.characters.length > 0 &&
     plan.characters.every((c) => filled(c.name) && filled(c.headline) && filled(c.personality) && filled(c.connections)) &&

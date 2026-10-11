@@ -109,7 +109,7 @@ const field = (label, text) => [el('h3', {}, label), el('p', {}, text)];
 
 export function planCards(plan) {
   const cards = [
-    card('premise', 'Premise', 'Your story in a nutshell', el('p', {}, plan.premise)),
+    card('premise', 'Premise', plan.heart || 'Your story in a nutshell', el('p', {}, plan.premise)),
     ...plan.characters.map((c) =>
       card('character', 'Sim', `${c.name} — ${c.headline}`,
         el('span', { class: 'name-tag' }, c.name),
@@ -126,14 +126,14 @@ export function planCards(plan) {
   return cards;
 }
 
-// Says which packs the story ingredients came from, and which picked packs weren't used yet.
-function ingredientNote(ing) {
+// Says which packs the story's ingredients came from, and which picked packs don't have notes yet.
+function ingredientNote(plan) {
+  const ing = plan.ingredients;
   if (!ing) return null;
-  const all = [...ing.characterTypes, ...ing.hooks, ...ing.twists, ...ing.settings];
-  const used = [...new Set(all.map((i) => i.source))];
+  const used = [...new Set((plan.ingredientsUsed || []).map((i) => i.source))];
   const notYet = ing.packs.filter((p) => !p.hasNotes).map((p) => p.name);
   return el('p', { class: 'hint' },
-    used[0] === 'General' ? 'Story ingredients: base game.' : `Story ingredients drawn from: ${used.join(', ')}.`,
+    !used.length || used[0] === 'General' ? 'Story ingredients: base game.' : `Story ingredients from: ${used.join(', ')}.`,
     notYet.length ? ` Not used yet (notes coming soon): ${notYet.join(', ')}.` : null);
 }
 
@@ -141,7 +141,7 @@ export function planScreen(run, go) {
   return el('section', {},
     el('h2', { class: 'screen-title' }, 'Your story deck'),
     el('p', { class: 'lead' }, 'Tap a card to open it.'),
-    ingredientNote(run.plan.ingredients),
+    ingredientNote(run.plan),
     el('div', { class: 'deck' }, planCards(run.plan)),
     el('div', { class: 'actions' },
       el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, 'Start over')),

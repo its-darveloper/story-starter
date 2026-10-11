@@ -19,7 +19,7 @@ Build mode: learn
   Learner check: Start the server, open the address it prints (on your phone if you can), type a short idea about a Sim or two, make the plan, and open each card. Does it read like your idea, and does the look feel like the start of the Y2K vibe?
   Commit: `Yap box to Claude-written plan cards`
 
-- [ ] **2. Picked packs shape the plan (the anti-generic draw)**
+- [x] **2. Picked packs shape the plan (the anti-generic draw)**
   Becomes usable: A packs screen with cards for every pack you own, multi-select plus Skip. Picking Vampires (for example) pulls vampire-specific hooks, twists, and places into the plan; skipping still gives a base-game-friendly plan.
   Why now: This is the unique kernel — Sims knowledge plus code-driven randomness instead of "AI, give me ideas." It goes second so the rest of the build is shaped around it, and the pack notes need your review, which is the slowest feedback loop.
   PRD ref: `prd.md > Features and Behavior > Pack selection`, `prd.md > States and Boundaries` (skipped packs)
@@ -85,5 +85,6 @@ Activity mode:
 - Claude calls now use `max_tokens: 16000` and `effort: medium` (plus server-side refusal fallback) instead of a 2000-token cap — the build found this model always thinks first, and that thinking counts toward the cap, so richer slice-2 prompts got cut off mid-plan.
 - The plan prompt now lists real base-game trait names and tells Claude not to invent traits — the learner's first plan contained a made-up trait ("Gloomy-turned-Cheerful"), the exact "AI doesn't know Sims" problem the kernel exists to fix.
 - All four supernatural pack notes expanded to ~10–12 character types and hooks each, built from each pack's real gameplay systems (ranks, powers, weaknesses, schools of magic, careers, aspirations, named residents) — the learner's review found the first drafts too thin to give real variety between draws.
+- Drawn ingredients became a menu instead of a checklist: Claude first names one central conflict ("heart"), then uses only the 1–2 ingredients that sharpen it (at least one from the player's packs when picked), reports which it used, and ties every character to that conflict — the learner found "weave every ingredient in" produced crowded plans with no central theme, unlike the focused slice-1 sisters story. Tradeoff accepted by the learner: with many packs picked, any one plan uses only one or two of them.
 - Pack picker lists the 26 owned packs whose names are known (high/medium confidence in `data/pack-codes.md`); four low-confidence kits (SP29, SP40, SP43, SP46) are left off until identified — showing a guessed name would add a "wait, what?" moment.
 

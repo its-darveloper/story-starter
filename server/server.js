@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { askClaude } from './claude.js';
-import { PLAN_SYSTEM, buildPlanPrompt, parsePlan } from './prompt.js';
+import { PLAN_SYSTEM, buildPlanPrompt, parsePlan, numberedIngredients } from './prompt.js';
 import { drawIngredients, packList } from './draw.js';
 
 const PORT = Number(process.env.PORT) || 3000;
@@ -47,12 +47,16 @@ async function makePlan(input) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     const plan = parsePlan(await askClaude({ system: PLAN_SYSTEM, prompt }));
     if (plan) {
+      // Turn the numbers Claude reported back into the ingredients themselves.
+      const menu = numberedIngredients(ingredients);
+      const used = plan.ingredientsUsed.map((n) => menu[Number(n) - 1]).filter(Boolean);
       return {
         status: 200,
         body: {
           id: `plan-${Date.now()}`,
           createdAt: new Date().toISOString(),
           ...plan,
+          ingredientsUsed: used,
           packs: packCodes,
           ingredients,
         },

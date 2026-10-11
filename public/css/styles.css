@@ -348,6 +348,23 @@ input[type="range"]:focus-visible { outline: 3px solid var(--aqua); outline-offs
 .card-body p { margin: 0 0 12px; }
 .card-body p:last-child { margin-bottom: 0; }
 
+/* "For Create-a-Sim" checklist: compact label / value rows */
+.cas {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f2f9ff;
+  border: 2px dashed var(--blue);
+}
+.cas h3 { color: #2a7fb8; }
+.cas dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 12px; font-size: .92rem; }
+.cas dt { font-weight: 800; color: var(--ink-soft); }
+.cas dd { margin: 0; }
+@media (max-width: 380px) {
+  .cas dl { grid-template-columns: 1fr; gap: 0; }
+  .cas dd { margin-bottom: 8px; }
+}
+
 .name-tag {
   display: inline-block;
   margin-bottom: 10px;

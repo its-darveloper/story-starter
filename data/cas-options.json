@@ -1,0 +1,44 @@
+{
+  "base": {
+    "sourceNote": "Base-game Create-a-Sim options, written from general knowledge of the game (not in the learner's pack files). Learner to sanity-check.",
+    "lifeStages": ["Baby", "Infant", "Toddler", "Child", "Teen", "Young Adult", "Adult", "Elder"],
+    "orientation": {
+      "describe": "Who they're romantically attracted to (men, women, or both), who they're interested in WooHoo with (men, women, or both), whether they're exploring romantically, or whether they're not interested in romance at all."
+    },
+    "boundaries": {
+      "describe": "Whether they get jealous, and what they'd accept from a partner with other Sims (nothing at all; flirting is fine; open to their partner having other romantic relationships)."
+    },
+    "likesDislikes": {
+      "colors": ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Pink", "White", "Black", "Brown", "Gray"],
+      "music": ["Pop", "Alternative", "Classical", "Hip Hop", "Electronica", "Jazz", "Romance", "Retro", "Spooky"],
+      "activities": ["Painting", "Cooking", "Fitness", "Gardening", "Fishing", "Video Gaming", "Programming", "Writing", "Comedy", "Mischief", "Charisma", "Guitar", "Piano", "Violin", "Logic", "Handiness", "Mixology", "Rocket Science"]
+    }
+  },
+  "packs": {
+    "EP16": {
+      "name": "Lovestruck",
+      "sourceNote": "From the learner's Lovestruck game text (Turn-Ons and Turn-Offs help entries).",
+      "turnOnCategories": {
+        "characteristics": ["Ambitionless", "Ambitious", "Argumentative", "Cerebral", "Clean", "Egotistical", "Emotional Decision Makers", "Family Motivated", "Funny", "Hardworking", "High Energy", "Homebody", "Idealist", "Messy", "Nature Enthusiast", "Optimistic", "Pessimistic", "Pet Enthusiast", "Spirited"],
+        "skills": ["Academic", "Arts & Crafts", "Culinary", "Drink Making", "Engineering", "Health & Sports", "Interpersonal", "Media & Technology", "Nature", "Performer", "Sense of Humor"],
+        "status": ["Broke", "Career Minded", "Highly Skilled", "Self-Employed", "Slacker", "Taken", "Wealthy"],
+        "romanceStyles": ["Affection", "Flirty", "Gift Giving", "Physical Intimacy", "Mess Around/WooHoo"],
+        "fashion": ["Basic", "Boho", "Country", "Hipster", "Outdoorsy", "Polished", "Preppy", "Rocker", "Streetwear"],
+        "looks": ["a hair color", "an outfit color"]
+      }
+    },
+    "EP04": {
+      "name": "Cats & Dogs",
+      "sourceNote": "From the learner's Cats & Dogs game text.",
+      "pets": ["a cat", "a small dog", "a large dog"],
+      "petAges": ["Puppy or Kitten", "Adult", "Elder"],
+      "petTraits": ["Active", "Aggressive", "Curious", "Friendly", "Glutton", "Hairy", "Hunter", "Independent", "Lazy", "Naughty", "Playful", "Skittish", "Smart", "Vocal"],
+      "traits": ["Cat Lover", "Dog Lover"]
+    },
+    "SP14": {
+      "name": "My First Pet Stuff",
+      "sourceNote": "From the learner's My First Pet Stuff game text.",
+      "pets": ["a pet rodent (like a hamster or rat) in a cage; rodents have no age or traits to set in Create-a-Sim"]
+    }
+  }
+}

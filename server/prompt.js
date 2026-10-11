@@ -1,6 +1,6 @@
 // Builds the prompts sent to Claude, and checks that a plan came back in the right shape.
 
-import { general, dials } from './draw.js';
+import { general, dials, casOptions } from './draw.js';
 
 export const PLAN_SYSTEM = `You help a Sims 4 player plan the start of a story before they open Create-a-Sim.
 Build on the player's own ideas; never replace them with generic ones.
@@ -12,7 +12,69 @@ Only mention pack features (worlds, careers, life states) from packs the player 
 The goal must stay loose: a direction to play toward, never a fixed ending (no "they get married and live happily ever after").
 Reply with JSON only, no other text.`;
 
-const PLAN_SHAPE = `{
+// Which optional Create-a-Sim details the picked packs unlock.
+function casPacks(packCodes) {
+  return {
+    lovestruck: packCodes.includes('EP16'),
+    pets: ['EP04', 'SP14'].filter((c) => packCodes.includes(c)),
+  };
+}
+
+function casShape(packCodes) {
+  const { lovestruck, pets } = casPacks(packCodes);
+  return `{
+        "lifeStage": "one life stage from the allowed list",
+        "orientation": "who they're attracted to romantically and for WooHoo, or exploring, or not interested in romance",
+        "boundaries": "whether they get jealous, and what they'd accept from a partner with other Sims",
+        "likes": "2-3 likes from the allowed lists",
+        "dislikes": "1-2 dislikes from the allowed lists"${lovestruck ? `,
+        "turnOns": "2-3 turn-ons from the Lovestruck lists",
+        "turnOffs": "1-2 turn-offs from the Lovestruck lists"` : ''}${pets.length ? `,
+        "pet": "their pet, or 'none'. For a cat or dog: name, cat or dog (and size), age, and 2-3 pet traits, then one personality note"` : ''}
+      }`;
+}
+
+// The real Create-a-Sim options Claude may use, limited to what the picked packs allow.
+function describeCas(packCodes) {
+  const { base, packs: byPack } = casOptions;
+  const { lovestruck, pets } = casPacks(packCodes);
+  const lines = [
+    'Create-a-Sim details for every character (the "cas" block). Use only real options:',
+    `- Life stage: ${base.lifeStages.join(', ')}. Pick what fits the story; romance, jobs, and WooHoo only make sense for Young Adults and older (Teens can date). For a Baby, Infant, Toddler, or Child, write "not applicable" for orientation, boundaries, turn-ons, and turn-offs.`,
+    `- Orientation: ${base.orientation.describe}`,
+    `- Boundaries: ${base.boundaries.describe}`,
+    `- Likes and dislikes: pick from colors (${base.likesDislikes.colors.join(', ')}), music (${base.likesDislikes.music.join(', ')}), and activities (${base.likesDislikes.activities.join(', ')}).`,
+  ];
+  if (lovestruck) {
+    const t = byPack.EP16.turnOnCategories;
+    lines.push(`- Turn-ons and turn-offs (Lovestruck): characteristics (${t.characteristics.join(', ')}); skills (${t.skills.join(', ')}); status (${t.status.join(', ')}); romance styles (${t.romanceStyles.join(', ')}); fashion (${t.fashion.join(', ')}); or ${t.looks.join(' or ')}.`);
+  }
+  if (pets.length) {
+    const options = pets.flatMap((c) => byPack[c].pets);
+    lines.push(`- Pets: ${options.join('; ')}. Not every household needs one; give a pet only where it adds to the story. A pet is never a character of its own: put it in the "pet" field of ONE owner's card (other characters, even in the same household, get "none").`);
+    if (pets.includes('EP04')) {
+      lines.push(`- Cats and dogs: age is ${byPack.EP04.petAges.join(', ')}; pet traits come only from ${byPack.EP04.petTraits.join(', ')}. Pets don't use Sim traits.`);
+      lines.push(`- With Cats & Dogs, the Sim traits ${byPack.EP04.traits.join(' and ')} are also allowed.`);
+    }
+  } else {
+    lines.push('- No pets: the player did not pick a pet pack.');
+  }
+  lines.push('Make these details serve the story: orientation must make every attraction in the plot possible, and boundaries and turn-ons should create or ease the central conflict where they can.');
+  return lines.join('\n');
+}
+
+// Names drawn at random for this plan, so Claude doesn't keep reusing its favorites.
+function describeNames(names) {
+  return `Names for this plan, drawn at random from a large international list. Pick every character's first and last name from these, choosing ones that suit each character and the story's world (family members can share a last name):
+- Usually feminine first names: ${names.female.join(', ')}
+- Usually masculine first names: ${names.male.join(', ')}
+- Either: ${names.unisex.join(', ')}
+- Last names: ${names.last.join(', ')}
+- Pet names: ${names.pet.join(', ')}
+Don't use any other names.`;
+}
+
+const planShape = (packCodes) => `{
   "heart": "the one central conflict or theme, in one short line (e.g. 'Two sisters who can't stand each other are stuck sharing a failing farm')",
   "ingredientsUsed": [the numbers of the 1 or 2 ingredients you used],
   "premise": "2-3 vivid sentences summarizing the story",
@@ -20,8 +82,9 @@ const PLAN_SHAPE = `{
     {
       "name": "full Sim name",
       "headline": "one short line, e.g. 'The burnt-out barista with a secret'",
-      "personality": "traits, likes/dislikes, quirks, aspiration, career, in a few sentences",
-      "connections": "how this Sim connects to the others"
+      "personality": "traits, quirks, aspiration, career, in a few sentences",
+      "connections": "how this Sim connects to the others",
+      "cas": ${casShape(packCodes)}
     }
   ],
   "plotline": {
@@ -112,6 +175,10 @@ ${describeSettings(dialSettings)}
 
 ${describeIngredients(ingredients)}
 
+${describeCas(ingredients.packs.map((p) => p.code))}
+
+${describeNames(ingredients.names)}
+
 How to build the plan:
 1. First, decide the ONE central conflict or theme, grown from the player's idea. Everything else serves it.
 2. Weave in the 1 or 2 ingredients you picked so they deepen that conflict, not sit beside it.
@@ -119,7 +186,7 @@ How to build the plan:
 4. Keep it focused enough that someone could explain the story in one breath.
 
 Write a starting plan with 2-4 characters. Use this exact JSON shape:
-${PLAN_SHAPE}`;
+${planShape(ingredients.packs.map((p) => p.code))}`;
 }
 
 // Pull the JSON object out of Claude's reply and check it has every part of a plan.
@@ -140,7 +207,8 @@ export function parsePlan(text) {
     Array.isArray(plan.ingredientsUsed) &&
     filled(plan.premise) &&
     Array.isArray(plan.characters) && plan.characters.length > 0 &&
-    plan.characters.every((c) => filled(c.name) && filled(c.headline) && filled(c.personality) && filled(c.connections)) &&
+    plan.characters.every((c) => filled(c.name) && filled(c.headline) && filled(c.personality) && filled(c.connections) &&
+      c.cas && filled(c.cas.lifeStage) && filled(c.cas.orientation) && filled(c.cas.boundaries) && filled(c.cas.likes) && filled(c.cas.dislikes)) &&
     plan.plotline && filled(plan.plotline.headline) && filled(plan.plotline.body) && filled(plan.plotline.goal) &&
     plan.world && filled(plan.world.world) && filled(plan.world.lots) && filled(plan.world.season);
   return ok ? plan : null;

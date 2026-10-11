@@ -117,7 +117,7 @@ Source: `scope.md > What "Working" Looks Like`
 The starting plan appears as a stack of cards, **led by the style the person chose** (character-driven opens on characters; plot-driven opens on plot). Closed, each card shows a headline; the person opens a card for detail, so nothing arrives as a wall of text.
 
 Card contents (starting set):
-- **Characters** (one card each): personality details from the yap and follow-ups, and how they connect to the others.
+- **Characters** (one card each): personality details from the yap and follow-ups, and how they connect to the others. Each ends with a compact **For Create-a-Sim** checklist: orientation, jealousy and romantic boundaries, likes and dislikes, turn-ons and turn-offs (when Lovestruck is picked), and a pet (when Cats & Dogs or My First Pet Stuff is picked), using only options that exist in the game. *(Added during the build at the learner's request.)*
 - **Plotline:** the starting storyline and a loose, non-specific goal (it must not force an ending).
 - **World and lots:** the kind of world, the kinds of lots needed, and the season to start in.
 - **Premise:** a short vivid summary of the story.

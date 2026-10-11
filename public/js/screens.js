@@ -153,6 +153,26 @@ function card(kind, tag, headline, ...body) {
 
 const field = (label, text) => [el('h3', {}, label), el('p', {}, text)];
 
+// The compact "For Create-a-Sim" checklist at the bottom of a character card.
+const CAS_ROWS = [
+  ['lifeStage', 'Life stage'],
+  ['orientation', 'Orientation'],
+  ['boundaries', 'Jealousy & boundaries'],
+  ['likes', 'Likes'],
+  ['dislikes', 'Dislikes'],
+  ['turnOns', 'Turn-ons'],
+  ['turnOffs', 'Turn-offs'],
+  ['pet', 'Pet'],
+];
+
+function casChecklist(cas) {
+  if (!cas) return null;
+  const rows = CAS_ROWS.filter(([key]) => cas[key]);
+  return el('div', { class: 'cas' },
+    el('h3', {}, 'For Create-a-Sim'),
+    el('dl', {}, rows.map(([key, label]) => [el('dt', {}, label), el('dd', {}, cas[key])])));
+}
+
 export function planCards(plan) {
   const cards = [
     card('premise', 'Premise', plan.heart || 'Your story in a nutshell', el('p', {}, plan.premise)),
@@ -160,7 +180,8 @@ export function planCards(plan) {
       card('character', 'Sim', `${c.name} — ${c.headline}`,
         el('span', { class: 'name-tag' }, c.name),
         ...field('Personality', c.personality),
-        ...field('Connections', c.connections))),
+        ...field('Connections', c.connections),
+        casChecklist(c.cas))),
     card('plot', 'Plot', plan.plotline.headline,
       el('p', {}, plan.plotline.body),
       ...field('Play toward', plan.plotline.goal)),

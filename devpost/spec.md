@@ -114,7 +114,9 @@ PRD ref: `prd.md > Features and Behavior > Plan Cards`, `prd.md > States and Bou
 Plan shape (saved and returned):
 ```
 { id, createdAt, style, premise,
-  characters: [{ name, headline, personality, connections }],
+  characters: [{ name, headline, personality, connections,
+                 cas: { lifeStage, orientation, boundaries, likes, dislikes,
+                        turnOns?, turnOffs?, pet? } }],   // turnOns/Offs need Lovestruck; pet needs Cats & Dogs or My First Pet Stuff
   plotline: { headline, body, goal },
   world: { world, lots, season },
   settings: { drama, predictability, relationships, pace, supernatural },
@@ -149,6 +151,7 @@ sims-skill-gameplay/
 ├── data/
 │   ├── pack-notes.json    # reviewed pack entries (first: 4 owned supernatural packs)
 │   ├── general-notes.json # general, base-game-friendly ingredients
+│   ├── cas-options.json   # real Create-a-Sim options: orientation, boundaries, likes, turn-ons, pets
 │   ├── starting-styles.json
 │   ├── nudges.json
 │   ├── dials.json         # five descriptions per slider

@@ -50,6 +50,11 @@ async function makePlan(input) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     const plan = parsePlan(await askClaude({ system: PLAN_SYSTEM, prompt }));
     if (plan) {
+      // Pack-only Create-a-Sim details can't appear without their pack.
+      for (const c of plan.characters) {
+        if (!packCodes.includes('EP16')) { delete c.cas.turnOns; delete c.cas.turnOffs; }
+        if (!packCodes.includes('EP04') && !packCodes.includes('SP14')) delete c.cas.pet;
+      }
       // Turn the numbers Claude reported back into the ingredients themselves.
       const menu = numberedIngredients(ingredients);
       const used = plan.ingredientsUsed.map((n) => menu[Number(n) - 1]).filter(Boolean);

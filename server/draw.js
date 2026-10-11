@@ -12,6 +12,8 @@ const readJson = (file) => JSON.parse(fs.readFileSync(path.join(DATA, file), 'ut
 
 export const general = readJson('general-notes.json');
 export const packs = readJson('pack-notes.json').packs;
+export const casOptions = readJson('cas-options.json');
+const nameBank = readJson('names.json');
 
 const hasNotes = (p) => Array.isArray(p.hooks) && p.hooks.length > 0;
 
@@ -128,12 +130,26 @@ export function drawIngredients({ packCodes = [], seed, settings = DEFAULT_SETTI
     if (candidates.length) drawn.twists[0] = candidates[Math.floor(random() * candidates.length)];
   }
 
+  // A fresh batch of name suggestions, so plans don't keep reusing Claude's favorites.
+  const pickNames = (list, n) => {
+    const pool = [...list];
+    return Array.from({ length: Math.min(n, pool.length) }, () => pool.splice(Math.floor(random() * pool.length), 1)[0]);
+  };
+  const names = {
+    female: pickNames(nameBank.female, 6),
+    male: pickNames(nameBank.male, 6),
+    unisex: pickNames(nameBank.unisex, 4),
+    last: pickNames(nameBank.last, 10),
+    pet: pickNames(nameBank.pet, 4),
+  };
+
   // Note: `drawn.settings` is the drawn *setting ingredient* (a place); the dial settings
   // are not returned here, to keep the two from colliding.
   return {
     seed,
     packs: chosen.map((p) => ({ code: p.code, name: p.name, summary: p.summary || null, hasNotes: hasNotes(p), supernatural: p.supernatural })),
     ...drawn,
+    names,
   };
 }
 

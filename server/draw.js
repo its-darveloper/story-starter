@@ -14,6 +14,8 @@ export const general = readJson('general-notes.json');
 export const packs = readJson('pack-notes.json').packs;
 export const casOptions = readJson('cas-options.json');
 const nameBank = readJson('names.json');
+export const styles = readJson('starting-styles.json').styles;
+export const nudges = readJson('nudges.json').nudges;
 
 const hasNotes = (p) => Array.isArray(p.hooks) && p.hooks.length > 0;
 

@@ -1,0 +1,52 @@
+{
+  "styles": [
+    {
+      "id": "character",
+      "title": "I start with characters",
+      "description": "You picture a Sim first: who they are, what they love, what drives them crazy. The story grows out of them.",
+      "yapPrompt": "Tell us about your Sim (or Sims). Who are they? What are they like? What do they want?",
+      "leadCard": "character",
+      "nudges": ["clash", "peeve", "favorite", "obsession", "crush", "secret", "family"]
+    },
+    {
+      "id": "plot",
+      "title": "I start with a plot",
+      "description": "You have a situation or a 'what if' in mind, and you'll make the Sims to fit it.",
+      "yapPrompt": "What's the situation? What happens, or what could happen?",
+      "leadCard": "plot",
+      "nudges": ["whatif", "stakes", "twist", "secret", "clash", "place"]
+    },
+    {
+      "id": "vibe",
+      "title": "I just have a vibe",
+      "description": "Nothing specific yet, just a feeling, a mood, or an aesthetic you want to play in.",
+      "yapPrompt": "Describe the mood. Words, colors, songs, seasons, anything that captures it.",
+      "leadCard": "premise",
+      "nudges": ["mood", "season", "place", "song", "favorite"]
+    },
+    {
+      "id": "recreate",
+      "title": "I want to recreate a movie, show, or book",
+      "description": "Bring a story you love into the game, as close to the original or as loose as you like.",
+      "yapPrompt": "Which story? Who are the characters you want to play, and how close to the original should it stay?",
+      "leadCard": "premise",
+      "nudges": ["source", "changes", "clash", "place"]
+    },
+    {
+      "id": "theme",
+      "title": "I'm building around a theme or pack",
+      "description": "You want to play with a specific pack, life state, or theme, like vampires, a farm, or university life.",
+      "yapPrompt": "What theme or pack do you want to play with? What about it excites you?",
+      "leadCard": "world",
+      "nudges": ["place", "whatif", "season", "family"]
+    },
+    {
+      "id": "unsure",
+      "title": "I'm not sure / something else",
+      "description": "No idea yet, or you start some other way. That's fine. We'll help you find a starting point.",
+      "yapPrompt": "Anything at all: a Sim you liked, a show you're watching, something that happened today. Even a few words is plenty.",
+      "leadCard": "premise",
+      "nudges": ["favorite", "mood", "whatif", "crush"]
+    }
+  ]
+}

@@ -71,7 +71,7 @@ function describeNames(names) {
 - Either: ${names.unisex.join(', ')}
 - Last names: ${names.last.join(', ')}
 - Pet names: ${names.pet.join(', ')}
-Don't use any other names.`;
+Always keep any names the player gave you (in their idea or their answers); use these suggestions only for characters and pets they didn't name. Don't use any other names.`;
 }
 
 const planShape = (packCodes) => `{
@@ -163,11 +163,25 @@ These are a menu, not a checklist. Pick only the 1 or 2 that best sharpen the ce
   fromPacks ? '\nAt least one ingredient you pick must come from one of the player\'s packs, so the plan reflects what they own.' : ''}`;
 }
 
-export function buildPlanPrompt({ yap, ingredients, dialSettings }) {
+// How the player likes to start, and what they added when asked follow-up questions.
+function describeStyle(style, followUps = []) {
+  const answered = followUps.filter((f) => f.answer && f.answer.trim());
+  return [
+    style ? `How this player likes to start a story: "${style.title}" (${style.description})` : '',
+    answered.length
+      ? 'They answered some follow-up questions. Treat these answers as part of their idea:\n' +
+        answered.map((f) => `- Q: ${f.question}\n  A: ${f.answer.trim()}`).join('\n')
+      : '',
+  ].filter(Boolean).join('\n\n');
+}
+
+export function buildPlanPrompt({ yap, ingredients, dialSettings, style, followUps }) {
   return `Here is what the player imagines, in their own words:
 """
 ${yap}
 """
+
+${describeStyle(style, followUps)}
 
 ${describePacks(ingredients)}
 
@@ -212,4 +226,42 @@ export function parsePlan(text) {
     plan.plotline && filled(plan.plotline.headline) && filled(plan.plotline.body) && filled(plan.plotline.goal) &&
     plan.world && filled(plan.world.world) && filled(plan.world.lots) && filled(plan.world.season);
   return ok ? plan : null;
+}
+
+// --- Reflect and follow up ---
+
+export const REFLECT_SYSTEM = `You are a warm, curious interviewer helping a Sims 4 player shape a story idea before they plan it.
+Use plain, friendly words. Never invent story details the player didn't give you.
+Reply with JSON only, no other text.`;
+
+export function buildReflectPrompt({ yap, style }) {
+  return `The player starts stories like this: "${style.title}" (${style.description})
+
+Here is what they said, in their own words:
+"""
+${yap}
+"""
+
+1. Reflect back what you heard in 1-2 short sentences, naming specific details they actually gave you, so they know you listened. If they said very little, say so kindly and keep it short.
+2. Ask 2 to 4 short follow-up questions about the most important GAPS: things a story plan would need that they haven't said yet (for a character-first player, maybe who else is in their Sim's life or what the Sim wants; for a plot-first player, maybe who's involved or what's at stake). Never ask about something they already told you. Keep each question to one sentence a player can answer in a few words. Never ask how the story should end; endings stay open, because the player discovers them by playing.
+
+Use this exact JSON shape:
+{
+  "reflection": "1-2 sentences",
+  "questions": ["question", "question"]
+}`;
+}
+
+export function parseReflect(text) {
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1) return null;
+  try {
+    const r = JSON.parse(text.slice(start, end + 1));
+    const ok = typeof r.reflection === 'string' && r.reflection.trim() &&
+      Array.isArray(r.questions) && r.questions.length >= 1 && r.questions.every((q) => typeof q === 'string' && q.trim());
+    return ok ? { reflection: r.reflection.trim(), questions: r.questions.slice(0, 4).map((q) => q.trim()) } : null;
+  } catch {
+    return null;
+  }
 }

@@ -154,6 +154,79 @@ textarea:focus { outline: none; border-color: var(--aqua); box-shadow: 0 0 0 4px
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* --- Starting styles --- */
+
+.styles { display: flex; flex-direction: column; gap: 12px; }
+
+.style-card {
+  appearance: none;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 3px solid var(--pink);
+  background: linear-gradient(135deg, var(--white), var(--pink-soft));
+  box-shadow: 0 4px 0 var(--pink-soft);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.style-card:nth-child(2n) { border-color: var(--lavender); background: linear-gradient(135deg, var(--white), #f3eeff); }
+.style-card:nth-child(3n) { border-color: var(--blue); background: linear-gradient(135deg, var(--white), #eef7ff); }
+.style-card[aria-pressed="true"] { border-color: var(--magenta); box-shadow: 0 4px 0 #c4166f; }
+.style-card:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
+.style-title { font-family: var(--font-script); font-style: italic; font-size: 1.45rem; color: var(--magenta); line-height: 1.2; }
+.style-desc { color: var(--ink-soft); }
+
+/* --- Nudges --- */
+
+.nudges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.nudge {
+  appearance: none;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+  color: #1a8f88;
+  padding: 6px 14px;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 2px solid var(--aqua);
+  background: #eefcfb;
+  cursor: pointer;
+}
+.nudge:active { transform: translateY(1px); }
+.nudge:focus-visible { outline: 3px solid var(--magenta); outline-offset: 2px; }
+
+/* --- Speech bubbles (reflection and follow-up questions) --- */
+
+.bubble {
+  position: relative;
+  display: block;
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border-radius: 20px;
+  line-height: 1.45;
+}
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  width: 18px; height: 18px;
+  background: inherit;
+  border: inherit;
+  border-top: 0; border-left: 0;
+  transform: rotate(45deg);
+}
+.bubble.heard { background: var(--pink-soft); border: 2px solid var(--pink); font-weight: 600; }
+.bubble.heard::after { left: 28px; }
+.bubble.ask { background: #eef7ff; border: 2px solid var(--blue); font-weight: 700; margin-bottom: 18px; }
+.bubble.ask::after { right: 28px; }
+
+.qas { display: flex; flex-direction: column; gap: 14px; }
+.answer { min-height: 64px; }
+
 /* --- Pack picker --- */
 
 .group-title {

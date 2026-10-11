@@ -1,0 +1,20 @@
+{
+  "nudges": {
+    "clash": { "label": "Who do they clash with?", "insert": "They clash with " },
+    "peeve": { "label": "Pet peeves", "insert": "Their pet peeve is " },
+    "favorite": { "label": "Favorite thing", "insert": "Their favorite thing is " },
+    "obsession": { "label": "Obsessed with…", "insert": "They're obsessed with " },
+    "crush": { "label": "Celebrity crush", "insert": "Their celebrity crush is " },
+    "secret": { "label": "A secret", "insert": "Nobody knows that " },
+    "family": { "label": "Family", "insert": "Their family is " },
+    "whatif": { "label": "What if…?", "insert": "What if " },
+    "stakes": { "label": "What's at stake?", "insert": "If it goes wrong, " },
+    "twist": { "label": "A twist you'd love", "insert": "I'd love it if " },
+    "place": { "label": "Where it happens", "insert": "It happens in " },
+    "mood": { "label": "The mood", "insert": "It feels like " },
+    "season": { "label": "A season", "insert": "It's set in " },
+    "song": { "label": "A song that fits", "insert": "A song that fits is " },
+    "source": { "label": "The story", "insert": "I want to recreate " },
+    "changes": { "label": "What to change", "insert": "I'd change " }
+  }
+}

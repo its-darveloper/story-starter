@@ -7,8 +7,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { askClaude } from './claude.js';
-import { PLAN_SYSTEM, buildPlanPrompt, parsePlan, numberedIngredients } from './prompt.js';
-import { drawIngredients, packList, packs, dials, readSettings } from './draw.js';
+import { PLAN_SYSTEM, buildPlanPrompt, parsePlan, numberedIngredients, REFLECT_SYSTEM, buildReflectPrompt, parseReflect } from './prompt.js';
+import { drawIngredients, packList, packs, dials, readSettings, styles, nudges } from './draw.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -45,7 +45,11 @@ async function makePlan(input) {
   // Supernatural only counts if a supernatural-capable pack was actually picked.
   settings.supernatural &&= packs.some((p) => p.supernatural && packCodes.includes(p.code));
   const ingredients = drawIngredients({ packCodes, seed: input.seed, settings });
-  const prompt = buildPlanPrompt({ yap, ingredients, dialSettings: settings });
+  const style = styles.find((st) => st.id === input.style) || null;
+  const followUps = Array.isArray(input.followUps)
+    ? input.followUps.map((f) => ({ question: String(f.question || ''), answer: String(f.answer || '') }))
+    : [];
+  const prompt = buildPlanPrompt({ yap, ingredients, dialSettings: settings, style, followUps });
   // Ask once; if the answer isn't a complete plan, ask one more time.
   for (let attempt = 1; attempt <= 2; attempt++) {
     const plan = parsePlan(await askClaude({ system: PLAN_SYSTEM, prompt }));
@@ -66,6 +70,8 @@ async function makePlan(input) {
           ...plan,
           ingredientsUsed: used,
           settings,
+          style: style?.id || null,
+          leadCard: style?.leadCard || 'premise',
           packs: packCodes,
           ingredients,
         },
@@ -76,7 +82,23 @@ async function makePlan(input) {
   return { status: 502, body: { error: "That plan didn't come out right. Try again?" } };
 }
 
+async function reflect(input) {
+  const yap = String(input.yap || '').trim();
+  if (!yap) return { status: 400, body: { error: 'Tell us a little about your story first.' } };
+  const style = styles.find((st) => st.id === input.style) || styles.find((st) => st.id === 'unsure');
+  const prompt = buildReflectPrompt({ yap, style });
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    // A short reply: low effort keeps it quick.
+    const result = parseReflect(await askClaude({ system: REFLECT_SYSTEM, prompt, effort: 'low', maxTokens: 8000 }));
+    if (result) return { status: 200, body: result };
+    console.warn(`Reflect attempt ${attempt} came back in the wrong shape.`);
+  }
+  return { status: 502, body: { error: "Couldn't come up with follow-up questions. Try again?" } };
+}
+
 const ROUTES = {
+  'GET /api/styles': async () => ({ status: 200, body: { styles, nudges } }),
+  'POST /api/reflect': reflect,
   'GET /api/packs': async () => ({ status: 200, body: { packs: packList() } }),
   'GET /api/dials': async () => ({ status: 200, body: dials }),
   'POST /api/plan': makePlan,

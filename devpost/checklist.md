@@ -49,7 +49,7 @@ Build mode: learn
   Learner check: Make a plan with Lovestruck and Cats & Dogs picked and open a character card. Could you build this Sim in Create-a-Sim straight from the checklist, and do the options match what you see in the game?
   Commit: `Create-a-Sim details on character cards`
 
-- [ ] **5. Your starting style shapes the questions and the cards**
+- [x] **5. Your starting style shapes the questions and the cards**
   Becomes usable: Pick a starting style from plain-language cards; the yap screen shows nudges that fit it; after the yap, Claude reflects back what it heard and asks a few follow-up questions as speech bubbles; your answers go into the plan; the card stack opens on the card that matches your style.
   Why now: Builds on a working plan engine. The interview layer is what makes the plan feel like yours rather than generic, but it depends on the plan path being solid first.
   PRD ref: `prd.md > Features and Behavior > Starting-style choice`, `prd.md > Features and Behavior > The yap`, `prd.md > Features and Behavior > Reflect and follow up`, `prd.md > Features and Behavior > Plan Cards`

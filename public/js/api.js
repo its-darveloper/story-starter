@@ -12,6 +12,7 @@ async function post(path, body) {
 }
 
 export const makePlan = (run) => post('/api/plan', run);
+export const reflect = (input) => post('/api/reflect', input);
 
 async function get(path, what) {
   const res = await fetch(path);
@@ -21,3 +22,4 @@ async function get(path, what) {
 
 export const getPacks = async () => (await get('/api/packs', 'pack list')).packs;
 export const getDials = () => get('/api/dials', 'story dials');
+export const getStyles = () => get('/api/styles', 'starting styles');

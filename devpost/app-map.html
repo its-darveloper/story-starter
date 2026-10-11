@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story Starter: App Map</title>
+<style>
+  :root {
+    --paper: #f2ede3; --card: #fbf8f2; --ink: #1d1a17; --soft: #5b5148;
+    --brick: #a8352a; --orange: #e8582b; --cobalt: #2f55d4; --green: #4f9a33; --sand: #f0d9a8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font: 900 clamp(1.8rem, 6vw, 2.6rem)/1.05 "Arial Black", Impact, system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 6px; text-transform: uppercase; }
+  h2 { font: 900 1.25rem/1.2 "Arial Black", system-ui, sans-serif; text-transform: uppercase; margin: 34px 0 10px; }
+  h3 { margin: 0 0 4px; font-size: 1.02rem; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--soft); }
+  .strip { display: grid; grid-template-columns: 2fr 1fr 3fr 1fr 2fr; gap: 5px; height: 12px; margin: 14px 0 22px; }
+  .strip span { border: 2px solid var(--ink); }
+  .strip span:nth-child(1) { background: var(--orange); } .strip span:nth-child(2) { background: var(--cobalt); }
+  .strip span:nth-child(3) { background: var(--sand); } .strip span:nth-child(4) { background: var(--green); }
+  .strip span:nth-child(5) { background: var(--brick); }
+  .card { background: var(--card); border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); padding: 14px 16px; margin: 0 0 16px; }
+  .pieces { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .pieces .card { margin: 0; }
+  code { font: .9em/1.4 ui-monospace, Menlo, Consolas, monospace; background: #ebe4d6; padding: 1px 5px; border-radius: 3px; word-break: break-word; }
+  .stop { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; }
+  .num { width: 40px; height: 40px; display: grid; place-items: center; font: 900 1.1rem "Arial Black", sans-serif; background: var(--orange); border: 3px solid var(--ink); }
+  .where { font-size: .95rem; margin: 4px 0 6px; }
+  details { border-top: 2px dashed var(--ink); margin-top: 10px; padding-top: 8px; }
+  summary { cursor: pointer; font-weight: 700; }
+  summary:focus-visible, a:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin: 0 0 8px; }
+  .practice { background: var(--sand); }
+  .scroll { overflow-x: auto; }
+  .scroll:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  svg { width: 100%; min-width: 620px; height: auto; display: block; }
+  .swipe { font-size: .85rem; color: var(--soft); margin: 8px 0 0; }
+  .diagram text { font: 13px system-ui, sans-serif; fill: var(--ink); }
+  .diagram .label { font-weight: 800; }
+  .diagram .path { font: 11px ui-monospace, Menlo, monospace; fill: var(--soft); }
+  footer { margin-top: 36px; font-size: .9rem; color: var(--soft); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Story Starter: App Map</h1>
+  <p class="sub">Where everything lives, and where to start when you want to change something.</p>
+  <div class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+  <h2>What it is</h2>
+  <p>A phone-friendly page that plans the start of a Sims 4 story. You pick how you like to start, describe your idea, answer a couple of follow-up questions, pick packs, and set mood dials. You get back a deck of plan cards, saved on your device.</p>
+
+  <div class="pieces">
+    <div class="card"><h3>The page</h3><p><code>public/</code>. Every screen, the collage look, and your saved plans (browser storage). It never talks to the AI directly.</p></div>
+    <div class="card"><h3>The little server</h3><p><code>server/</code>. Serves the page, keeps the API key private, draws random story ingredients, and asks Claude for the plan.</p></div>
+    <div class="card"><h3>The notes</h3><p><code>data/</code>. Pack notes, dial wording, starting styles, nudges, real Create-a-Sim options, and names. This is how the app "knows Sims."</p></div>
+    <div class="card"><h3>Claude</h3><p>Called by <code>server/claude.js</code>. Does the writing: the reflection, the follow-up questions, and the plan.</p></div>
+  </div>
+
+  <h2>One action, end to end: "Make my plan"</h2>
+  <div class="card scroll" tabindex="0" aria-label="Diagram, scrolls sideways on small screens">
+    <svg class="diagram" viewBox="0 0 700 300" role="img" aria-labelledby="dtitle dtext">
+      <title id="dtitle">How tapping Make my plan becomes a deck of cards</title>
+      <desc id="dtext">The page sends your idea, packs, and dials to the server. The server draws random ingredients from the pack notes, builds instructions, asks Claude, checks the answer, and sends the plan back. The page saves it on your device and deals the cards.</desc>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d1a17"/></marker></defs>
+      <g stroke="#1d1a17" stroke-width="3">
+        <rect x="10" y="20" width="200" height="110" fill="#fbf8f2"/>
+        <rect x="250" y="20" width="200" height="260" fill="#fbf8f2"/>
+        <rect x="490" y="20" width="200" height="110" fill="#fbf8f2"/>
+        <rect x="490" y="170" width="200" height="110" fill="#f0d9a8"/>
+        <rect x="10" y="170" width="200" height="110" fill="#fbf8f2"/>
+      </g>
+      <g stroke="#1d1a17" stroke-width="2.5" fill="none" marker-end="url(#ah)">
+        <path d="M210,75 L246,75"/>
+        <path d="M450,75 L486,75"/>
+        <path d="M486,105 L450,105"/>
+        <path d="M450,225 L486,225"/>
+        <path d="M250,225 L214,225"/>
+      </g>
+      <text x="22" y="46" class="label">1. You tap the button</text>
+      <text x="22" y="68">idea + answers + packs</text>
+      <text x="22" y="86">+ dial settings</text>
+      <text x="22" y="114" class="path">public/js/app.js · go('making')</text>
+      <text x="262" y="46" class="label">2. The server</text>
+      <text x="262" y="70">draws random ingredients</text>
+      <text x="262" y="88">from the notes you picked,</text>
+      <text x="262" y="106">shaped by your dials</text>
+      <text x="262" y="126" class="path">server/draw.js</text>
+      <text x="262" y="160">builds the instructions:</text>
+      <text x="262" y="178">dials, story frame, real</text>
+      <text x="262" y="196">CAS options, names</text>
+      <text x="262" y="216" class="path">server/prompt.js</text>
+      <text x="262" y="250">checks the answer has</text>
+      <text x="262" y="268">every part (retries once)</text>
+      <text x="502" y="46" class="label">3. Claude writes</text>
+      <text x="502" y="70">the plan as JSON</text>
+      <text x="502" y="114" class="path">server/claude.js</text>
+      <text x="502" y="196" class="label">Ingredient notes</text>
+      <text x="502" y="218">data/pack-notes.json</text>
+      <text x="502" y="238">data/general-notes.json</text>
+      <text x="502" y="258">data/dials.json …</text>
+      <text x="22" y="196" class="label">4. Your deck</text>
+      <text x="22" y="218">saved on this device,</text>
+      <text x="22" y="236">dealt in as a collage</text>
+      <text x="22" y="262" class="path">public/js/store.js, screens.js</text>
+    </svg>
+  </div>
+  <p class="swipe">On a phone, swipe the diagram sideways.</p>
+
+  <h2>A route through the code (3 stops)</h2>
+  <p class="sub">A reference route. Open each file and search for the anchor to land on the right spot.</p>
+
+  <div class="card stop">
+    <div class="num" aria-hidden="true">1</div>
+    <div>
+      <h3>The random draw: where "not generic" comes from</h3>
+      <p class="where"><code>server/draw.js</code>, search for <code>export function drawIngredients(</code></p>
+      <p>Before Claude writes anything, the code picks 2 character types, 2 hooks, a twist, and a setting from the packs you chose. Packs take turns so each one contributes, the dials make matching ingredients likelier, and the supernatural switch filters them. A <code>seed</code> makes a draw repeatable for demos.</p>
+      <details><summary>Why it matters</summary><p>The randomness lives in code, not in the AI's habits. That's the core idea of the app: structure instead of "AI, give me ideas."</p></details>
+    </div>
+  </div>
+
+  <div class="card stop">
+    <div class="num" aria-hidden="true">2</div>
+    <div>
+      <h3>The instructions: how a plan gets its shape</h3>
+      <p class="where"><code>server/prompt.js</code>, search for <code>export function buildPlanPrompt(</code>, then <code>How to build the plan</code> and <code>const DIAL_EFFECTS</code></p>
+      <p>Everything Claude is told: your idea and answers, the drawn ingredients (a menu, use only 1 or 2), what each dial position must do, the story frame (want, flaw, opposition, day one, clues), the real Create-a-Sim options your packs allow, and the names to use. <code>parsePlan</code> then checks the answer has every part.</p>
+      <details><summary>Why it matters</summary><p>Most "the plan feels off" problems are fixed here, in plain-English rules, not in code.</p></details>
+    </div>
+  </div>
+
+  <div class="card stop">
+    <div class="num" aria-hidden="true">3</div>
+    <div>
+      <h3>The deck: how the plan becomes cards</h3>
+      <p class="where"><code>public/js/screens.js</code>, search for <code>export function planCards(</code></p>
+      <p>Turns the plan into tiles, orders them by your starting style (character-first opens on a Sim), and gives each a pattern, a tilt, and its turn in the deal. <code>public/js/store.js</code> (<code>savePlan</code>) keeps it on your device.</p>
+      <details><summary>Why it matters</summary><p>If you add a new field to the plan, this is where it shows up on a card.</p></details>
+    </div>
+  </div>
+
+  <h2>To change this, start here</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Add or fix a pack's story notes:</strong> <code>data/pack-notes.json</code> (same shape as the Vampires entry; packs without notes show "notes coming soon").</li>
+      <li><strong>Reword a dial position:</strong> <code>data/dials.json</code>. To change what a dial makes Claude <em>do</em>: <code>DIAL_EFFECTS</code> in <code>server/prompt.js</code>.</li>
+      <li><strong>Change the story rules:</strong> "How to build the plan" in <code>server/prompt.js</code>.</li>
+      <li><strong>Starting styles and nudges:</strong> <code>data/starting-styles.json</code>, <code>data/nudges.json</code>.</li>
+      <li><strong>Welcome copy:</strong> <code>welcomeScreen</code> in <code>public/js/screens.js</code>.</li>
+      <li><strong>Colors, type, motion:</strong> <code>public/css/styles.css</code> (the color tokens are at the top). <strong>Patterns and shapes:</strong> edit <code>tools/make_svgs.mjs</code>, then run <code>node tools/make_svgs.mjs</code>.</li>
+      <li><strong>The AI model or how hard it thinks:</strong> <code>server/claude.js</code> (<code>MODEL</code> and <code>effort</code>).</li>
+    </ul>
+  </div>
+
+  <h2>A practice to reuse</h2>
+  <div class="card practice">
+    <h3>When an idea grows mid-build, check it against the kernel, then build the smallest version that serves it.</h3>
+    <p><strong>What happened:</strong> plans had vivid characters but flat, reactive stories. A full story frame was proposed (seven new card lines and an extra slice). Before agreeing, the question "am I over-engineering?" was checked against <code>devpost/scope.md</code> &gt; The Unique Kernel ("structure instead of 'AI, give me ideas'").</p>
+    <p><strong>The evidence:</strong> the fix did serve the kernel, so it was kept, but as a lean version: the frame lives in the instructions (<code>server/prompt.js</code>), and the cards show just "Wants", "Holding them back", and "Day one". The <strong>Revisions</strong> list in <code>devpost/checklist.md</code> records this alongside the other mid-build growth (Create-a-Sim details, names, the restyle), and the build still finished every slice and the final review.</p>
+    <p><strong>On your next project:</strong> keep the one-line kernel somewhere visible. When a new idea comes up mid-build, ask two questions: does it serve the kernel, and what's the smallest version that does? Then write the decision down where the plan lives.</p>
+  </div>
+
+  <h2>Run it again</h2>
+  <div class="card">
+    <p>From the project folder, with your key in <code>.env</code>:</p>
+    <p><code>npm start</code></p>
+    <p>Then open the address it prints (<code>http://localhost:3000</code> on this computer, or the "On your phone" address on the same Wi-Fi). The <code>README.md</code> has phone troubleshooting.</p>
+  </div>
+
+  <footer>Snapshot of the code at commit <code>2c09db9</code> (after the collage restyle). The code can change after this; if a search anchor stops matching, the idea is still in the same file.</footer>
+</main>
+</body>
+</html>

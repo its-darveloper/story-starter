@@ -72,25 +72,25 @@ Build mode: learn
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 3 (packs and dials shaping the plan). Learner: dials feel right; asked for real aspirations and a fixed vampire-garlic setting (both done), and proposed richer character details (see Revisions).
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed — learner explored the full flow on their phone; feedback led to the welcome-copy and collage-restyle items below
 
 ## Final Review
 
-- [ ] Rewrite the welcome copy: shorter, plain, not salesy (learner: "too wordy and salesy")
-- [ ] Restyle to a handmade street-art collage look (learner references: the Beautiful Losers cover, a patterned tile panel, a cut-paper assemblage): off-white paper, chunky hand-cut display type, op-art patterned tiles in brick red / orange / cobalt / green / black, wood-frame edges; with fun, smooth, human interactions (plan cards dealt in as a collage, stamp-down tiles, sticker nudges, patterned dials), readable text, and reduced-motion support. Replaces the Y2K look in `prd.md` / `spec.md > Look and Feel`.
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Rewrite the welcome copy: shorter, plain, not salesy (learner: "too wordy and salesy")
+- [x] Restyle to a handmade street-art collage look (learner references: the Beautiful Losers cover, a patterned tile panel, a cut-paper assemblage): off-white paper, chunky hand-cut display type, op-art patterned tiles in brick red / orange / cobalt / green / black, wood-frame edges; with fun, smooth, human interactions (plan cards dealt in as a collage, stamp-down tiles, sticker nudges, patterned dials), readable text, and reduced-motion support. Replaces the Y2K look in `prd.md` / `spec.md > Look and Feel`.
+- [x] Final review complete — feedback resolved and learner confirms ready to ship (learner: "i love it as v1")
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — prior practice connected (focused alternative)
+- [x] Optional edit and transfer reflection addressed — edit not applicable; reflection already covered by the learner's own "am I over engineering?" check, transfer question offered
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence:
-Route and stops:
-Edit outcome:
-Reflection:
-Activity mode:
+Activity and evidence: Focused alternative, prior practice connected. During the build the learner asked "am I over engineering?" about the proposed story frame; it was checked against `scope.md > The Unique Kernel`, kept as a lean version (frame in `server/prompt.js`; cards show only Wants / Holding them back / Day one), and recorded under Revisions. Takeaway: when an idea grows mid-build, check it against the kernel and build the smallest version that serves it.
+Route and stops: Reference route only (not toured): `server/draw.js` drawIngredients → `server/prompt.js` buildPlanPrompt / DIAL_EFFECTS / "How to build the plan" → `public/js/screens.js` planCards (+ `public/js/store.js` savePlan).
+Edit outcome: Not applicable.
+Reflection: Transfer question offered; not required.
+Activity mode: Prior practice connected, plus the app map.
 
 ## Revisions
 

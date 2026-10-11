@@ -30,17 +30,71 @@ function makeRandom(seed) {
   };
 }
 
-const randomItem = (list, random) => list.splice(Math.floor(random() * list.length), 1)[0];
+export const dials = readJson('dials.json');
 
-export function drawIngredients({ packCodes = [], seed } = {}) {
+export const DEFAULT_SETTINGS = { drama: 3, predictability: 3, relationships: 3, pace: 3, supernatural: false };
+
+// Clean up whatever the page sent: each dial is a whole number 1-5, supernatural is true/false.
+export function readSettings(input = {}) {
+  const settings = { ...DEFAULT_SETTINGS };
+  for (const d of dials.dials) {
+    const v = Math.round(Number(input[d.id]));
+    if (v >= 1 && v <= 5) settings[d.id] = v;
+  }
+  settings.supernatural = input.supernatural === true;
+  return settings;
+}
+
+const tagsOf = (item) => (typeof item === 'string' ? [] : item.tags || []);
+const isSupernatural = (item) => tagsOf(item).includes('supernatural');
+
+// How much each dial favors ingredients with a given tag. Each dial runs 1-5;
+// 3 is neutral, so the pull goes from -2 (left end) to +2 (right end).
+const DIAL_PULL = {
+  drama: { messy: 1, rivalry: 0.5, cozy: -1 },
+  predictability: { surprise: 1 },
+  relationships: { romance: 1 },
+  pace: { fast: 1, slow: -1 },
+};
+
+// An ingredient's chance of being drawn, given the dials. 1 is ordinary; matching
+// the dials makes it up to ~3x likelier, fighting them makes it much less likely.
+function weight(item, settings) {
+  const tags = tagsOf(item);
+  let pull = 0;
+  for (const [dial, byTag] of Object.entries(DIAL_PULL)) {
+    for (const [tag, strength] of Object.entries(byTag)) {
+      if (tags.includes(tag)) pull += strength * (settings[dial] - 3);
+    }
+  }
+  return Math.max(0.15, 1 + 0.5 * pull);
+}
+
+// Take one item out of the list, favoring heavier ones.
+function weightedTake(list, settings, random) {
+  const weights = list.map((i) => weight(i, settings));
+  let r = random() * weights.reduce((a, b) => a + b, 0);
+  let i = 0;
+  while (i < list.length - 1 && (r -= weights[i]) > 0) i++;
+  return list.splice(i, 1)[0];
+}
+
+export function drawIngredients({ packCodes = [], seed, settings = DEFAULT_SETTINGS } = {}) {
   seed = Number.isInteger(seed) ? seed : Math.floor(Math.random() * 2 ** 31);
   const random = makeRandom(seed);
 
+  // Supernatural is off: leave out vampires, spellcasters, ghosts, and aliens.
+  const allowed = (item) => settings.supernatural || !isSupernatural(item);
+  const toSource = (name, note) => ({
+    source: name,
+    pools: Object.fromEntries(Object.keys(COUNTS).map((k) => [k, (note[k] || []).filter(allowed)])),
+  });
+
   const chosen = packs.filter((p) => packCodes.includes(p.code));
-  const withNotes = chosen.filter(hasNotes);
-  // No packs, or only packs without notes yet: fall back to the general notes.
-  const sources = (withNotes.length ? withNotes.map((p) => ({ source: p.name, note: p })) : [{ source: 'General', note: general }])
-    .map((s) => ({ source: s.source, pools: Object.fromEntries(Object.keys(COUNTS).map((k) => [k, [...(s.note[k] || [])]])) }));
+  const sources = chosen.filter(hasNotes).map((p) => toSource(p.name, p))
+    .filter((s) => Object.values(s.pools).some((pool) => pool.length));
+  // General notes back up any kind of ingredient the packs can't supply (or everything, with no packs).
+  const backup = toSource('General', general);
 
   // Packs take turns across ALL the picks (not restarting for each kind of ingredient),
   // in a random order, so every selected pack contributes before any pack gets a second turn.
@@ -54,17 +108,31 @@ export function drawIngredients({ packCodes = [], seed } = {}) {
   const drawn = {};
   for (const [kind, n] of Object.entries(COUNTS)) {
     drawn[kind] = [];
-    while (drawn[kind].length < n && sources.some((s) => s.pools[kind].length)) {
-      const s = order[turn++ % order.length];
-      if (!s.pools[kind].length) continue;
-      const item = randomItem(s.pools[kind], random);
+    while (drawn[kind].length < n) {
+      const live = sources.some((s) => s.pools[kind].length);
+      const s = live ? order[turn++ % order.length] : backup;
+      if (!s.pools[kind].length) {
+        if (!live) break;
+        continue;
+      }
+      const item = weightedTake(s.pools[kind], settings, random);
       drawn[kind].push({ source: s.source, ...(typeof item === 'string' ? { text: item } : item) });
     }
   }
 
+  // Supernatural is on but the luck of the draw left nothing supernatural on the menu
+  // (e.g. Get to Work's careers came up instead of its aliens): swap the twist for one that is.
+  const anySupernatural = Object.values(drawn).flat().some(isSupernatural);
+  if (settings.supernatural && !anySupernatural) {
+    const candidates = sources.flatMap((s) => s.pools.twists.filter(isSupernatural).map((t) => ({ source: s.source, ...t })));
+    if (candidates.length) drawn.twists[0] = candidates[Math.floor(random() * candidates.length)];
+  }
+
+  // Note: `drawn.settings` is the drawn *setting ingredient* (a place); the dial settings
+  // are not returned here, to keep the two from colliding.
   return {
     seed,
-    packs: chosen.map((p) => ({ code: p.code, name: p.name, summary: p.summary || null, hasNotes: hasNotes(p) })),
+    packs: chosen.map((p) => ({ code: p.code, name: p.name, summary: p.summary || null, hasNotes: hasNotes(p), supernatural: p.supernatural })),
     ...drawn,
   };
 }

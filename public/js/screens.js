@@ -73,8 +73,54 @@ export function packsScreen(run, go, { packs }) {
     groups,
     el('div', { class: 'actions sticky' },
       el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, '←', el('span', { class: 'sr-only' }, 'Back')),
-      el('button', { class: 'pill', type: 'button', onclick: () => { run.packs = []; go('making'); } }, 'Skip'),
-      el('button', { class: 'pill primary grow', type: 'button', onclick: () => go('making') }, 'Make my plan ✦', el('span', { class: 'count' }, count))),
+      el('button', { class: 'pill', type: 'button', onclick: () => { run.packs = []; go('dials'); } }, 'Skip'),
+      el('button', { class: 'pill primary grow', type: 'button', onclick: () => go('dials') }, 'Next ✦', el('span', { class: 'count' }, count))),
+  );
+}
+
+export function dialsScreen(run, go, { dials, packs }) {
+  const slider = (d) => {
+    const description = el('p', { class: 'dial-desc', id: `${d.id}-desc` }, d.positions[run.settings[d.id] - 1]);
+    const input = el('input', {
+      type: 'range', min: '1', max: '5', step: '1', id: d.id,
+      value: String(run.settings[d.id]),
+      'aria-describedby': `${d.id}-desc`,
+    });
+    input.addEventListener('input', () => {
+      run.settings[d.id] = Number(input.value);
+      description.textContent = d.positions[run.settings[d.id] - 1];
+    });
+    return el('div', { class: 'dial' },
+      el('label', { class: 'dial-label', for: d.id }, d.label),
+      input,
+      el('div', { class: 'dial-ends', 'aria-hidden': 'true' }, el('span', {}, d.ends[0]), el('span', {}, d.ends[1])),
+      description);
+  };
+
+  // The supernatural switch only unlocks when a supernatural-capable pack was picked.
+  const sn = dials.supernatural;
+  const unlocked = packs.some((p) => p.supernatural && run.packs.includes(p.code));
+  if (!unlocked) run.settings.supernatural = false;
+  const box = el('input', { type: 'checkbox', id: 'supernatural', 'aria-describedby': 'supernatural-note' });
+  box.checked = run.settings.supernatural;
+  box.disabled = !unlocked;
+  const note = el('p', { class: 'dial-desc', id: 'supernatural-note' },
+    !unlocked ? sn.locked : box.checked ? sn.on : sn.off);
+  box.addEventListener('change', () => {
+    run.settings.supernatural = box.checked;
+    note.textContent = box.checked ? sn.on : sn.off;
+  });
+
+  return el('section', {},
+    el('h2', { class: 'screen-title' }, 'Set the mood'),
+    el('p', { class: 'lead' }, 'Slide each one to decide what kind of story you want. The words underneath tell you what you’ll get.'),
+    el('div', { class: 'dials' }, dials.dials.map(slider)),
+    el('div', { class: 'dial supernatural' + (unlocked ? '' : ' locked') },
+      el('label', { class: 'check', for: 'supernatural' }, box, el('span', {}, sn.label)),
+      note),
+    el('div', { class: 'actions' },
+      el('button', { class: 'pill', type: 'button', onclick: () => go('packs') }, '← Back'),
+      el('button', { class: 'pill primary', type: 'button', onclick: () => go('making') }, 'Make my plan ✦')),
   );
 }
 
@@ -87,7 +133,7 @@ export function makingScreen(run, go, { error } = {}) {
       el('p', { class: 'error', role: 'alert' }, error),
       el('div', { class: 'actions' },
         el('button', { class: 'pill primary', type: 'button', onclick: () => go('making') }, 'Try again'),
-        el('button', { class: 'pill', type: 'button', onclick: () => go('packs') }, 'Back')),
+        el('button', { class: 'pill', type: 'button', onclick: () => go('dials') }, 'Back')),
     );
   }
   return el('section', {},

@@ -25,8 +25,8 @@ PRD ref: `prd.md > The Core Journey`
 2. **Pick a style** — the page shows cards from a style list file. The choice is stored in the page's memory.
 3. **Yap** — the player types or dictates into the box (the phone's own keyboard dictation). Tapped nudges add text to the box.
 4. **Reflect and follow up** — the page sends the style and yap to the server (`POST /api/reflect`). The server asks Claude for a short reflection and a few follow-up questions about gaps, and returns them. The player answers.
-5. **Set the dials** — four sliders and the supernatural checkbox. The page reads descriptions from a dials file and updates the label as the slider moves.
-6. **Pick packs** — pack cards come from the pack notes file. If the player skips, no packs are sent.
+5. **Pick packs** — pack cards come from the pack notes file. If the player skips, no packs are sent.
+6. **Set the dials** — four sliders and the supernatural checkbox. The page reads descriptions from a dials file and updates the label as the slider moves.
 7. **Make the plan** — the page sends everything to the server (`POST /api/plan`). The server (a) draws ingredients from the selected packs' notes (or the general notes if none), (b) builds a prompt with the player's words, answers, slider meanings, and ingredients, (c) calls Claude and asks for the plan in a fixed structure, (d) returns it.
 8. **See the cards** — the page lays the plan out as cards, with the card matching the chosen style first.
 9. **Save and reopen** — the page stores the plan in the browser's local storage. Next visit, a "My plans" list shows saved plans.

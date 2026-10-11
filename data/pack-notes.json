@@ -7,18 +7,18 @@
       "supernatural": true,
       "summary": "Sims can become vampires who rank up from Fledgling to Grand Master, choosing powers (like turning into a bat or mist, mesmerizing others, or resisting the sun) and taking on weaknesses as they grow stronger. Vampires can follow the Good Vampire or Master Vampire aspiration and learn Vampire Lore and the Pipe Organ. Comes with Forgotten Hollow, a gloomy world where it's never quite day, home to the ancient Count Vladislaus Straud and the Vatore siblings.",
       "characterTypes": [
-        "An ancient Grand Master vampire who has seen too much and is bored of immortality",
-        "A brand-new Fledgling still learning their powers, hiding the change from their family",
-        "A Good Vampire who only drinks plasma fruit and packs, and never feeds on Sims without asking",
-        "A Master Vampire on a power trip, collecting powers and thralls and lording it over younger vampires",
-        "A vampire with the Guilty Drinker weakness who feels awful every time they feed",
-        "A vampire with Day Phobia who panics if they're outside when the sun is up",
-        "A thirst-driven vampire whose irresistible hunger keeps getting them into trouble",
-        "A sun-resistant daywalker who passes as mortal and holds down a normal life",
-        "A brooding vampire who plays haunting music on the pipe organ late into the night",
-        "A mortal Vampire Lore scholar who has read every book and desperately wants to be turned",
-        "A garlic-hanging vampire hunter type who is sure something is wrong next door",
-        "A vampire who has been offered the cure and can't decide whether they want to be mortal again"
+        { "text": "An ancient Grand Master vampire who has seen too much and is bored of immortality", "tags": ["supernatural"] },
+        { "text": "A brand-new Fledgling still learning their powers, hiding the change from their family", "tags": ["supernatural"] },
+        { "text": "A Good Vampire who only drinks plasma fruit and packs, and never feeds on Sims without asking", "tags": ["supernatural"] },
+        { "text": "A Master Vampire on a power trip, collecting powers and thralls and lording it over younger vampires", "tags": ["supernatural"] },
+        { "text": "A vampire with the Guilty Drinker weakness who feels awful every time they feed", "tags": ["supernatural"] },
+        { "text": "A vampire with Day Phobia who panics if they're outside when the sun is up", "tags": ["supernatural"] },
+        { "text": "A thirst-driven vampire whose irresistible hunger keeps getting them into trouble", "tags": ["supernatural"] },
+        { "text": "A sun-resistant daywalker who passes as mortal and holds down a normal life", "tags": ["supernatural"] },
+        { "text": "A brooding vampire who plays haunting music on the pipe organ late into the night", "tags": ["supernatural"] },
+        { "text": "A mortal Vampire Lore scholar who has read every book and desperately wants to be turned", "tags": ["supernatural"] },
+        { "text": "A garlic-hanging vampire hunter type who is sure something is wrong next door", "tags": ["supernatural"] },
+        { "text": "A vampire who has been offered the cure and can't decide whether they want to be mortal again", "tags": ["supernatural"] }
       ],
       "hooks": [
         { "text": "A mortal asks a vampire to turn them, and the vampire has to decide whether to say yes", "tags": ["romance", "supernatural", "slow"] },
@@ -46,11 +46,11 @@
         { "text": "A vampire's new weakness shows up at the worst possible time", "tags": ["supernatural", "surprise", "fast"] }
       ],
       "settings": [
-        "Forgotten Hollow: a gothic, misty world with crooked houses and a permanent feeling of dusk",
-        "A home with no windows in the bedroom and a coffin where the bed should be",
-        "A garden full of plasma fruit and garlic, grown by two Sims who disagree about everything",
-        "A dim parlor built around a pipe organ, with heavy curtains always drawn",
-        "A grand, decaying vampire mansion on a hill, a little too much like Count Straud's"
+        { "text": "Forgotten Hollow: a gothic, misty world with crooked houses and a permanent feeling of dusk", "tags": ["supernatural"] },
+        { "text": "A home with no windows in the bedroom and a coffin where the bed should be", "tags": ["supernatural"] },
+        { "text": "A shared garden split down the middle: plasma fruit on the vampire's side, garlic on the mortal's side, and a feud over the fence between them", "tags": ["supernatural"] },
+        { "text": "A dim parlor built around a pipe organ, with heavy curtains always drawn", "tags": [] },
+        { "text": "A grand, decaying vampire mansion on a hill, a little too much like Count Straud's", "tags": ["supernatural"] }
       ],
       "sourceNote": "Drafted in our own words from the learner's installed game text and general knowledge of the pack. Needs learner review."
     },
@@ -61,18 +61,18 @@
       "supernatural": true,
       "summary": "Sims can become spellcasters who rank up from Apprentice through Acolyte and Adept to Virtuoso, learning spells from three schools of magic (Practical, Untamed, and Mischief), brewing potions at a cauldron, bonding with a familiar, and dueling other spellcasters. Overusing magic, losing duels, or failed potions can bring curses. Spellcasters can pass on the gift of magic, and the Purveyor of Potions aspiration is all about brewing. Comes with Glimmerbrook, a misty storybook village, and the hidden Magic Realm where the Sages run Magic HQ.",
       "characterTypes": [
-        "A by-the-book Practical magic spellcaster who mostly uses spells to clean, fix, and cook",
-        "A wild Untamed magic spellcaster who sets things on fire and freezes people mid-argument",
-        "A Mischief magic troublemaker who turns people into minions, makes them infatuated, or drives them to despair just to watch",
-        "A reckless duelist who challenges everyone and keeps collecting curses",
-        "A Purveyor of Potions brewing questionable remedies out of their kitchen and selling them to the neighbors",
-        "A brand-new Apprentice who just got the gift of magic and keeps getting their spells wrong",
-        "A Virtuoso who has mastered every school and is quietly lonely at the top",
-        "A spellcaster who drank a Potion of Immortality and has outlived everyone they loved",
-        "A spellcaster who is inseparable from their familiar (a dragon, a phoenix, a voodoo doll, or a raven)",
-        "A spellcaster who overcharges their magic and is one bad day away from exploding",
-        "A mortal who marries into a spellcaster family and feels left out",
-        "A spellcaster's kid born into magic, desperate to start casting before they're ready"
+        { "text": "A by-the-book Practical magic spellcaster who mostly uses spells to clean, fix, and cook", "tags": ["supernatural"] },
+        { "text": "A wild Untamed magic spellcaster who sets things on fire and freezes people mid-argument", "tags": ["supernatural"] },
+        { "text": "A Mischief magic troublemaker who turns people into minions, makes them infatuated, or drives them to despair just to watch", "tags": ["supernatural"] },
+        { "text": "A reckless duelist who challenges everyone and keeps collecting curses", "tags": ["supernatural"] },
+        { "text": "A Purveyor of Potions brewing questionable remedies out of their kitchen and selling them to the neighbors", "tags": ["supernatural"] },
+        { "text": "A brand-new Apprentice who just got the gift of magic and keeps getting their spells wrong", "tags": ["supernatural"] },
+        { "text": "A Virtuoso who has mastered every school and is quietly lonely at the top", "tags": ["supernatural"] },
+        { "text": "A spellcaster who drank a Potion of Immortality and has outlived everyone they loved", "tags": ["supernatural"] },
+        { "text": "A spellcaster who is inseparable from their familiar (a dragon, a phoenix, a voodoo doll, or a raven)", "tags": ["supernatural"] },
+        { "text": "A spellcaster who overcharges their magic and is one bad day away from exploding", "tags": ["supernatural"] },
+        { "text": "A mortal who marries into a spellcaster family and feels left out", "tags": ["supernatural"] },
+        { "text": "A spellcaster's kid born into magic, desperate to start casting before they're ready", "tags": ["supernatural"] }
       ],
       "hooks": [
         { "text": "A Sim discovers they come from a long line of spellcasters", "tags": ["supernatural", "family", "surprise"] },
@@ -99,11 +99,11 @@
         { "text": "A spellcaster tries to cleanse a curse and picks up a worse one instead", "tags": ["supernatural", "messy", "fast"] }
       ],
       "settings": [
-        "Glimmerbrook: a misty, storybook village with a bridge, a river, and old cottages",
-        "The Magic Realm: a floating world reached by portal, where spellcasters meet, shop, and duel",
-        "A kitchen turned potion lab, with a cauldron where the stove should be",
-        "A cluttered cottage library full of spellbooks, crystals, and brooms by the door",
-        "A garden grown for potion ingredients, tended by a familiar"
+        { "text": "Glimmerbrook: a misty, storybook village with a bridge, a river, and old cottages", "tags": ["supernatural"] },
+        { "text": "The Magic Realm: a floating world reached by portal, where spellcasters meet, shop, and duel", "tags": ["supernatural"] },
+        { "text": "A kitchen turned potion lab, with a cauldron where the stove should be", "tags": ["supernatural"] },
+        { "text": "A cluttered cottage library full of spellbooks, crystals, and brooms by the door", "tags": ["supernatural"] },
+        { "text": "A garden grown for potion ingredients, tended by a familiar", "tags": ["supernatural"] }
       ],
       "sourceNote": "Drafted in our own words from the learner's installed game text (spells, potions, curses, ranks) and general knowledge of the pack. Needs learner review."
     },
@@ -114,16 +114,16 @@
       "supernatural": true,
       "summary": "Haunted houses full of specters (playful, mischievous, grumpy, and mopey ones) and accursed objects, a Medium skill for holding séances, and Guidry, a flirty ghost paranormal investigator who visits at night and can license Sims to take ghost-busting gigs. You can summon Bonehilda, a skeleton maid, collect specters in jars, and even get an invitation to join the Soul Reaper Society.",
       "characterTypes": [
-        "A skeptic who buys a haunted house because it was cheap and refuses to admit anything is wrong",
-        "A paranormal investigator who takes night gigs and is secretly terrified",
-        "A Medium who holds séances to talk to someone they lost",
-        "A flirty ghost who has been haunting the same house for a century",
-        "A thrill-seeker who loves haunted houses and keeps turning the haunting up for fun",
-        "A specter collector with shelves full of jars of captured spirits",
-        "A Sim who may have sold a piece of their soul and is starting to regret it",
-        "A tired homeowner who relies on Bonehilda the skeleton maid and treats her like family",
-        "A ghost-obsessed kid who wants to be a paranormal investigator when they grow up",
-        "A fortune-teller type who runs a séance parlor out of their living room"
+        { "text": "A skeptic who buys a haunted house because it was cheap and refuses to admit anything is wrong", "tags": ["supernatural"] },
+        { "text": "A paranormal investigator who takes night gigs and is secretly terrified", "tags": ["supernatural"] },
+        { "text": "A Medium who holds séances to talk to someone they lost", "tags": ["supernatural"] },
+        { "text": "A flirty ghost who has been haunting the same house for a century", "tags": ["supernatural"] },
+        { "text": "A thrill-seeker who loves haunted houses and keeps turning the haunting up for fun", "tags": ["supernatural"] },
+        { "text": "A specter collector with shelves full of jars of captured spirits", "tags": ["supernatural"] },
+        { "text": "A Sim who may have sold a piece of their soul and is starting to regret it", "tags": ["supernatural"] },
+        { "text": "A tired homeowner who relies on Bonehilda the skeleton maid and treats her like family", "tags": ["supernatural"] },
+        { "text": "A ghost-obsessed kid who wants to be a paranormal investigator when they grow up", "tags": ["supernatural"] },
+        { "text": "A fortune-teller type who runs a séance parlor out of their living room", "tags": ["supernatural"] }
       ],
       "hooks": [
         { "text": "A household moves into a haunted house and the haunting gets worse every night", "tags": ["supernatural", "fast", "messy"] },
@@ -148,10 +148,10 @@
         { "text": "A haunted painting in the house turns out to be a portrait of someone the family knows", "tags": ["supernatural", "surprise", "family"] }
       ],
       "settings": [
-        "A haunted residential lot with creaking floors, flickering lights, and a séance table",
-        "An old house full of strange portraits and statues collected by a previous owner",
-        "A spooky parlor with a chalk séance circle, crystal ball, and creepy dolls on every shelf",
-        "A crumbling Victorian-style home with clay hands reaching out of the garden"
+        { "text": "A haunted residential lot with creaking floors, flickering lights, and a séance table", "tags": ["supernatural"] },
+        { "text": "An old house full of strange portraits and statues collected by a previous owner", "tags": [] },
+        { "text": "A spooky parlor with a chalk séance circle, crystal ball, and creepy dolls on every shelf", "tags": ["supernatural"] },
+        { "text": "A crumbling Victorian-style home with clay hands reaching out of the garden", "tags": ["supernatural"] }
       ],
       "sourceNote": "Drafted in our own words from the learner's installed game text (Guidry, investigator gigs, accursed objects) and general knowledge of the pack. Needs learner review."
     },
@@ -162,18 +162,18 @@
       "supernatural": true,
       "summary": "Three active careers you follow your Sim to work in: Detective (crime scenes, clues, interrogations, arrests, up to Chief), Doctor (diagnoses, surgery, house calls, outbreaks, up to Chief of Staff), and Scientist (inventions like the SimRay and a cloning machine, serums, and a wormhole generator to the alien world). Sims can buy and run their own retail store and learn Baking and Photography. And aliens: abductions, aliens living in disguise, alien pregnancies (for any gender), and Sixam, the strange glowing alien world.",
       "characterTypes": [
-        "A detective who can't stop investigating even off the clock and treats every dinner party like a crime scene",
-        "An overworked doctor who keeps getting called on house calls and misses every family event",
-        "A scientist who builds wild inventions and isn't sure whether they're a good guy or a mad one",
-        "A scientist who cloned themselves, and now there are two of them",
-        "An alien living in disguise who is trying very hard to seem normal",
-        "An alien who has given up the disguise and doesn't care who knows",
-        "A shop owner whose store is the only thing they're proud of",
-        "A baker running a bakery out of a tiny storefront, famous for one strange dessert",
-        "A photographer who sells prints and accidentally captures things they shouldn't",
-        "A Sim who has been abducted so many times the aliens practically know them by name",
-        "A rookie cop trying to impress their tough-as-nails Chief",
-        "A conspiracy-minded neighbor who accuses everyone of being an alien"
+        { "text": "A detective who can't stop investigating even off the clock and treats every dinner party like a crime scene", "tags": [] },
+        { "text": "An overworked doctor who keeps getting called on house calls and misses every family event", "tags": [] },
+        { "text": "A scientist who builds wild inventions and isn't sure whether they're a good guy or a mad one", "tags": ["supernatural"] },
+        { "text": "A scientist who cloned themselves, and now there are two of them", "tags": ["supernatural"] },
+        { "text": "An alien living in disguise who is trying very hard to seem normal", "tags": ["supernatural"] },
+        { "text": "An alien who has given up the disguise and doesn't care who knows", "tags": ["supernatural"] },
+        { "text": "A shop owner whose store is the only thing they're proud of", "tags": [] },
+        { "text": "A baker running a bakery out of a tiny storefront, famous for one strange dessert", "tags": [] },
+        { "text": "A photographer who sells prints and accidentally captures things they shouldn't", "tags": [] },
+        { "text": "A Sim who has been abducted so many times the aliens practically know them by name", "tags": ["supernatural"] },
+        { "text": "A rookie cop trying to impress their tough-as-nails Chief", "tags": [] },
+        { "text": "A conspiracy-minded neighbor who accuses everyone of being an alien", "tags": ["supernatural"] }
       ],
       "hooks": [
         { "text": "A Sim opens their own retail store and has to make it work", "tags": ["cozy", "fast"] },
@@ -200,11 +200,11 @@
         { "text": "The store's best customer turns out to be an alien in disguise", "tags": ["supernatural", "surprise", "cozy"] }
       ],
       "settings": [
-        "A small retail shop with an apartment-style home in the back",
-        "Sixam: the alien world, strange and glowing, reached by portal",
-        "The workplaces: a police station, a hospital, and a science lab you can follow your Sim into",
-        "A home garage turned science lab, with an invention constructor and a wormhole generator",
-        "A cozy bakery storefront with a display case and an upstairs apartment"
+        { "text": "A small retail shop with an apartment-style home in the back", "tags": [] },
+        { "text": "Sixam: the alien world, strange and glowing, reached by portal", "tags": ["supernatural"] },
+        { "text": "The workplaces: a police station, a hospital, and a science lab you can follow your Sim into", "tags": [] },
+        { "text": "A home garage turned science lab, with an invention constructor and a wormhole generator", "tags": ["supernatural"] },
+        { "text": "A cozy bakery storefront with a display case and an upstairs apartment", "tags": [] }
       ],
       "sourceNote": "Drafted in our own words from the learner's installed game text (careers, aliens, retail) and general knowledge of the pack. Needs learner review."
     },

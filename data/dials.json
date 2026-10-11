@@ -1,0 +1,58 @@
+{
+  "dials": [
+    {
+      "id": "drama",
+      "label": "Drama",
+      "ends": ["Happy ending", "Reality TV"],
+      "positions": [
+        "A sweet, cozy story where the worst thing that happens is a burnt dinner",
+        "Mostly warm, with a few hurt feelings to work through",
+        "Ups and downs: real arguments, real makeups",
+        "Messy: secrets, grudges, and at least one big blowup",
+        "Reality-TV chaos: betrayals, feuds, and someone storming out of every party"
+      ]
+    },
+    {
+      "id": "predictability",
+      "label": "Predictability",
+      "ends": ["I choose", "Surprise me"],
+      "positions": [
+        "You're in control: the plan lays everything out, no surprises",
+        "Mostly planned, with one small surprise tucked in",
+        "A clear direction, plus a twist waiting to happen",
+        "Expect the unexpected: a twist that could change where the story goes",
+        "Surprise me: a twist that could flip everything you thought you knew"
+      ]
+    },
+    {
+      "id": "relationships",
+      "label": "Relationship planning",
+      "ends": ["See what happens", "Set it up"],
+      "positions": [
+        "Leave love wide open: no pairings planned, let your Sims decide",
+        "Hint at a spark or two, but nothing's decided",
+        "Some chemistry set up, and room for it to go either way",
+        "Clear crushes and tensions: you'll know who's drawn to whom",
+        "Fully set up: who's into whom, who's in the way, and why"
+      ]
+    },
+    {
+      "id": "pace",
+      "label": "Pace",
+      "ends": ["Slow burn", "Fast"],
+      "positions": [
+        "Slow burn: plenty of quiet days before anything big happens",
+        "Steady: small changes that build over weeks",
+        "Balanced: something meaningful happens most sim-weeks",
+        "Brisk: big moments come quickly",
+        "Fast: something big happens on day one"
+      ]
+    }
+  ],
+  "supernatural": {
+    "label": "Add supernatural elements",
+    "on": "Vampires, spellcasters, ghosts, or aliens from your packs can show up in the story.",
+    "off": "The story stays human, even if you picked a supernatural pack.",
+    "locked": "Pick a pack with supernatural content (Vampires, Realm of Magic, Paranormal Stuff, or Get to Work) to turn this on."
+  }
+}

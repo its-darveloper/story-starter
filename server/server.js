@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { askClaude } from './claude.js';
 import { PLAN_SYSTEM, buildPlanPrompt, parsePlan, numberedIngredients } from './prompt.js';
-import { drawIngredients, packList } from './draw.js';
+import { drawIngredients, packList, packs, dials, readSettings } from './draw.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -41,8 +41,11 @@ async function makePlan(input) {
   if (!yap) return { status: 400, body: { error: 'Tell us a little about your story first.' } };
 
   const packCodes = Array.isArray(input.packs) ? input.packs.map(String) : [];
-  const ingredients = drawIngredients({ packCodes, seed: input.seed });
-  const prompt = buildPlanPrompt({ yap, ingredients });
+  const settings = readSettings(input.settings);
+  // Supernatural only counts if a supernatural-capable pack was actually picked.
+  settings.supernatural &&= packs.some((p) => p.supernatural && packCodes.includes(p.code));
+  const ingredients = drawIngredients({ packCodes, seed: input.seed, settings });
+  const prompt = buildPlanPrompt({ yap, ingredients, dialSettings: settings });
   // Ask once; if the answer isn't a complete plan, ask one more time.
   for (let attempt = 1; attempt <= 2; attempt++) {
     const plan = parsePlan(await askClaude({ system: PLAN_SYSTEM, prompt }));
@@ -57,6 +60,7 @@ async function makePlan(input) {
           createdAt: new Date().toISOString(),
           ...plan,
           ingredientsUsed: used,
+          settings,
           packs: packCodes,
           ingredients,
         },
@@ -69,6 +73,7 @@ async function makePlan(input) {
 
 const ROUTES = {
   'GET /api/packs': async () => ({ status: 200, body: { packs: packList() } }),
+  'GET /api/dials': async () => ({ status: 200, body: dials }),
   'POST /api/plan': makePlan,
 };
 

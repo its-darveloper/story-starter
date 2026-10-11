@@ -29,7 +29,7 @@ Build mode: learn
   Learner check: Read the Vampires pack note and say whether it's true to the pack. Then make the same idea twice — once with Vampires picked, once skipping packs — and compare the plans.
   Commit: `Pack picker and seeded ingredient draw`
 
-- [ ] **3. Dials and the supernatural switch change the plan**
+- [x] **3. Dials and the supernatural switch change the plan**
   Becomes usable: Four sliders (drama, predictability, relationship planning, pace) with descriptions that change as you move them, and an "Add supernatural elements" checkbox that is grayed out with a visible note until a supernatural-capable pack is picked. Moving drama from cozy to reality-TV visibly changes the plan.
   Why now: This completes the kernel — the "oh, that's cool" beat that the plan responds to your settings. It's the best moment for your early feedback, while there's still time to retune what the dials do.
   PRD ref: `prd.md > Features and Behavior > Dials`
@@ -61,7 +61,7 @@ Build mode: learn
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 3 (packs and dials shaping the plan)
+- [x] Early usable behavior explored — after slice 3 (packs and dials shaping the plan). Learner: dials feel right; asked for real aspirations and a fixed vampire-garlic setting (both done), and proposed richer character details (see Revisions).
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -86,5 +86,7 @@ Activity mode:
 - The plan prompt now lists real base-game trait names and tells Claude not to invent traits — the learner's first plan contained a made-up trait ("Gloomy-turned-Cheerful"), the exact "AI doesn't know Sims" problem the kernel exists to fix.
 - All four supernatural pack notes expanded to ~10–12 character types and hooks each, built from each pack's real gameplay systems (ranks, powers, weaknesses, schools of magic, careers, aspirations, named residents) — the learner's review found the first drafts too thin to give real variety between draws.
 - Drawn ingredients became a menu instead of a checklist: Claude first names one central conflict ("heart"), then uses only the 1–2 ingredients that sharpen it (at least one from the player's packs when picked), reports which it used, and ties every character to that conflict — the learner found "weave every ingredient in" produced crowded plans with no central theme, unlike the focused slice-1 sisters story. Tradeoff accepted by the learner: with many packs picked, any one plan uses only one or two of them.
+- Packs screen now comes before the dials (PRD Core Journey and spec journey updated) — the PRD's own rule that the supernatural checkbox unlocks only after a supernatural pack is picked couldn't work with dials first; learner chose the swap.
+- Dial positions now carry firm, concrete instructions at each end (e.g. drama 4–5 requires a betrayal, exposed secret, or public blowup), and supernatural ON requires a supernatural main character and guarantees a supernatural ingredient on the menu — with soft wording, Claude anchored on the player's idea and drama 5 read almost like drama 3. Character types and settings in the four pack notes gained `supernatural` tags so the switch can filter them.
 - Pack picker lists the 26 owned packs whose names are known (high/medium confidence in `data/pack-codes.md`); four low-confidence kits (SP29, SP40, SP43, SP46) are left off until identified — showing a guessed name would add a "wait, what?" moment.
 

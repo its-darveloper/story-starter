@@ -1,15 +1,18 @@
 // Screen flow and the in-memory state for one run through the app.
 
-import { yapScreen, packsScreen, makingScreen, planScreen } from './screens.js';
-import { makePlan, getPacks } from './api.js';
+import { yapScreen, packsScreen, dialsScreen, makingScreen, planScreen } from './screens.js';
+import { makePlan, getPacks, getDials } from './api.js';
 
 const run = {
   yap: '',
   packs: [],
+  settings: { drama: 3, predictability: 3, relationships: 3, pace: 3, supernatural: false },
   plan: null,
 };
 
+// Loaded once from the server, then reused.
 let packList = null;
+let dialList = null;
 
 const root = document.getElementById('screen');
 
@@ -21,10 +24,12 @@ function show(node) {
 async function go(name) {
   if (name === 'yap') return show(yapScreen(run, go));
   if (name === 'plan') return show(planScreen(run, go));
-  if (name === 'packs') {
+  if (name === 'packs' || name === 'dials') {
     try {
       packList ??= await getPacks();
-      return show(packsScreen(run, go, { packs: packList }));
+      if (name === 'packs') return show(packsScreen(run, go, { packs: packList }));
+      dialList ??= await getDials();
+      return show(dialsScreen(run, go, { dials: dialList, packs: packList }));
     } catch (err) {
       return show(makingScreen(run, go, { error: err.message }));
     }
@@ -32,7 +37,7 @@ async function go(name) {
   if (name === 'making') {
     show(makingScreen(run, go));
     try {
-      run.plan = await makePlan({ yap: run.yap, packs: run.packs });
+      run.plan = await makePlan({ yap: run.yap, packs: run.packs, settings: run.settings });
       go('plan');
     } catch (err) {
       // Keep everything the player entered; just offer a retry.

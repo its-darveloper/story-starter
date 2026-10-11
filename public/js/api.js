@@ -13,8 +13,11 @@ async function post(path, body) {
 
 export const makePlan = (run) => post('/api/plan', run);
 
-export async function getPacks() {
-  const res = await fetch('/api/packs');
-  if (!res.ok) throw new Error("Couldn't load the pack list.");
-  return (await res.json()).packs;
+async function get(path, what) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error(`Couldn't load the ${what}.`);
+  return res.json();
 }
+
+export const getPacks = async () => (await get('/api/packs', 'pack list')).packs;
+export const getDials = () => get('/api/dials', 'story dials');

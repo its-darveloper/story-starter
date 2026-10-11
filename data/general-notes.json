@@ -8,6 +8,14 @@
     "Noncommittal", "Outgoing", "Perfectionist", "Romantic", "Self-Assured", "Slob", "Snob",
     "Unflirty"
   ],
+  "aspirations": [
+    "Bodybuilder", "Painter Extraordinaire", "Musical Genius", "Bestselling Author",
+    "Public Enemy", "Chief of Mischief", "Successful Lineage", "Big Happy Family",
+    "Master Chef", "Master Mixologist", "Fabulously Wealthy", "Mansion Baron",
+    "Renaissance Sim", "Nerd Brain", "Computer Whiz", "Serial Romantic", "Soulmate",
+    "Freelance Botanist", "The Curator", "Angling Ace", "Joke Star", "Party Animal",
+    "Friend of the World", "Neighborhood Confidante"
+  ],
   "characterTypes": [
     "A struggling artist who sells paintings to pay rent and resents anyone who calls it a hobby",
     "A burnt-out career climber who just quit their job with no plan",

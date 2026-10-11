@@ -17,8 +17,8 @@ Source: `scope.md > The Core Loop`
 2. **Pick a starting style.** They click one card describing the kind of player they are. Each card explains in plain words what that style means.
 3. **Yap.** A big, friendly open box invites them to say whatever they imagine (about characters, if they picked character-driven). They can type or use their device's dictation. Small tappable prompts sit beside the box.
 4. **Reflect and follow up.** The app reflects back what it heard and asks a few follow-up questions about the gaps.
-5. **Set the dials.** They set drama and predictability.
-6. **Pick packs.** They click the packs they own (as many as they want) or skip.
+5. **Pick packs.** They click the packs they own (as many as they want) or skip. *(Moved before the dials during the build, so the supernatural checkbox already knows which packs were picked.)*
+6. **Set the dials.** They set drama and predictability.
 7. **Get the plan.** The starting plan appears as a stack of cards, led by what they chose in step 2.
 8. **Walk away** knowing who to create, the starting plotline, the kinds of lots and world, and the season to start in.
 9. **Come back later.** The plan is saved on the same device, so they can reopen it while playing or when a story needs shaking up.
@@ -30,8 +30,8 @@ Source: `scope.md > The POC Boundary`
 - **Starting-style screen:** a small set of cards, each with a title and a plain-language description.
 - **Yap screen:** one large open text box, tappable nudge prompts beside it, a clearly visible way to continue.
 - **Follow-up screen:** the app's short reflection of what it heard, then a few questions.
-- **Dials screen:** four sliders (drama, predictability, relationship planning, pace) with live descriptions, plus an opt-in supernatural checkbox.
 - **Packs screen:** a grid of pack cards, multi-select, with a visible skip.
+- **Dials screen:** four sliders (drama, predictability, relationship planning, pace) with live descriptions, plus an opt-in supernatural checkbox.
 - **Plan screen:** a stack/deck of cards (see Plan Cards below).
 
 Navigation is one step at a time, forward through the flow, with the ability to go back.

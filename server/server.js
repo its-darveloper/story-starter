@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { askClaude } from './claude.js';
 import { PLAN_SYSTEM, buildPlanPrompt, parsePlan } from './prompt.js';
+import { drawIngredients, packList } from './draw.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -39,14 +40,22 @@ async function makePlan(input) {
   const yap = String(input.yap || '').trim();
   if (!yap) return { status: 400, body: { error: 'Tell us a little about your story first.' } };
 
-  const prompt = buildPlanPrompt({ yap });
+  const packCodes = Array.isArray(input.packs) ? input.packs.map(String) : [];
+  const ingredients = drawIngredients({ packCodes, seed: input.seed });
+  const prompt = buildPlanPrompt({ yap, ingredients });
   // Ask once; if the answer isn't a complete plan, ask one more time.
   for (let attempt = 1; attempt <= 2; attempt++) {
     const plan = parsePlan(await askClaude({ system: PLAN_SYSTEM, prompt }));
     if (plan) {
       return {
         status: 200,
-        body: { id: `plan-${Date.now()}`, createdAt: new Date().toISOString(), ...plan },
+        body: {
+          id: `plan-${Date.now()}`,
+          createdAt: new Date().toISOString(),
+          ...plan,
+          packs: packCodes,
+          ingredients,
+        },
       };
     }
     console.warn(`Plan attempt ${attempt} came back in the wrong shape.`);
@@ -54,7 +63,10 @@ async function makePlan(input) {
   return { status: 502, body: { error: "That plan didn't come out right. Try again?" } };
 }
 
-const ROUTES = { 'POST /api/plan': makePlan };
+const ROUTES = {
+  'GET /api/packs': async () => ({ status: 200, body: { packs: packList() } }),
+  'POST /api/plan': makePlan,
+};
 
 // --- Static files ---
 

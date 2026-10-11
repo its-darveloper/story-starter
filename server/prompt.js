@@ -1,8 +1,13 @@
 // Builds the prompts sent to Claude, and checks that a plan came back in the right shape.
 
+import { general } from './draw.js';
+
 export const PLAN_SYSTEM = `You help a Sims 4 player plan the start of a story before they open Create-a-Sim.
 Build on the player's own ideas; never replace them with generic ones.
 Be specific and vivid, and use real Sims 4 things (traits, aspirations, careers, worlds, lot types) where they fit.
+Only name traits that really exist. Use these base-game traits: ${general.traits.join(', ')}.
+If you want a quality that isn't on that list, describe it in plain words instead of inventing a trait name.
+Only mention pack features (worlds, careers, life states) from packs the player selected; otherwise stay base-game.
 The goal must stay loose: a direction to play toward, never a fixed ending (no "they get married and live happily ever after").
 Reply with JSON only, no other text.`;
 
@@ -28,12 +33,37 @@ const PLAN_SHAPE = `{
   }
 }`;
 
-export function buildPlanPrompt({ yap }) {
+function describePacks(ingredients) {
+  if (!ingredients.packs.length) return 'The player skipped pack selection. Keep everything base-game friendly.';
+  return 'Packs the player owns and selected:\n' + ingredients.packs
+    .map((p) => `- ${p.name}${p.summary ? `: ${p.summary}` : ''}`)
+    .join('\n');
+}
+
+function describeIngredients(ingredients) {
+  const list = (items) => items.map((i) => `- ${i.text} (${i.source})`).join('\n');
+  return `Story ingredients, drawn at random for this plan. Weave every one of them in, adapted to fit the player's idea:
+Character types to inspire the cast:
+${list(ingredients.characterTypes)}
+Story hooks:
+${list(ingredients.hooks)}
+A twist waiting to happen (set it up; don't resolve it):
+${list(ingredients.twists)}
+A setting:
+${list(ingredients.settings)}`;
+}
+
+export function buildPlanPrompt({ yap, ingredients }) {
   return `Here is what the player imagines, in their own words:
 """
 ${yap}
 """
 
+${describePacks(ingredients)}
+
+${describeIngredients(ingredients)}
+
+The player's own idea comes first; the ingredients add specifics and surprise around it.
 Write a starting plan with 2-4 characters. Use this exact JSON shape:
 ${PLAN_SHAPE}`;
 }

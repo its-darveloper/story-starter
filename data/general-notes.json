@@ -1,0 +1,49 @@
+{
+  "summary": "Base-game-friendly story ingredients. Used when the player skips packs or picks packs that don't have notes yet.",
+  "traits": [
+    "Active", "Ambitious", "Art Lover", "Bookworm", "Bro", "Cheerful", "Childish", "Clumsy",
+    "Creative", "Erratic", "Evil", "Family-Oriented", "Foodie", "Geek", "Genius", "Glutton",
+    "Gloomy", "Good", "Goofball", "Hates Children", "Hot-Headed", "Jealous", "Kleptomaniac",
+    "Lazy", "Loner", "Loves Outdoors", "Materialistic", "Mean", "Music Lover", "Neat",
+    "Noncommittal", "Outgoing", "Perfectionist", "Romantic", "Self-Assured", "Slob", "Snob",
+    "Unflirty"
+  ],
+  "characterTypes": [
+    "A struggling artist who sells paintings to pay rent and resents anyone who calls it a hobby",
+    "A burnt-out career climber who just quit their job with no plan",
+    "A teen who wants out of their small town more than anything",
+    "A retired Sim who has outlived their friends and wants one last adventure",
+    "A charming flirt who has never had a relationship last a month",
+    "A perfectionist host who throws parties to hide how lonely they are",
+    "A stay-at-home parent who used to be a rising star in something",
+    "A slob roommate with a heart of gold and terrible timing"
+  ],
+  "hooks": [
+    { "text": "Someone inherits a house they didn't know existed", "tags": ["surprise", "family"] },
+    { "text": "Two exes are forced to share a lot after a money disaster", "tags": ["messy", "romance"] },
+    { "text": "A household starts with almost no money and one big dream", "tags": ["slow", "cozy"] },
+    { "text": "A new neighbor moves in and immediately knows too much about everyone", "tags": ["surprise", "messy"] },
+    { "text": "Best friends open a small business together", "tags": ["cozy", "fast"] },
+    { "text": "A big family reunion happens at the worst possible time", "tags": ["messy", "family", "fast"] },
+    { "text": "Someone moves to a new town to start over and keeps their past a secret", "tags": ["slow", "surprise"] },
+    { "text": "A single parent and their kid move in with a grandparent they barely know", "tags": ["family", "cozy", "slow"] }
+  ],
+  "twists": [
+    { "text": "A secret sibling turns up at the door", "tags": ["surprise", "family", "messy"] },
+    { "text": "Two rivals are forced to work the same career track", "tags": ["messy", "rivalry"] },
+    { "text": "A love triangle forms between people who all live in the same house", "tags": ["messy", "romance"] },
+    { "text": "Someone gets the promotion everyone else wanted", "tags": ["rivalry", "fast"] },
+    { "text": "A quiet character is revealed to be secretly famous online", "tags": ["surprise"] },
+    { "text": "An unexpected friendship grows between two characters who started as enemies", "tags": ["cozy", "slow", "romance"] },
+    { "text": "A surprise pregnancy shakes up everyone's plans", "tags": ["messy", "family", "fast"] },
+    { "text": "The house itself needs a full rebuild after a fire", "tags": ["surprise", "fast"] }
+  ],
+  "settings": [
+    "A cramped starter home that clearly needs renovating",
+    "A big, run-down family house with too many bedrooms and too many memories",
+    "A shared apartment-style lot with thin walls",
+    "A quiet suburban street where everyone watches everyone",
+    "A park lot that becomes the household's go-to hangout"
+  ],
+  "sourceNote": "Written for this project in our own words. Trait names match base-game Sims 4 traits."
+}

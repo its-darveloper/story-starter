@@ -136,6 +136,69 @@ textarea:focus { outline: none; border-color: var(--aqua); box-shadow: 0 0 0 4px
 .pill:disabled { opacity: .45; cursor: not-allowed; }
 .pill:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
 
+/* Keeps the Back / Skip / Make buttons reachable while scrolling a long pack list */
+.actions.sticky {
+  position: sticky;
+  bottom: 0;
+  padding: 18px 0 12px;
+  background: linear-gradient(transparent, var(--white) 35%);
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+.actions.sticky .pill { padding: 8px 16px; }
+.pill.grow { flex: 1; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.count { font-size: .75rem; font-weight: 600; opacity: .9; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* --- Pack picker --- */
+
+.group-title {
+  margin: 20px 0 8px;
+  font-size: .8rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.pack {
+  appearance: none;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 18px;
+  border: 3px solid var(--blue);
+  background: linear-gradient(180deg, var(--white), #eef7ff);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.pack.spooky { border-color: var(--lavender); background: linear-gradient(180deg, var(--white), #f3eeff); }
+.pack-name { font-weight: 700; line-height: 1.25; }
+.pack-soon { font-size: .75rem; color: var(--ink-soft); }
+.pack[aria-pressed="true"] {
+  border-color: var(--magenta);
+  background: linear-gradient(135deg, var(--pink), var(--magenta));
+  color: var(--white);
+  box-shadow: 0 4px 0 #c4166f;
+}
+.pack[aria-pressed="true"] .pack-soon { color: var(--white); }
+.pack[aria-pressed="true"] .pack-name::before { content: "✓ "; }
+.pack:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
+
 /* --- Loading / error --- */
 
 .status {

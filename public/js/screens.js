@@ -8,7 +8,7 @@ function el(tag, attrs = {}, ...children) {
     else if (k === 'class') node.className = v;
     else node.setAttribute(k, v);
   }
-  node.append(...children.flat().filter((c) => c != null && c !== false));
+  node.append(...children.flat(Infinity).filter((c) => c != null && c !== false));
   return node;
 }
 
@@ -19,19 +19,62 @@ export function yapScreen(run, go) {
     'aria-label': 'Tell us about your story',
   });
   box.value = run.yap;
-  const next = el('button', { class: 'pill primary', type: 'button' }, 'Make my plan ✦');
+  const next = el('button', { class: 'pill primary', type: 'button' }, 'Next ✦');
   next.disabled = !box.value.trim();
   box.addEventListener('input', () => {
     run.yap = box.value;
     next.disabled = !box.value.trim();
   });
-  next.addEventListener('click', () => go('making'));
+  next.addEventListener('click', () => go('packs'));
 
   return el('section', {},
     el('h2', { class: 'screen-title' }, 'Spill it'),
     el('p', { class: 'lead' }, 'Say whatever you imagine, in your own words. A few words is fine. You can type or use your keyboard’s microphone.'),
     box,
     el('div', { class: 'actions' }, next),
+  );
+}
+
+const PACK_TYPES = ['Expansion Pack', 'Game Pack', 'Stuff Pack', 'Kit', 'Free Pack'];
+
+export function packsScreen(run, go, { packs }) {
+  const count = el('span', {});
+  const updateCount = () => {
+    count.textContent = run.packs.length ? `${run.packs.length} picked` : 'None picked yet';
+  };
+
+  const tile = (p) => {
+    const btn = el('button', {
+      class: 'pack' + (p.supernatural ? ' spooky' : ''),
+      type: 'button',
+      'aria-pressed': String(run.packs.includes(p.code)),
+    },
+      el('span', { class: 'pack-name' }, p.name),
+      p.hasNotes ? null : el('span', { class: 'pack-soon' }, 'notes coming soon'),
+    );
+    btn.addEventListener('click', () => {
+      run.packs = run.packs.includes(p.code) ? run.packs.filter((c) => c !== p.code) : [...run.packs, p.code];
+      btn.setAttribute('aria-pressed', String(run.packs.includes(p.code)));
+      updateCount();
+    });
+    return btn;
+  };
+
+  const groups = PACK_TYPES
+    .map((type) => [type, packs.filter((p) => p.type === type)])
+    .filter(([, list]) => list.length)
+    .map(([type, list]) => [el('h3', { class: 'group-title' }, type + 's'), el('div', { class: 'pack-grid' }, list.map(tile))]);
+
+  updateCount();
+  return el('section', {},
+    el('h2', { class: 'screen-title' }, 'Your packs'),
+    el('p', { class: 'lead' }, 'Tap the packs you own and want in this story. Pick as many as you like, or skip to keep it base game.'),
+    el('p', { class: 'hint' }, 'Packs marked “notes coming soon” can be picked, but the plan won’t use their details yet.'),
+    groups,
+    el('div', { class: 'actions sticky' },
+      el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, '←', el('span', { class: 'sr-only' }, 'Back')),
+      el('button', { class: 'pill', type: 'button', onclick: () => { run.packs = []; go('making'); } }, 'Skip'),
+      el('button', { class: 'pill primary grow', type: 'button', onclick: () => go('making') }, 'Make my plan ✦', el('span', { class: 'count' }, count))),
   );
 }
 
@@ -44,7 +87,7 @@ export function makingScreen(run, go, { error } = {}) {
       el('p', { class: 'error', role: 'alert' }, error),
       el('div', { class: 'actions' },
         el('button', { class: 'pill primary', type: 'button', onclick: () => go('making') }, 'Try again'),
-        el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, 'Back to my idea')),
+        el('button', { class: 'pill', type: 'button', onclick: () => go('packs') }, 'Back')),
     );
   }
   return el('section', {},
@@ -83,10 +126,22 @@ export function planCards(plan) {
   return cards;
 }
 
+// Says which packs the story ingredients came from, and which picked packs weren't used yet.
+function ingredientNote(ing) {
+  if (!ing) return null;
+  const all = [...ing.characterTypes, ...ing.hooks, ...ing.twists, ...ing.settings];
+  const used = [...new Set(all.map((i) => i.source))];
+  const notYet = ing.packs.filter((p) => !p.hasNotes).map((p) => p.name);
+  return el('p', { class: 'hint' },
+    used[0] === 'General' ? 'Story ingredients: base game.' : `Story ingredients drawn from: ${used.join(', ')}.`,
+    notYet.length ? ` Not used yet (notes coming soon): ${notYet.join(', ')}.` : null);
+}
+
 export function planScreen(run, go) {
   return el('section', {},
     el('h2', { class: 'screen-title' }, 'Your story deck'),
     el('p', { class: 'lead' }, 'Tap a card to open it.'),
+    ingredientNote(run.plan.ingredients),
     el('div', { class: 'deck' }, planCards(run.plan)),
     el('div', { class: 'actions' },
       el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, 'Start over')),

@@ -1,0 +1,235 @@
+{
+  "packs": [
+    {
+      "code": "GP04",
+      "name": "Vampires",
+      "type": "Game Pack",
+      "supernatural": true,
+      "summary": "Sims can become vampires who rank up from Fledgling to Grand Master, choosing powers (like turning into a bat or mist, mesmerizing others, or resisting the sun) and taking on weaknesses as they grow stronger. Vampires can follow the Good Vampire or Master Vampire aspiration and learn Vampire Lore and the Pipe Organ. Comes with Forgotten Hollow, a gloomy world where it's never quite day, home to the ancient Count Vladislaus Straud and the Vatore siblings.",
+      "characterTypes": [
+        "An ancient Grand Master vampire who has seen too much and is bored of immortality",
+        "A brand-new Fledgling still learning their powers, hiding the change from their family",
+        "A Good Vampire who only drinks plasma fruit and packs, and never feeds on Sims without asking",
+        "A Master Vampire on a power trip, collecting powers and thralls and lording it over younger vampires",
+        "A vampire with the Guilty Drinker weakness who feels awful every time they feed",
+        "A vampire with Day Phobia who panics if they're outside when the sun is up",
+        "A thirst-driven vampire whose irresistible hunger keeps getting them into trouble",
+        "A sun-resistant daywalker who passes as mortal and holds down a normal life",
+        "A brooding vampire who plays haunting music on the pipe organ late into the night",
+        "A mortal Vampire Lore scholar who has read every book and desperately wants to be turned",
+        "A garlic-hanging vampire hunter type who is sure something is wrong next door",
+        "A vampire who has been offered the cure and can't decide whether they want to be mortal again"
+      ],
+      "hooks": [
+        { "text": "A mortal asks a vampire to turn them, and the vampire has to decide whether to say yes", "tags": ["romance", "supernatural", "slow"] },
+        { "text": "A young vampire is taken under the wing of a much older one who expects total loyalty", "tags": ["supernatural", "rivalry"] },
+        { "text": "Someone moves into Forgotten Hollow without realizing who their neighbors are", "tags": ["supernatural", "surprise"] },
+        { "text": "A vampire tries to hold down a normal day job while avoiding the sun", "tags": ["supernatural", "cozy", "fast"] },
+        { "text": "A family discovers one of their own was turned years ago and kept it secret", "tags": ["supernatural", "family", "surprise"] },
+        { "text": "Two vampires race to rank up first, one following the Good Vampire path and one the Master Vampire path", "tags": ["supernatural", "rivalry", "fast"] },
+        { "text": "A Good Vampire tries to run a household where nobody is ever fed on, but plasma fruit keeps running out", "tags": ["supernatural", "cozy", "slow"] },
+        { "text": "A newly turned vampire has to choose their first power, and the choice says a lot about who they'll become", "tags": ["supernatural", "slow", "surprise"] },
+        { "text": "A mortal moves in with a vampire roommate and slowly figures out the house rules (no sun, no garlic, no questions)", "tags": ["supernatural", "cozy", "romance"] },
+        { "text": "Someone gets invited to Count Straud's mansion and doesn't come home the same", "tags": ["supernatural", "surprise", "messy"] },
+        { "text": "A vampire family's oldest member sets impossible standards for the younger, newer vampires", "tags": ["supernatural", "family", "rivalry"] },
+        { "text": "A Vampire Lore obsessive starts researching the strange new neighbors and gets far too close to the truth", "tags": ["supernatural", "slow", "surprise"] }
+      ],
+      "twists": [
+        { "text": "Someone finds the recipe for the vampire cure, and not everyone wants it used", "tags": ["supernatural", "messy", "surprise"] },
+        { "text": "A vampire forgets to come inside before sunrise and is caught in the light", "tags": ["supernatural", "fast", "messy"] },
+        { "text": "A vampire turns their love interest, and then regrets it", "tags": ["supernatural", "romance", "messy"] },
+        { "text": "An uninvited vampire can't get through the door at the worst moment", "tags": ["supernatural", "surprise"] },
+        { "text": "A vampire mesmerizes someone to cover a mistake, and the victim slowly starts to remember", "tags": ["supernatural", "messy", "rivalry"] },
+        { "text": "A Good Vampire's thirst finally wins and they feed on someone they love", "tags": ["supernatural", "messy", "romance"] },
+        { "text": "Someone is lied to about the plasma they were served", "tags": ["supernatural", "messy", "surprise"] },
+        { "text": "A powerful vampire offers to train a rival, with strings attached", "tags": ["supernatural", "rivalry", "slow"] },
+        { "text": "A vampire's new weakness shows up at the worst possible time", "tags": ["supernatural", "surprise", "fast"] }
+      ],
+      "settings": [
+        "Forgotten Hollow: a gothic, misty world with crooked houses and a permanent feeling of dusk",
+        "A home with no windows in the bedroom and a coffin where the bed should be",
+        "A garden full of plasma fruit and garlic, grown by two Sims who disagree about everything",
+        "A dim parlor built around a pipe organ, with heavy curtains always drawn",
+        "A grand, decaying vampire mansion on a hill, a little too much like Count Straud's"
+      ],
+      "sourceNote": "Drafted in our own words from the learner's installed game text and general knowledge of the pack. Needs learner review."
+    },
+    {
+      "code": "GP08",
+      "name": "Realm of Magic",
+      "type": "Game Pack",
+      "supernatural": true,
+      "summary": "Sims can become spellcasters who rank up from Apprentice through Acolyte and Adept to Virtuoso, learning spells from three schools of magic (Practical, Untamed, and Mischief), brewing potions at a cauldron, bonding with a familiar, and dueling other spellcasters. Overusing magic, losing duels, or failed potions can bring curses. Spellcasters can pass on the gift of magic, and the Purveyor of Potions aspiration is all about brewing. Comes with Glimmerbrook, a misty storybook village, and the hidden Magic Realm where the Sages run Magic HQ.",
+      "characterTypes": [
+        "A by-the-book Practical magic spellcaster who mostly uses spells to clean, fix, and cook",
+        "A wild Untamed magic spellcaster who sets things on fire and freezes people mid-argument",
+        "A Mischief magic troublemaker who turns people into minions, makes them infatuated, or drives them to despair just to watch",
+        "A reckless duelist who challenges everyone and keeps collecting curses",
+        "A Purveyor of Potions brewing questionable remedies out of their kitchen and selling them to the neighbors",
+        "A brand-new Apprentice who just got the gift of magic and keeps getting their spells wrong",
+        "A Virtuoso who has mastered every school and is quietly lonely at the top",
+        "A spellcaster who drank a Potion of Immortality and has outlived everyone they loved",
+        "A spellcaster who is inseparable from their familiar (a dragon, a phoenix, a voodoo doll, or a raven)",
+        "A spellcaster who overcharges their magic and is one bad day away from exploding",
+        "A mortal who marries into a spellcaster family and feels left out",
+        "A spellcaster's kid born into magic, desperate to start casting before they're ready"
+      ],
+      "hooks": [
+        { "text": "A Sim discovers they come from a long line of spellcasters", "tags": ["supernatural", "family", "surprise"] },
+        { "text": "Two spellcasters race to rank up to Virtuoso and earn the Sages' respect", "tags": ["supernatural", "rivalry", "fast"] },
+        { "text": "A spellcaster teaches magic to a mortal they've fallen for, then has to decide whether to give them the gift", "tags": ["supernatural", "romance", "slow"] },
+        { "text": "A family runs a cozy home in Glimmerbrook where the magic is mostly for chores", "tags": ["supernatural", "cozy", "slow"] },
+        { "text": "Three siblings each follow a different school of magic and can't agree on how magic should be used", "tags": ["supernatural", "family", "rivalry"] },
+        { "text": "A potion brewer opens a small potion business and some customers get more than they paid for", "tags": ["supernatural", "cozy", "messy"] },
+        { "text": "A Sim gets stripped of their magic and has to win it back", "tags": ["supernatural", "slow", "surprise"] },
+        { "text": "A spellcaster brings someone back from the dead with a resurrection spell or potion, and they come back a little different", "tags": ["supernatural", "family", "surprise"] },
+        { "text": "Duels in the Magic Realm turn a friendly rivalry into a real feud", "tags": ["supernatural", "rivalry", "fast"] },
+        { "text": "A spellcaster binds a new familiar, and the familiar seems to have a mind of its own", "tags": ["supernatural", "cozy", "surprise"] },
+        { "text": "A Sim uses a Potion of Forced Friendship to win someone over, and the friendship isn't real", "tags": ["supernatural", "romance", "messy"] }
+      ],
+      "twists": [
+        { "text": "A failed potion leaves someone with a curse that makes them repulsive to everyone", "tags": ["supernatural", "messy"] },
+        { "text": "Someone drinks a Potion of Immortality and has to watch everyone else age", "tags": ["supernatural", "slow", "surprise"] },
+        { "text": "A duel between friends goes wrong and one of them leaves cursed", "tags": ["supernatural", "rivalry", "messy"] },
+        { "text": "A spellcaster's power builds up and explodes in the middle of a party", "tags": ["supernatural", "fast", "messy"] },
+        { "text": "A curse causes uncontrollable laughter at a funeral", "tags": ["supernatural", "surprise", "messy"] },
+        { "text": "An infatuation spell makes someone fall for the wrong person, and it doesn't wear off when it should", "tags": ["supernatural", "romance", "messy"] },
+        { "text": "Someone is turned into a minion and does embarrassing things in public", "tags": ["supernatural", "surprise", "fast"] },
+        { "text": "A hexed potion gets swapped with a good one", "tags": ["supernatural", "surprise", "messy"] },
+        { "text": "A spellcaster tries to cleanse a curse and picks up a worse one instead", "tags": ["supernatural", "messy", "fast"] }
+      ],
+      "settings": [
+        "Glimmerbrook: a misty, storybook village with a bridge, a river, and old cottages",
+        "The Magic Realm: a floating world reached by portal, where spellcasters meet, shop, and duel",
+        "A kitchen turned potion lab, with a cauldron where the stove should be",
+        "A cluttered cottage library full of spellbooks, crystals, and brooms by the door",
+        "A garden grown for potion ingredients, tended by a familiar"
+      ],
+      "sourceNote": "Drafted in our own words from the learner's installed game text (spells, potions, curses, ranks) and general knowledge of the pack. Needs learner review."
+    },
+    {
+      "code": "SP18",
+      "name": "Paranormal Stuff",
+      "type": "Stuff Pack",
+      "supernatural": true,
+      "summary": "Haunted houses full of specters (playful, mischievous, grumpy, and mopey ones) and accursed objects, a Medium skill for holding séances, and Guidry, a flirty ghost paranormal investigator who visits at night and can license Sims to take ghost-busting gigs. You can summon Bonehilda, a skeleton maid, collect specters in jars, and even get an invitation to join the Soul Reaper Society.",
+      "characterTypes": [
+        "A skeptic who buys a haunted house because it was cheap and refuses to admit anything is wrong",
+        "A paranormal investigator who takes night gigs and is secretly terrified",
+        "A Medium who holds séances to talk to someone they lost",
+        "A flirty ghost who has been haunting the same house for a century",
+        "A thrill-seeker who loves haunted houses and keeps turning the haunting up for fun",
+        "A specter collector with shelves full of jars of captured spirits",
+        "A Sim who may have sold a piece of their soul and is starting to regret it",
+        "A tired homeowner who relies on Bonehilda the skeleton maid and treats her like family",
+        "A ghost-obsessed kid who wants to be a paranormal investigator when they grow up",
+        "A fortune-teller type who runs a séance parlor out of their living room"
+      ],
+      "hooks": [
+        { "text": "A household moves into a haunted house and the haunting gets worse every night", "tags": ["supernatural", "fast", "messy"] },
+        { "text": "A Sim gets their Paranormal Investigator License and starts taking gigs", "tags": ["supernatural", "cozy"] },
+        { "text": "Someone holds a séance to reach a lost family member, and something else answers", "tags": ["supernatural", "family", "surprise"] },
+        { "text": "The ghost of a former owner refuses to leave and has opinions about the decor", "tags": ["supernatural", "cozy", "slow"] },
+        { "text": "Guidry starts visiting every night, and someone in the house is falling for him", "tags": ["supernatural", "romance", "slow"] },
+        { "text": "A Sim builds up their Medium skill to reach someone specific on the other side", "tags": ["supernatural", "family", "slow"] },
+        { "text": "Roommates in a haunted house disagree about whether to exorcise the place or keep the ghosts", "tags": ["supernatural", "rivalry", "cozy"] },
+        { "text": "A Sim is invited to join the Soul Reaper Society and has to decide what that really means", "tags": ["supernatural", "surprise", "slow"] },
+        { "text": "Two rival paranormal investigators keep showing up to the same haunted house", "tags": ["supernatural", "rivalry", "fast"] },
+        { "text": "A family summons Bonehilda to help with chores, and she becomes the most reliable member of the household", "tags": ["supernatural", "cozy", "family"] }
+      ],
+      "twists": [
+        { "text": "An accursed object turns up in the house and nobody knows who brought it", "tags": ["supernatural", "surprise"] },
+        { "text": "A Sim falls for the ghost living in their house", "tags": ["supernatural", "romance", "slow"] },
+        { "text": "An investigator runs home terrified and quits mid-job", "tags": ["supernatural", "fast"] },
+        { "text": "The house's haunting gets dialed up just as guests arrive for a party", "tags": ["supernatural", "messy", "fast"] },
+        { "text": "A specter starts a fire in the middle of the night", "tags": ["supernatural", "fast", "messy"] },
+        { "text": "A specter escapes from its jar", "tags": ["supernatural", "surprise", "fast"] },
+        { "text": "A séance reaches the wrong ghost, and it decides to stay", "tags": ["supernatural", "surprise", "messy"] },
+        { "text": "A haunted painting in the house turns out to be a portrait of someone the family knows", "tags": ["supernatural", "surprise", "family"] }
+      ],
+      "settings": [
+        "A haunted residential lot with creaking floors, flickering lights, and a séance table",
+        "An old house full of strange portraits and statues collected by a previous owner",
+        "A spooky parlor with a chalk séance circle, crystal ball, and creepy dolls on every shelf",
+        "A crumbling Victorian-style home with clay hands reaching out of the garden"
+      ],
+      "sourceNote": "Drafted in our own words from the learner's installed game text (Guidry, investigator gigs, accursed objects) and general knowledge of the pack. Needs learner review."
+    },
+    {
+      "code": "EP01",
+      "name": "Get to Work",
+      "type": "Expansion Pack",
+      "supernatural": true,
+      "summary": "Three active careers you follow your Sim to work in: Detective (crime scenes, clues, interrogations, arrests, up to Chief), Doctor (diagnoses, surgery, house calls, outbreaks, up to Chief of Staff), and Scientist (inventions like the SimRay and a cloning machine, serums, and a wormhole generator to the alien world). Sims can buy and run their own retail store and learn Baking and Photography. And aliens: abductions, aliens living in disguise, alien pregnancies (for any gender), and Sixam, the strange glowing alien world.",
+      "characterTypes": [
+        "A detective who can't stop investigating even off the clock and treats every dinner party like a crime scene",
+        "An overworked doctor who keeps getting called on house calls and misses every family event",
+        "A scientist who builds wild inventions and isn't sure whether they're a good guy or a mad one",
+        "A scientist who cloned themselves, and now there are two of them",
+        "An alien living in disguise who is trying very hard to seem normal",
+        "An alien who has given up the disguise and doesn't care who knows",
+        "A shop owner whose store is the only thing they're proud of",
+        "A baker running a bakery out of a tiny storefront, famous for one strange dessert",
+        "A photographer who sells prints and accidentally captures things they shouldn't",
+        "A Sim who has been abducted so many times the aliens practically know them by name",
+        "A rookie cop trying to impress their tough-as-nails Chief",
+        "A conspiracy-minded neighbor who accuses everyone of being an alien"
+      ],
+      "hooks": [
+        { "text": "A Sim opens their own retail store and has to make it work", "tags": ["cozy", "fast"] },
+        { "text": "An alien in disguise falls for a Sim who has no idea", "tags": ["supernatural", "romance", "slow"] },
+        { "text": "A scientist finally opens a portal to the alien world", "tags": ["supernatural", "surprise", "fast"] },
+        { "text": "A detective is assigned a case that leads straight to their own family", "tags": ["messy", "family", "surprise"] },
+        { "text": "A doctor's career climb leaves no room for anyone at home", "tags": ["slow", "family"] },
+        { "text": "Two coworkers compete for the same promotion in an active career, and only one can become Chief", "tags": ["rivalry", "fast"] },
+        { "text": "A family hides an alien member from the neighbors, and the neighbors are getting suspicious", "tags": ["supernatural", "family", "messy"] },
+        { "text": "A Sim builds a satellite dish to contact aliens, and something answers", "tags": ["supernatural", "surprise", "slow"] },
+        { "text": "A scientist tests their serums on the household, one roommate at a time", "tags": ["supernatural", "messy", "fast"] },
+        { "text": "Partners open a bakery-and-photo shop together and argue about everything in the back room", "tags": ["cozy", "rivalry", "romance"] },
+        { "text": "A detective falls for the main suspect in their case", "tags": ["romance", "messy", "slow"] }
+      ],
+      "twists": [
+        { "text": "A Sim gets abducted and comes back pregnant with an alien baby, whatever their gender", "tags": ["supernatural", "surprise", "messy"] },
+        { "text": "Someone discovers their partner has been an alien this whole time", "tags": ["supernatural", "romance", "surprise"] },
+        { "text": "A scientist's invention changes someone in a way that can't be undone", "tags": ["supernatural", "messy"] },
+        { "text": "A disease outbreak hits town and the doctor is the only one who can help", "tags": ["fast", "family"] },
+        { "text": "A clone of a Sim starts living their life better than they do", "tags": ["supernatural", "surprise", "rivalry"] },
+        { "text": "A detective arrests someone they love", "tags": ["messy", "romance", "fast"] },
+        { "text": "A doctor delivers a baby that turns out to be part alien", "tags": ["supernatural", "surprise", "family"] },
+        { "text": "A bad serum leaves someone with a strange side effect at the worst moment", "tags": ["supernatural", "messy", "fast"] },
+        { "text": "The store's best customer turns out to be an alien in disguise", "tags": ["supernatural", "surprise", "cozy"] }
+      ],
+      "settings": [
+        "A small retail shop with an apartment-style home in the back",
+        "Sixam: the alien world, strange and glowing, reached by portal",
+        "The workplaces: a police station, a hospital, and a science lab you can follow your Sim into",
+        "A home garage turned science lab, with an invention constructor and a wormhole generator",
+        "A cozy bakery storefront with a display case and an upstairs apartment"
+      ],
+      "sourceNote": "Drafted in our own words from the learner's installed game text (careers, aliens, retail) and general knowledge of the pack. Needs learner review."
+    },
+
+    { "code": "EP02", "name": "Get Together", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP03", "name": "City Living", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP04", "name": "Cats & Dogs", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP05", "name": "Seasons", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP08", "name": "Discover University", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP10", "name": "Snowy Escape", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP11", "name": "Cottage Living", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP13", "name": "Growing Together", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP15", "name": "For Rent", "type": "Expansion Pack", "supernatural": false },
+    { "code": "EP16", "name": "Lovestruck", "type": "Expansion Pack", "supernatural": false },
+    { "code": "GP02", "name": "Spa Day", "type": "Game Pack", "supernatural": false },
+    { "code": "GP03", "name": "Dine Out", "type": "Game Pack", "supernatural": false },
+    { "code": "GP05", "name": "Parenthood", "type": "Game Pack", "supernatural": false },
+    { "code": "FP01", "name": "Holiday Celebration Pack", "type": "Free Pack", "supernatural": false },
+    { "code": "SP02", "name": "Perfect Patio Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP06", "name": "Romantic Garden Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP08", "name": "Backyard Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP12", "name": "Toddler Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP13", "name": "Laundry Day Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP14", "name": "My First Pet Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP16", "name": "Tiny Living Stuff", "type": "Stuff Pack", "supernatural": false },
+    { "code": "SP23", "name": "Courtyard Oasis Kit", "type": "Kit", "supernatural": false }
+  ]
+}

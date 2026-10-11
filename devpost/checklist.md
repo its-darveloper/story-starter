@@ -9,7 +9,7 @@ Build mode: learn
 
 ## Slices
 
-- [ ] **1. Type a story idea and get a plan back as cards**
+- [x] **1. Type a story idea and get a plan back as cards**
   Becomes usable: Start the server, open the page on the laptop or phone, type a few sentences about your Sims in the yap box, tap "Make my plan," and see a real Claude-written plan (premise, characters, plotline, world/lots/season) as a stack of tap-to-open cards.
   Why now: The Claude API call is the riskiest unknown (the spec flags the headers and response shape as unverified), and every later step depends on it. This slice also builds the server, the page shell, the Y2K base styles, and the plan structure check, so every later slice has somewhere to land.
   PRD ref: `prd.md > The Core Journey` (steps 3, 7, 8), `prd.md > Features and Behavior > Plan Cards`
@@ -81,4 +81,9 @@ Reflection:
 Activity mode:
 
 ## Revisions
+
+- Claude calls now use `max_tokens: 16000` and `effort: medium` (plus server-side refusal fallback) instead of a 2000-token cap — the build found this model always thinks first, and that thinking counts toward the cap, so richer slice-2 prompts got cut off mid-plan.
+- The plan prompt now lists real base-game trait names and tells Claude not to invent traits — the learner's first plan contained a made-up trait ("Gloomy-turned-Cheerful"), the exact "AI doesn't know Sims" problem the kernel exists to fix.
+- All four supernatural pack notes expanded to ~10–12 character types and hooks each, built from each pack's real gameplay systems (ranks, powers, weaknesses, schools of magic, careers, aspirations, named residents) — the learner's review found the first drafts too thin to give real variety between draws.
+- Pack picker lists the 26 owned packs whose names are known (high/medium confidence in `data/pack-codes.md`); four low-confidence kits (SP29, SP40, SP43, SP46) are left off until identified — showing a guessed name would add a "wait, what?" moment.
 

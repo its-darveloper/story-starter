@@ -12,6 +12,52 @@ function el(tag, attrs = {}, ...children) {
   return node;
 }
 
+const fmtDate = (iso) => {
+  try {
+    return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch {
+    return '';
+  }
+};
+
+export function welcomeScreen(run, go, { saved, onOpen, onDelete }) {
+  const step = (n, text) => el('li', {}, el('span', { class: 'step-num', 'aria-hidden': 'true' }, n), el('span', {}, text));
+
+  const savedItem = (p) => el('li', { class: 'saved' },
+    el('button', { class: 'saved-open', type: 'button', onclick: () => onOpen(p.id) },
+      el('span', { class: 'saved-title' }, p.heart || p.plotline?.headline || 'A story plan'),
+      el('span', { class: 'saved-meta' }, [
+        p.characters?.map((c) => c.name.split(' ')[0]).join(', '),
+        fmtDate(p.createdAt),
+      ].filter(Boolean).join(' · '))),
+    el('button', {
+      class: 'saved-delete', type: 'button', 'aria-label': 'Delete this plan',
+      onclick: () => { if (confirm('Delete this plan? This can’t be undone.')) onDelete(p.id); },
+    }, '✕'));
+
+  return el('section', {},
+    el('div', { class: 'welcome' },
+      el('p', { class: 'welcome-hook' }, 'Stuck after Create-a-Sim, wondering “what’s supposed to happen now?”'),
+      el('p', {}, 'Story Starter turns your idea, your packs, and your mood into a starting plan you can actually play, so your Sims don’t drift into the same marry-a-kid-happily-ever-after story every time.'),
+      el('h3', { class: 'welcome-label' }, 'How it works'),
+      el('ol', { class: 'steps' },
+        step('1', 'Tell us how you like to start a story.'),
+        step('2', 'Spill your idea, in your own words. A few words is fine.'),
+        step('3', 'Answer a couple of quick questions.'),
+        step('4', 'Pick your packs and set the mood.')),
+      el('h3', { class: 'welcome-label' }, 'What you get'),
+      el('p', {}, 'A deck of cards: who to make in Create-a-Sim (down to turn-ons and pets), the starting plot and the first scene to play, and the world, lots, and season to start in. The ending is yours to play.'),
+      el('div', { class: 'actions' },
+        el('button', { class: 'pill primary', type: 'button', onclick: () => go('start-over') }, 'Start a new story ✦'))),
+    saved.length
+      ? el('div', { class: 'saved-plans' },
+          el('h2', { class: 'screen-title' }, 'My plans'),
+          el('p', { class: 'hint' }, 'Saved on this device. Tap one to reopen it.'),
+          el('ul', { class: 'saved-list' }, saved.map(savedItem)))
+      : null,
+  );
+}
+
 export function styleScreen(run, go, { styles }) {
   const pick = (st) => el('button', {
     class: 'style-card',
@@ -23,6 +69,7 @@ export function styleScreen(run, go, { styles }) {
     el('span', { class: 'style-desc' }, st.description));
 
   return el('section', {},
+    el('button', { class: 'pill back-link', type: 'button', onclick: () => go('welcome') }, '← Home'),
     el('h2', { class: 'screen-title' }, 'How do you start?'),
     el('p', { class: 'lead' }, 'Everyone dreams up stories differently. Pick the one that sounds most like you. There’s no wrong answer.'),
     el('div', { class: 'styles' }, styles.map(pick)),
@@ -297,13 +344,17 @@ function ingredientNote(plan) {
     notYet.length ? ` Not used yet (notes coming soon): ${notYet.join(', ')}.` : null);
 }
 
-export function planScreen(run, go) {
+export function planScreen(run, go, { saved = true } = {}) {
   return el('section', {},
+    el('button', { class: 'pill back-link', type: 'button', onclick: () => go('welcome') }, '← My plans'),
     el('h2', { class: 'screen-title' }, 'Your story deck'),
     el('p', { class: 'lead' }, 'Tap a card to open it.'),
+    saved
+      ? el('p', { class: 'hint saved-note' }, `✓ Saved on this device${run.plan.createdAt ? ` · ${fmtDate(run.plan.createdAt)}` : ''}`)
+      : el('p', { class: 'error' }, 'This plan couldn’t be saved on this device (private browsing can block it). Screenshot it if you want to keep it.'),
     ingredientNote(run.plan),
     el('div', { class: 'deck' }, planCards(run.plan)),
     el('div', { class: 'actions' },
-      el('button', { class: 'pill', type: 'button', onclick: () => go('start-over') }, 'Start over')),
+      el('button', { class: 'pill primary', type: 'button', onclick: () => go('start-over') }, 'Start a new story ✦')),
   );
 }

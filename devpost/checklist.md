@@ -59,7 +59,7 @@ Build mode: learn
   Learner check: Go through the flow as "character-driven" with a short yap. Does the reflection sound like it actually heard you, and do the follow-ups ask about things you didn't say?
   Commit: `Starting styles, nudges, and reflect-and-follow-up`
 
-- [ ] **6. The full journey: welcome, back buttons, and saved plans**
+- [x] **6. The full journey: welcome, back buttons, and saved plans**
   Becomes usable: The whole flow from welcome screen to cards, with back buttons on every step, works comfortably on a phone. Finished plans save on that device, and a "My plans" list on the welcome screen reopens (or deletes) them later.
   Why now: Polish and persistence come last because they wrap a working journey; nothing earlier depends on them. Includes the README you'll need for the demo.
   PRD ref: `prd.md > The Core Journey` (steps 1, 9), `prd.md > Screens and Layout`, `prd.md > States and Boundaries`
@@ -76,6 +76,8 @@ Build mode: learn
 
 ## Final Review
 
+- [ ] Rewrite the welcome copy: shorter, plain, not salesy (learner: "too wordy and salesy")
+- [ ] Restyle to a handmade street-art collage look (learner references: the Beautiful Losers cover, a patterned tile panel, a cut-paper assemblage): off-white paper, chunky hand-cut display type, op-art patterned tiles in brick red / orange / cobalt / green / black, wood-frame edges; with fun, smooth, human interactions (plan cards dealt in as a collage, stamp-down tiles, sticker nudges, patterned dials), readable text, and reduced-motion support. Replaces the Y2K look in `prd.md` / `spec.md > Look and Feel`.
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map

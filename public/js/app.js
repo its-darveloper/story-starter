@@ -1,7 +1,8 @@
 // Screen flow and the in-memory state for one run through the app.
-// Flow: style → yap → follow-up → packs → dials → making → plan
+// Flow: welcome → style → yap → follow-up → packs → dials → making → plan (saved automatically)
 
-import { styleScreen, yapScreen, followUpScreen, packsScreen, dialsScreen, makingScreen, planScreen } from './screens.js';
+import { welcomeScreen, styleScreen, yapScreen, followUpScreen, packsScreen, dialsScreen, makingScreen, planScreen } from './screens.js';
+import { listPlans, getPlan, savePlan, deletePlan } from './store.js';
 import { makePlan, reflect, getPacks, getDials, getStyles } from './api.js';
 
 const freshRun = () => ({
@@ -16,6 +17,7 @@ const freshRun = () => ({
 });
 
 let run = freshRun();
+let lastSaveOk = true;
 
 // Loaded once from the server, then reused.
 const loaded = {};
@@ -30,6 +32,19 @@ function show(node) {
 
 async function go(name, { retry } = {}) {
   try {
+    if (name === 'welcome') {
+      return show(welcomeScreen(run, go, {
+        saved: listPlans(),
+        onOpen: (id) => {
+          const plan = getPlan(id);
+          if (!plan) return go('welcome');
+          run = { ...freshRun(), plan };
+          lastSaveOk = true;
+          go('plan');
+        },
+        onDelete: (id) => { deletePlan(id); go('welcome'); },
+      }));
+    }
     if (name === 'start-over') {
       run = freshRun();
       return go('style');
@@ -57,7 +72,7 @@ async function go(name, { retry } = {}) {
     if (name === 'dials') {
       return show(dialsScreen(run, go, { dials: await load('dials', getDials), packs: await load('packs', getPacks) }));
     }
-    if (name === 'plan') return show(planScreen(run, go));
+    if (name === 'plan') return show(planScreen(run, go, { saved: lastSaveOk }));
     if (name === 'making') {
       show(makingScreen(run, go));
       try {
@@ -68,6 +83,7 @@ async function go(name, { retry } = {}) {
           packs: run.packs,
           settings: run.settings,
         });
+        lastSaveOk = savePlan(run.plan);
         return go('plan');
       } catch (err) {
         // Keep everything the player entered; just offer a retry.
@@ -79,4 +95,4 @@ async function go(name, { retry } = {}) {
   }
 }
 
-go('style');
+go('welcome');

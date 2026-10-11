@@ -1,7 +1,7 @@
 // Screen flow and the in-memory state for one run through the app.
 // Flow: welcome → style → yap → follow-up → packs → dials → making → plan (saved automatically)
 
-import { welcomeScreen, styleScreen, yapScreen, followUpScreen, packsScreen, dialsScreen, makingScreen, planScreen } from './screens.js';
+import { cutify, welcomeScreen, styleScreen, yapScreen, followUpScreen, packsScreen, dialsScreen, makingScreen, planScreen } from './screens.js';
 import { listPlans, getPlan, savePlan, deletePlan } from './store.js';
 import { makePlan, reflect, getPacks, getDials, getStyles } from './api.js';
 
@@ -94,5 +94,10 @@ async function go(name, { retry } = {}) {
     show(makingScreen(run, go, { error: err.message }));
   }
 }
+
+// The masthead logo is hand-cut lettering too, and tapping it goes home.
+const home = document.getElementById('home');
+cutify(home);
+home.addEventListener('click', () => go('welcome'));
 
 go('welcome');

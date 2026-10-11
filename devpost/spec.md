@@ -54,12 +54,14 @@ PRD ref: `prd.md > The Core Journey`
 ## Look and Feel
 PRD ref: `prd.md > Look and Feel`
 
-Direction from the learner's references (early-2000s doll-website style) and their stated priority that low cognitive load beats decoration.
-- **Palette:** hot magenta and pink as the base; baby blue and lavender; aqua/teal accents; a white outer margin so the pinks pop. Gradients on tiles.
-- **Navigation and buttons:** rounded pill buttons with colored outlines; a vertical stack of colorful icon tiles for steps.
-- **Type:** rounded sans for UI; italic script-style headings on sticker-like tiles. System fonts or a web font with a system fallback so it works offline.
-- **Details:** pixel-square mosaics in corners, speech/thought bubbles for the follow-up questions, pink name tags with arrows, sparkles, "+" marks.
-- **Cards:** the plan is a stack/deck of cards that look like collectible tiles; closed cards show a headline.
+Direction from the learner's references (the *Beautiful Losers* cover, a patterned tile panel, a cut-paper assemblage) and their stated priority that low cognitive load beats decoration. *(Revised during the final review; replaces the earlier Y2K direction.)*
+- **Palette:** off-white paper with a faint grain; brick red, orange, cobalt, leaf green, sky blue, sand, and near-black ink; warm wood for frame edges; a soft pink wall color as an accent.
+- **Patterns:** original op-art patterns drawn in CSS (cubes, zigzags, chevrons, triangles, stripes) used on tiles, card headers, and dial tracks.
+- **Type:** a chunky display face (Rubik Mono One) for headings, set letter by letter with a slight jitter so it reads hand-cut; a plain, readable sans (Work Sans) for body text; a handwritten face (Caveat) for small labels. Loaded from Google Fonts with system fallbacks.
+- **Buttons and tiles:** flat paper shapes with hard offset shadows and a slight tilt; pressing one "stamps" it down into its shadow.
+- **Details:** cut-paper speech bubbles for the follow-up questions, sticker-style nudges, hand-lettered numbers.
+- **Cards:** the plan arrives as a collage of patterned tiles dealt onto the page one by one; tapping a tile unfolds it to full width.
+- **Motion:** quick and springy, never in the way; everything calms down when the device asks for reduced motion.
 - **Imagery:** interface decoration only (CSS and inline SVG). No illustrated characters or scenes in the PoC.
 - **Original art only:** the style is recreated; no third-party logos, characters, or screenshots go in the repo.
 - **Readability wins:** body text stays high-contrast and large enough on a phone; decoration never sits behind long text.

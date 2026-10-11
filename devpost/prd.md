@@ -42,7 +42,8 @@ Navigation is one step at a time, forward through the flow, with the ability to 
 Source: `scope.md > Inspiration & Identity`
 
 Established by the learner:
-- **Vibe:** My Scene and Polly Pocket, early-2000s / Y2K websites: glossy, bubbly, playful, colorful, nostalgic.
+- **Vibe:** handmade street-art collage, in the spirit of the *Beautiful Losers* art scene: off-white paper, chunky hand-cut lettering, op-art patterned tiles, cut-paper shapes, wood-frame edges. Warm, human, and a little imperfect. *(Changed during the build at the learner's request; it replaces the earlier My Scene / Polly Pocket Y2K direction.)*
+- **Interactions:** fun, smooth, and human-centric. Things feel tactile (tiles stamp down, nudges stick on like stickers, the plan is dealt onto the page as a collage) without slowing anyone down.
 - **Metaphor:** a world you peek into, with cards you open; a tarot / Yu-Gi-Oh "pull from a deck" feel is a possible fit.
 - **Priority:** it should look and feel good, and low cognitive load wins over decoration.
 

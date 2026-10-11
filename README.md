@@ -39,7 +39,9 @@ For the "it isn't generic" moment, make the same idea twice with Drama at 1 and 
 - `public/` is the page: plain HTML, CSS, and JavaScript, no framework.
 - `server/` is a small Node server with no packages. It serves the page, holds the API key (the page never sees it), draws the story ingredients (`draw.js`), builds the instructions for Claude (`prompt.js`), and calls the Claude API (`claude.js`).
 - `data/` holds the pack notes, mood dial wording, starting styles, nudges, Create-a-Sim options, and names.
-- `tools/` has helper scripts for reading pack text from a local game install and rebuilding the name list.
+- `public/img/` holds the patterns and cut-paper shapes. They're original SVGs drawn by `tools/make_svgs.mjs` (run `node tools/make_svgs.mjs` to redraw them).
+- `tools/` also has helper scripts for reading pack text from a local game install and rebuilding the name list.
+- Fonts (Rubik Mono One, Work Sans, Caveat) load from Google Fonts, so the page needs an internet connection to look right; it falls back to system fonts without one.
 
 ## Credits and notes
 

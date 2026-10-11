@@ -12,6 +12,42 @@ function el(tag, attrs = {}, ...children) {
   return node;
 }
 
+// Hand-cut lettering: every letter gets a small, repeatable tilt and nudge, and an
+// occasional letter is cut out of black paper. Same text always looks the same.
+export function cutType(text) {
+  let n = 0;
+  let inverted = false; // at most one cut-out letter per heading, or it gets noisy
+  return text.split(' ').map((word) => el('span', { class: 'w' },
+    [...word].map((ch) => {
+      const k = (ch.charCodeAt(0) * 7 + n++ * 13) % 17;
+      const letter = /[A-Za-z]/.test(ch);
+      const inv = letter && !inverted && (k === 3 || k === 11);
+      if (inv) inverted = true;
+      return el('span', {
+        class: 'l' + (inv ? ' inv' : '') + (letter || /\d/.test(ch) ? '' : ' punct'),
+        style: `--r:${(k % 7) - 3}deg;--y:${(k % 5) - 2}px`,
+      }, ch);
+    })));
+}
+
+// Turn plain text already on the page (like the masthead) into hand-cut lettering.
+export function cutify(node) {
+  node.replaceChildren(el('span', { 'aria-hidden': 'true' }, cutType(node.textContent.trim())));
+}
+
+const TILTS = [-1.2, 0.9, -0.5, 1.4, -0.9, 0.6, -1.5, 1.1];
+const tilt = (i) => `--tilt:${TILTS[i % TILTS.length]}deg`;
+const swatch = (i, extra = '') => el('span', { class: `swatch p${i % 8}${extra}`, 'aria-hidden': 'true' });
+const cutHeading = (cls, text) => el('h2', { class: `${cls} cut`, 'aria-label': text }, el('span', { 'aria-hidden': 'true' }, cutType(text)));
+const title = (text) => cutHeading('screen-title', text);
+
+// Tap feedback: stamp the tile down, then move on once the animation has played.
+const stampThen = (node, fn) => {
+  node.classList.add('stamp');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(fn, reduced ? 0 : 200);
+};
+
 const fmtDate = (iso) => {
   try {
     return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
@@ -21,9 +57,8 @@ const fmtDate = (iso) => {
 };
 
 export function welcomeScreen(run, go, { saved, onOpen, onDelete }) {
-  const step = (n, text) => el('li', {}, el('span', { class: 'step-num', 'aria-hidden': 'true' }, n), el('span', {}, text));
-
-  const savedItem = (p) => el('li', { class: 'saved' },
+  const savedItem = (p, i) => el('li', { class: 'saved tile', style: tilt(i + 3) },
+    swatch(i + 2),
     el('button', { class: 'saved-open', type: 'button', onclick: () => onOpen(p.id) },
       el('span', { class: 'saved-title' }, p.heart || p.plotline?.headline || 'A story plan'),
       el('span', { class: 'saved-meta' }, [
@@ -37,41 +72,46 @@ export function welcomeScreen(run, go, { saved, onOpen, onDelete }) {
 
   return el('section', {},
     el('div', { class: 'welcome' },
-      el('p', { class: 'welcome-hook' }, 'Stuck after Create-a-Sim, wondering “what’s supposed to happen now?”'),
-      el('p', {}, 'Story Starter turns your idea, your packs, and your mood into a starting plan you can actually play, so your Sims don’t drift into the same marry-a-kid-happily-ever-after story every time.'),
-      el('h3', { class: 'welcome-label' }, 'How it works'),
-      el('ol', { class: 'steps' },
-        step('1', 'Tell us how you like to start a story.'),
-        step('2', 'Spill your idea, in your own words. A few words is fine.'),
-        step('3', 'Answer a couple of quick questions.'),
-        step('4', 'Pick your packs and set the mood.')),
-      el('h3', { class: 'welcome-label' }, 'What you get'),
-      el('p', {}, 'A deck of cards: who to make in Create-a-Sim (down to turn-ons and pets), the starting plot and the first scene to play, and the world, lots, and season to start in. The ending is yours to play.'),
+      cutHeading('welcome-head', 'Plan your Sims story before you play'),
+      el('p', { class: 'welcome-sub' }, 'For when gameplay gets boring and every challenge starts to feel the same.'),
+      el('div', { class: 'collage', 'aria-hidden': 'true' },
+        el('img', { class: 'c1', src: 'img/blob-orange.svg', alt: '' }),
+        swatch(0, ' c2'),
+        el('img', { class: 'c3', src: 'img/burst-sand.svg', alt: '' }),
+        el('img', { class: 'c4', src: 'img/ring.svg', alt: '' }),
+        el('img', { class: 'c5', src: 'img/blob-sky.svg', alt: '' }),
+        el('img', { class: 'c6', src: 'img/can-blue.svg', alt: '' })),
       el('div', { class: 'actions' },
-        el('button', { class: 'pill primary', type: 'button', onclick: () => go('start-over') }, 'Start a new story ✦'))),
+        el('button', { class: 'pill primary', type: 'button', onclick: () => go('start-over') }, 'Start a story'))),
     saved.length
       ? el('div', { class: 'saved-plans' },
-          el('h2', { class: 'screen-title' }, 'My plans'),
-          el('p', { class: 'hint' }, 'Saved on this device. Tap one to reopen it.'),
+          title('My plans'),
+          el('p', { class: 'hint' }, 'Saved on this device.'),
           el('ul', { class: 'saved-list' }, saved.map(savedItem)))
       : null,
   );
 }
 
 export function styleScreen(run, go, { styles }) {
-  const pick = (st) => el('button', {
-    class: 'style-card',
-    type: 'button',
-    'aria-pressed': String(run.style === st.id),
-    onclick: () => { run.style = st.id; go('yap'); },
-  },
-    el('span', { class: 'style-title' }, st.title),
-    el('span', { class: 'style-desc' }, st.description));
+  const pick = (st, i) => {
+    const btn = el('button', {
+      class: 'style-card tile',
+      type: 'button',
+      style: tilt(i),
+      'aria-pressed': String(run.style === st.id),
+    },
+      swatch(i),
+      el('span', { class: 'style-body' },
+        el('span', { class: 'style-title' }, st.title),
+        el('span', { class: 'style-desc' }, st.description)));
+    btn.addEventListener('click', () => { run.style = st.id; stampThen(btn, () => go('yap')); });
+    return btn;
+  };
 
   return el('section', {},
     el('button', { class: 'pill back-link', type: 'button', onclick: () => go('welcome') }, '← Home'),
-    el('h2', { class: 'screen-title' }, 'How do you start?'),
-    el('p', { class: 'lead' }, 'Everyone dreams up stories differently. Pick the one that sounds most like you. There’s no wrong answer.'),
+    title('How do you start?'),
+    el('p', { class: 'lead' }, 'Pick the one that sounds most like you.'),
     el('div', { class: 'styles' }, styles.map(pick)),
   );
 }
@@ -93,27 +133,31 @@ export function yapScreen(run, go, { styles, nudges }) {
   next.addEventListener('click', () => go('followup'));
 
   // Tapping a nudge starts a new line with a sentence opener, then puts the cursor after it.
-  const nudge = (id) => {
+  const nudge = (id, i) => {
     const n = nudges[id];
-    return el('button', {
-      class: 'nudge',
-      type: 'button',
-      onclick: () => {
-        const text = box.value.trimEnd();
-        box.value = (text ? text + '\n' : '') + n.insert;
-        update();
-        box.focus();
-        box.setSelectionRange(box.value.length, box.value.length);
-      },
-    }, '+ ', n.label);
+    const btn = el('button', { class: 'nudge', type: 'button', style: tilt(i + 2) }, '+ ', n.label);
+    btn.addEventListener('click', () => {
+      const text = box.value.trimEnd();
+      box.value = (text ? text + '\n' : '') + n.insert;
+      update();
+      // The sticker pops and the box flashes, so you can see where the words went.
+      for (const [node, cls] of [[btn, 'peel'], [box, 'flash']]) {
+        node.classList.remove(cls);
+        void node.offsetWidth;
+        node.classList.add(cls);
+      }
+      box.focus();
+      box.setSelectionRange(box.value.length, box.value.length);
+    });
+    return btn;
   };
   update();
 
   return el('section', {},
-    el('h2', { class: 'screen-title' }, 'Spill it'),
-    el('p', { class: 'lead' }, 'Say whatever you imagine, in your own words. A few words is fine. You can type or use your keyboard’s microphone.'),
+    title('Spill it'),
+    el('p', { class: 'lead' }, 'Your idea, your words. A few is fine. Typing or your keyboard’s mic both work.'),
     box,
-    el('p', { class: 'hint' }, 'Stuck? Tap one to get started (or ignore them):'),
+    el('p', { class: 'hint hand' }, 'stuck? grab a sticker:'),
     el('div', { class: 'nudges' }, style.nudges.map(nudge)),
     el('div', { class: 'actions' },
       el('button', { class: 'pill', type: 'button', onclick: () => go('style') }, '← Back'),
@@ -125,10 +169,8 @@ export function followUpScreen(run, go, { loading, error } = {}) {
   const back = el('button', { class: 'pill', type: 'button', onclick: () => go('yap') }, '← Back');
   if (loading) {
     return el('section', {},
-      el('h2', { class: 'screen-title' }, 'Got it…'),
-      el('div', { class: 'status' },
-        el('span', { class: 'big', 'aria-hidden': 'true' }, '✦'),
-        el('p', {}, 'Reading what you wrote…')),
+      title('Got it…'),
+      el('div', { class: 'status' }, shuffle(), el('p', { class: 'hand' }, 'reading what you wrote…')),
     );
   }
   if (error) {
@@ -154,9 +196,9 @@ export function followUpScreen(run, go, { loading, error } = {}) {
   };
 
   return el('section', {},
-    el('h2', { class: 'screen-title' }, 'Here’s what I heard'),
+    title('Here’s what I heard'),
     el('p', { class: 'bubble heard' }, run.reflection),
-    el('p', { class: 'lead' }, 'A few questions to fill in the gaps. Answer any you like; skip the rest.'),
+    el('p', { class: 'lead' }, 'A few gaps to fill. Answer any, skip the rest.'),
     el('div', { class: 'qas' }, run.followUps.map(question)),
     el('div', { class: 'actions' },
       back,
@@ -174,8 +216,9 @@ export function packsScreen(run, go, { packs }) {
 
   const tile = (p) => {
     const btn = el('button', {
-      class: 'pack' + (p.supernatural ? ' spooky' : ''),
+      class: 'pack tile' + (p.supernatural ? ' spooky' : ''),
       type: 'button',
+      style: tilt(packs.indexOf(p)),
       'aria-pressed': String(run.packs.includes(p.code)),
     },
       el('span', { class: 'pack-name' }, p.name),
@@ -196,9 +239,9 @@ export function packsScreen(run, go, { packs }) {
 
   updateCount();
   return el('section', {},
-    el('h2', { class: 'screen-title' }, 'Your packs'),
-    el('p', { class: 'lead' }, 'Tap the packs you own and want in this story. Pick as many as you like, or skip to keep it base game.'),
-    el('p', { class: 'hint' }, 'Packs marked “notes coming soon” can be picked, but the plan won’t use their details yet.'),
+    title('Your packs'),
+    el('p', { class: 'lead' }, 'Tap the ones you want in this story, or skip for base game.'),
+    el('p', { class: 'hint' }, '“Notes coming soon” packs can be picked, but the plan won’t use their details yet.'),
     groups,
     el('div', { class: 'actions sticky' },
       el('button', { class: 'pill', type: 'button', onclick: () => go('followup') }, '←', el('span', { class: 'sr-only' }, 'Back')),
@@ -215,11 +258,13 @@ export function dialsScreen(run, go, { dials, packs }) {
       value: String(run.settings[d.id]),
       'aria-describedby': `${d.id}-desc`,
     });
+    input.style.setProperty('--v', run.settings[d.id]);
     input.addEventListener('input', () => {
       run.settings[d.id] = Number(input.value);
+      input.style.setProperty('--v', input.value);
       description.textContent = d.positions[run.settings[d.id] - 1];
     });
-    return el('div', { class: 'dial' },
+    return el('div', { class: 'dial', style: tilt(dials.dials.indexOf(d) + 1) },
       el('label', { class: 'dial-label', for: d.id }, d.label),
       input,
       el('div', { class: 'dial-ends', 'aria-hidden': 'true' }, el('span', {}, d.ends[0]), el('span', {}, d.ends[1])),
@@ -241,8 +286,8 @@ export function dialsScreen(run, go, { dials, packs }) {
   });
 
   return el('section', {},
-    el('h2', { class: 'screen-title' }, 'Set the mood'),
-    el('p', { class: 'lead' }, 'Slide each one to decide what kind of story you want. The words underneath tell you what you’ll get.'),
+    title('Set the mood'),
+    el('p', { class: 'lead' }, 'Slide each one. The words underneath tell you what you’ll get.'),
     el('div', { class: 'dials' }, dials.dials.map(slider)),
     el('div', { class: 'dial supernatural' + (unlocked ? '' : ' locked') },
       el('label', { class: 'check', for: 'supernatural' }, box, el('span', {}, sn.label)),
@@ -253,12 +298,13 @@ export function dialsScreen(run, go, { dials, packs }) {
   );
 }
 
+const shuffle = () => el('div', { class: 'shuffle', 'aria-hidden': 'true' },
+  el('span', { class: 'p0' }), el('span', { class: 'p4' }), el('span', { class: 'p3' }));
+
 export function makingScreen(run, go, { error } = {}) {
   if (error) {
     return el('section', {},
-      el('div', { class: 'status' },
-        el('span', { class: 'big', 'aria-hidden': 'true' }, '✧'),
-        el('p', {}, 'Hmm, the plan got stuck.')),
+      el('div', { class: 'status' }, el('p', { class: 'hand' }, 'hmm, the plan got stuck.')),
       el('p', { class: 'error', role: 'alert' }, error),
       el('div', { class: 'actions' },
         el('button', { class: 'pill primary', type: 'button', onclick: () => go('making') }, 'Try again'),
@@ -267,15 +313,19 @@ export function makingScreen(run, go, { error } = {}) {
   }
   return el('section', {},
     el('div', { class: 'status' },
-      el('span', { class: 'big', 'aria-hidden': 'true' }, '✦'),
-      el('p', {}, 'Shuffling your story deck…'),
-      el('p', { class: 'hint' }, 'This takes a few seconds.')),
+      shuffle(),
+      el('p', { class: 'hand' }, 'shuffling your story deck…'),
+      el('p', { class: 'hint' }, 'About 20 seconds.')),
   );
 }
 
+const CARD_PATTERN = { premise: 2, character: 0, plot: 3, world: 4 };
+
 function card(kind, tag, headline, ...body) {
   return el('details', { class: 'card', 'data-kind': kind },
-    el('summary', {}, el('span', { class: 'tag' }, tag), el('span', { class: 'card-headline' }, headline)),
+    el('summary', {},
+      swatch(CARD_PATTERN[kind]),
+      el('span', { class: 'card-head' }, el('span', { class: 'tag' }, tag), el('span', { class: 'card-headline' }, headline))),
     el('div', { class: 'card-body' }, ...body),
   );
 }
@@ -314,8 +364,7 @@ export function planCards(plan) {
   const groups = {
     premise: [card('premise', 'Premise', plan.heart || 'Your story in a nutshell', el('p', {}, plan.premise))],
     character: plan.characters.map((c) =>
-      card('character', 'Sim', `${c.name} — ${c.headline}`,
-        el('span', { class: 'name-tag' }, c.name),
+      card('character', 'Sim', [el('span', { class: 'sim-name' }, c.name), el('span', { class: 'sim-line' }, c.headline)],
         ...field('Personality', c.personality),
         c.wants && field('Wants', c.wants),
         c.holdingBack && field('Holding them back', c.holdingBack),
@@ -330,7 +379,20 @@ export function planCards(plan) {
       ...field('Lots', plan.world.lots),
       ...field('Season', plan.world.season))],
   };
-  return (CARD_ORDER[plan.leadCard] || CARD_ORDER.premise).flatMap((kind) => groups[kind]);
+  const cards = (CARD_ORDER[plan.leadCard] || CARD_ORDER.premise).flatMap((kind) => groups[kind]);
+  // Each Sim gets its own pattern; every card gets a tilt and its turn in the deal.
+  let sims = 0;
+  const simCount = plan.characters.length;
+  cards.forEach((c, i) => {
+    c.style.cssText = `${tilt(i)};--i:${i}`;
+    if (c.dataset.kind === 'character') {
+      c.querySelector('.swatch').className = `swatch p${[0, 6, 4, 1][sims % 4]}`;
+      // An odd Sim out spans the full width, so the collage has no hole.
+      if (simCount % 2 === 1 && sims === simCount - 1) c.classList.add('wide');
+      sims++;
+    }
+  });
+  return cards;
 }
 
 // Says which packs the story's ingredients came from, and which picked packs don't have notes yet.
@@ -347,7 +409,7 @@ function ingredientNote(plan) {
 export function planScreen(run, go, { saved = true } = {}) {
   return el('section', {},
     el('button', { class: 'pill back-link', type: 'button', onclick: () => go('welcome') }, '← My plans'),
-    el('h2', { class: 'screen-title' }, 'Your story deck'),
+    title('Your story deck'),
     el('p', { class: 'lead' }, 'Tap a card to open it.'),
     saved
       ? el('p', { class: 'hint saved-note' }, `✓ Saved on this device${run.plan.createdAt ? ` · ${fmtDate(run.plan.createdAt)}` : ''}`)

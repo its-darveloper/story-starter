@@ -1,0 +1,9 @@
+{
+  "name": "sims-story-starter",
+  "private": true,
+  "type": "module",
+  "description": "A guided, pack-aware story planner for The Sims 4.",
+  "scripts": {
+    "start": "node --env-file=.env server/server.js"
+  }
+}

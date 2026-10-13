@@ -8,3 +8,12 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Personal story plans (kept private)
+stories/
+
+# Hackathon course skills (not part of this project)
+.agents/
+.claude/
+agent/
+skills-lock.json
